@@ -15,11 +15,22 @@ export class FrontendConstruct extends Construct {
 
         const domainName = 'adamsulemanji.com';
         const subDomain = 'www';
+        const fullDomain = `${subDomain}.${domainName}`;
 
-        // ********** Frontend Bucket **********
-        const myBucket = new s3.Bucket(this, `myBucket-${subDomain}`, {
+        // ********** WWW Frontend Bucket **********
+        const wwwBucket = new s3.Bucket(this, `myBucket-${subDomain}`, {
             removalPolicy: cdk.RemovalPolicy.DESTROY,
             autoDeleteObjects: true,
+        });
+
+        // ********** Apex Redirect Bucket **********
+        const apexBucket = new s3.Bucket(this, 'myBucket-apex', {
+            removalPolicy: cdk.RemovalPolicy.DESTROY,
+            autoDeleteObjects: true,
+            websiteRedirect: {
+                hostName: fullDomain,
+                protocol: s3.RedirectProtocol.HTTPS,
+            },
         });
 
         const cloudfrontOAI = new cloudfront.OriginAccessIdentity(
@@ -27,11 +38,11 @@ export class FrontendConstruct extends Construct {
             `cloudfront-OAI-${subDomain}`
         );
 
-        // ********** Bucket Policy **********
-        myBucket.addToResourcePolicy(
+        // ********** WWW Bucket Policy **********
+        wwwBucket.addToResourcePolicy(
             new iam.PolicyStatement({
                 actions: ['s3:GetObject'],
-                resources: [myBucket.arnForObjects('*')],
+                resources: [wwwBucket.arnForObjects('*')],
                 principals: [
                     new iam.CanonicalUserPrincipal(
                         cloudfrontOAI.cloudFrontOriginAccessIdentityS3CanonicalUserId
@@ -45,20 +56,31 @@ export class FrontendConstruct extends Construct {
             domainName: domainName,
         });
 
-        // ********** ACM Certificate **********
-        const certificate = new acm.Certificate(
+        // ********** ACM Certificates **********
+        const wwwCertificate = new acm.Certificate(
             this,
             `Certificate-${subDomain}`,
             {
-                domainName: `${subDomain}.${domainName}`,
+                domainName: fullDomain,
                 validation: acm.CertificateValidation.fromDns(zone),
             }
         );
 
-        // ********** CloudFront Distribution **********
-        const s3Origin = new origin.S3Origin(myBucket);
+        const apexCertificate = new acm.Certificate(
+            this,
+            'Certificate-apex',
+            {
+                domainName: domainName,
+                validation: acm.CertificateValidation.fromDns(zone),
+            }
+        );
 
-        const distribution = new cloudfront.Distribution(
+        // ********** WWW CloudFront Distribution **********
+        const s3Origin = new origin.S3Origin(wwwBucket, {
+            originAccessIdentity: cloudfrontOAI,
+        });
+
+        const wwwDistribution = new cloudfront.Distribution(
             this,
             `myDist-${subDomain}`,
             {
@@ -69,8 +91,8 @@ export class FrontendConstruct extends Construct {
                     allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
                 },
                 defaultRootObject: 'index.html',
-                domainNames: [`${subDomain}.${domainName}`],
-                certificate,
+                domainNames: [fullDomain],
+                certificate: wwwCertificate,
                 errorResponses: [
                     {
                         httpStatus: 403,
@@ -88,12 +110,35 @@ export class FrontendConstruct extends Construct {
             }
         );
 
-        // ********** Route 53 Alias Record **********
+        // ********** Apex CloudFront Distribution **********
+        const apexDistribution = new cloudfront.Distribution(
+            this,
+            'myDist-apex',
+            {
+                defaultBehavior: {
+                    origin: new origin.S3Origin(apexBucket),
+                    viewerProtocolPolicy:
+                        cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+                },
+                domainNames: [domainName],
+                certificate: apexCertificate,
+            }
+        );
+
+        // ********** Route 53 Alias Records **********
         new route53.ARecord(this, `AliasRecord-${subDomain}`, {
             zone,
-            recordName: `${subDomain}`,
+            recordName: subDomain,
             target: route53.RecordTarget.fromAlias(
-                new route53targets.CloudFrontTarget(distribution)
+                new route53targets.CloudFrontTarget(wwwDistribution)
+            ),
+        });
+
+        new route53.ARecord(this, 'AliasRecord-apex', {
+            zone,
+            recordName: domainName,
+            target: route53.RecordTarget.fromAlias(
+                new route53targets.CloudFrontTarget(apexDistribution)
             ),
         });
 
@@ -103,19 +148,25 @@ export class FrontendConstruct extends Construct {
             `DeployWithInvalidation-${subDomain}`,
             {
                 sources: [bucket.Source.asset('./frontend/build')],
-                destinationBucket: myBucket,
-                distribution,
+                destinationBucket: wwwBucket,
+                distribution: wwwDistribution,
                 memoryLimit: 1024,
                 ephemeralStorageSize: cdk.Size.mebibytes(1024),
                 distributionPaths: ['/*'],
             }
         );
 
-        // ********** Output **********
+        // ********** Outputs **********
         new cdk.CfnOutput(this, `DistributionDomainName-${subDomain}`, {
-            value: distribution.domainName,
+            value: wwwDistribution.domainName,
             description: `Distribution Domain Name for ${subDomain}`,
             exportName: `DistributionDomainName-${subDomain}`,
+        });
+
+        new cdk.CfnOutput(this, 'DistributionDomainName-apex', {
+            value: apexDistribution.domainName,
+            description: 'Distribution Domain Name for apex',
+            exportName: 'DistributionDomainName-apex',
         });
     }
 }
