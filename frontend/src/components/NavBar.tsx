@@ -16,23 +16,24 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-const navItems = [
-  {
-    title: "Home",
-    href: "/",
-  },
+interface NavItem {
+  title: string;
+  href: string;
+  subItems?: { title: string; href: string }[];
+}
+
+const navItems: NavItem[] = [
   {
     title: "About",
     href: "/about",
   },
   {
-    title: "Services",
-    href: "/services",
-    subItems: [
-      { title: "Web Development", href: "/services/web-development" },
-      { title: "Mobile Development", href: "/services/mobile-development" },
-      { title: "UI/UX Design", href: "/services/ui-ux-design" },
-    ],
+    title: "Projects",
+    href: "/projects",
+  },
+  {
+    title: "Fun Things",
+    href: "/fun",
   },
   {
     title: "Contact",
