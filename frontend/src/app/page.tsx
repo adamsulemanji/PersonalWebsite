@@ -1,6 +1,8 @@
-import Image from "next/image";
+"use client";
 
+import Image from "next/image";
 import NavBar from "@/components/NavBar";
+import styles from "@/styles/Banner.module.css";
 
 export default function Home() {
   return (
@@ -12,6 +14,17 @@ export default function Home() {
         </div>
         <div className="text-lg text-center sm:text-left">
           This website is still under construction. Check back soon!
+        </div>
+        <div
+          className={`w-full overflow-hidden whitespace-nowrap ${styles.marqueeContainer}`}
+        >
+          <div className={styles.marquee}>
+            <span className="mx-4">Welcome to my personal website!</span>
+            <span className="mx-4">Stay tuned for updates and progress!</span>
+            <span className="mx-4">
+              Check out my projects once they are done!
+            </span>
+          </div>
         </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
