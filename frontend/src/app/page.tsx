@@ -10,21 +10,14 @@ export default function Home() {
         <div className="text-2xl font-bold text-center sm:text-left">
           Hi! I'm Adam Sulemanji
         </div>
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx Adam Sulemanji
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+        <div className="text-lg text-center sm:text-left">
+          This website is still under construction. Check back soon!
+        </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          href="www.adamsulemanji.com"
           target="_blank"
           rel="noopener noreferrer"
         >

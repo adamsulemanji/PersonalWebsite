@@ -1,5 +1,7 @@
 *.js
 !jest.config.js
+!frontend/src/pages/404.js
+
 *.d.ts
 node_modules
 
