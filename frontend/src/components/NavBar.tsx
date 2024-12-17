@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, X, Sun, Moon } from "lucide-react"; // Import Sun and Moon icons
+import { Menu, Sun, Moon } from "lucide-react"; // Import Sun and Moon icons
 
 import { Button } from "@/components/ui/button";
 import {
@@ -101,7 +101,7 @@ export default function Navbar() {
         <div className="flex items-center">
           <Button
             variant="ghost"
-            className="px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+            className="px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 md:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
             <Menu className="h-5 w-5" />
@@ -109,7 +109,7 @@ export default function Navbar() {
           </Button>
           <Button
             variant="ghost"
-            className="px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0"
             onClick={() => setDarkMode(!darkMode)}
           >
             {darkMode ? (
@@ -124,7 +124,7 @@ export default function Navbar() {
           <SheetTrigger asChild>
             <Button
               variant="ghost"
-              className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+              className="mr-2 px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 md:hidden"
             >
               <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle Menu</span>
