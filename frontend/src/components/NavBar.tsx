@@ -119,6 +119,13 @@ export default function Navbar() {
             )}
             <span className="sr-only">Toggle Dark Mode</span>
           </Button>
+          <Button
+            variant="ghost"
+            className="px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 p-10"
+            onClick={() => window.open("/resume.pdf", "_blank")}
+          >
+            Resume
+          </Button>
         </div>
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
