@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
 import { Menu, Sun, Moon } from "lucide-react"; // Import Sun and Moon icons
 
 import { Button } from "@/components/ui/button";
@@ -18,26 +17,26 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 interface NavItem {
   title: string;
-  href: string;
-  subItems?: { title: string; href: string }[];
+  id: string;
+  subItems?: { title: string; id: string }[];
 }
 
 const navItems: NavItem[] = [
   {
     title: "About",
-    href: "/about",
+    id: "about",
   },
   {
     title: "Projects",
-    href: "/projects",
+    id: "projects",
   },
   {
     title: "Fun Things",
-    href: "/fun",
+    id: "fun",
   },
   {
     title: "Contact",
-    href: "/contact",
+    id: "contact",
   },
 ];
 
@@ -53,13 +52,20 @@ export default function Navbar() {
     }
   }, [darkMode]);
 
+  const handleScroll = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-20 items-center justify-between w-full px-4 md:px-8">
         <div className="mr-4 hidden md:flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
+          <a href="#" className="mr-6 flex items-center space-x-2">
             <span className="hidden font-bold sm:inline-block">Adam</span>
-          </Link>
+          </a>
           <NavigationMenu>
             <NavigationMenuList>
               {navItems.map((item) =>
@@ -71,12 +77,13 @@ export default function Navbar() {
                         {item.subItems.map((subItem) => (
                           <li key={subItem.title} className="row-span-3">
                             <NavigationMenuLink asChild>
-                              <Link
-                                href={subItem.href}
+                              <a
+                                href={`#${subItem.id}`}
                                 className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                                onClick={() => handleScroll(subItem.id)}
                               >
                                 {subItem.title}
-                              </Link>
+                              </a>
                             </NavigationMenuLink>
                           </li>
                         ))}
@@ -85,13 +92,12 @@ export default function Navbar() {
                   </NavigationMenuItem>
                 ) : (
                   <NavigationMenuItem key={item.title}>
-                    <Link href={item.href} legacyBehavior passHref>
-                      <NavigationMenuLink
-                        className={navigationMenuTriggerStyle()}
-                      >
-                        {item.title}
-                      </NavigationMenuLink>
-                    </Link>
+                    <NavigationMenuLink
+                      className={navigationMenuTriggerStyle()}
+                      onClick={() => handleScroll(item.id)}
+                    >
+                      {item.title}
+                    </NavigationMenuLink>
                   </NavigationMenuItem>
                 )
               )}
@@ -139,7 +145,7 @@ export default function Navbar() {
           </SheetTrigger>
           <SheetContent side="left" className="pr-0">
             <MobileLink
-              href="/"
+              href="#"
               className="flex items-center"
               onOpenChange={setIsOpen}
             >
@@ -155,7 +161,7 @@ export default function Navbar() {
                         {item.subItems.map((subItem) => (
                           <MobileLink
                             key={subItem.title}
-                            href={subItem.href}
+                            href={`#${subItem.id}`}
                             onOpenChange={setIsOpen}
                           >
                             {subItem.title}
@@ -166,7 +172,7 @@ export default function Navbar() {
                   ) : (
                     <MobileLink
                       key={item.title}
-                      href={item.href}
+                      href={`#${item.id}`}
                       onOpenChange={setIsOpen}
                     >
                       {item.title}
@@ -197,7 +203,7 @@ function MobileLink({
   ...props
 }: MobileLinkProps) {
   return (
-    <Link
+    <a
       href={href}
       onClick={() => {
         onOpenChange?.(false);
@@ -206,6 +212,6 @@ function MobileLink({
       {...props}
     >
       {children}
-    </Link>
+    </a>
   );
 }
