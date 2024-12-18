@@ -34,11 +34,8 @@ export default function Home() {
             </span>
           </div>
         </section>
-        <section className="mt-96">
-          <h2
-            className="text-5xl font-bold text-center sm:text-left mb-10"
-            id="about"
-          >
+        <section className="mt-96" id="about">
+          <h2 className="text-5xl font-bold text-center sm:text-left mb-10">
             About
           </h2>
           <div className="flex flex-col gap-4 w-full max-w-[1000px]">
