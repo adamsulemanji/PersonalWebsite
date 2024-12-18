@@ -69,12 +69,18 @@ export default function Home() {
               <b>Market Risk Summear Analyst</b> in the summer of 2023. I helped
               manage interest rate risk within the Goldman Sachs Bank Legal
               Entity. I specifically looked at how Delta and Gamma values
-              changed over time with the fluctating interest rates climate.
+              changed over time with the fluctating interest rates climate. I
+              was also a developer who created a new risk metric that allowed
+              use to see our delta value in correlation with other bond tenures.
             </p>
             <p className="text-lg text-center sm:text-left text-gray-800 dark:text-gray-200">
-              I am currently looking for a full-time position as a Software
-              Engineer or Data Analyst. I am open to any opportunities and am
-              excited to see what the future holds.
+              My third and final internship was with <b>Amazon</b> as a{" "}
+              <b>Software Development Engineer Intern</b> in the summer of 2024.
+              I worked in the Cross Borders Organization, more specifically the
+              Crosslistings team which allows customers to buy different
+              products from different Amazon marketplaces. This was my first big
+              tech internship which allowed me to gain full development
+              experience in a large-scale, high-impact environment.
             </p>
           </div>
         </section>
