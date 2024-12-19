@@ -45,40 +45,61 @@ export default function Home() {
               in December 2023 and continued onto my Masters of Computer Science
               and graduated in December of 2024.
             </p>
-            <p className="text-3xl text-center sm:text-left text-gray-800 dark:text-gray-200">
+            <h3 className="text-3xl font-bold text-center sm:text-left text-gray-800 dark:text-gray-200 mt-10">
               Internships
-            </p>
-            <p className="text-lg text-center sm:text-left text-gray-800 dark:text-gray-200">
-              My first internship was at <b>PricewaterhouseCoopers</b> (PwC) as
-              a <b>Data and Technology Start Intern</b> in the summer of 2022. I
-              worked on a team of 5 to deliver key insights to a non-profit
-              leadership about what is the best course of action and
-              recommendation to increase donor engagement and retention.
-              <br />
-              <br />
-              This was my first internship do the whole thing was a learning
-              opportunity. After this I was able to take what I learned and
-              apply it to my next internship although not related to what I
-              would do next.
-            </p>
-            <p className="text-lg text-center sm:text-left text-gray-800 dark:text-gray-200">
-              My second internship was at <b>Goldman Sachs</b> as a{" "}
-              <b>Market Risk Summear Analyst</b> in the summer of 2023. I helped
-              manage interest rate risk within the Goldman Sachs Bank Legal
-              Entity. I specifically looked at how Delta and Gamma values
-              changed over time with the fluctating interest rates climate. I
-              was also a developer who created a new risk metric that allowed
-              use to see our delta value in correlation with other bond tenures.
-            </p>
-            <p className="text-lg text-center sm:text-left text-gray-800 dark:text-gray-200">
-              My third and final internship was with <b>Amazon</b> as a{" "}
-              <b>Software Development Engineer Intern</b> in the summer of 2024.
-              I worked in the Cross Borders Organization, more specifically the
-              Crosslistings team which allows customers to buy different
-              products from different Amazon marketplaces. This was my first big
-              tech internship which allowed me to gain full development
-              experience in a large-scale, high-impact environment.
-            </p>
+            </h3>
+            <div className="flex flex-col gap-8 mt-6">
+              <div>
+                <h4 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
+                  PricewaterhouseCoopers (PwC)
+                </h4>
+                <p className="text-lg text-gray-800 dark:text-gray-200">
+                  <b>Data and Technology Start Intern</b> - Summer 2022
+                </p>
+                <p className="text-lg text-gray-800 dark:text-gray-200 mt-2">
+                  I worked on a team of 5 to deliver key insights to a
+                  non-profit leadership about the best course of action and
+                  recommendations to increase donor engagement and retention.
+                  <br />
+                  <br />
+                  This was my first internship, so the whole experience was a
+                  learning opportunity. After this, I was able to take what I
+                  learned and apply it to my next internship, although it was
+                  not directly related.
+                </p>
+              </div>
+              <div>
+                <h4 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
+                  Goldman Sachs
+                </h4>
+                <p className="text-lg text-gray-800 dark:text-gray-200">
+                  <b>Market Risk Summer Analyst</b> - Summer 2023
+                </p>
+                <p className="text-lg text-gray-800 dark:text-gray-200 mt-2">
+                  I helped manage interest rate risk within the Goldman Sachs
+                  Bank Legal Entity. I specifically looked at how Delta and
+                  Gamma values changed over time with the fluctuating interest
+                  rates climate. I also developed a new risk metric that allowed
+                  us to see our delta value in correlation with other bond
+                  tenures.
+                </p>
+              </div>
+              <div>
+                <h4 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
+                  Amazon
+                </h4>
+                <p className="text-lg text-gray-800 dark:text-gray-200">
+                  <b>Software Development Engineer Intern</b> - Summer 2024
+                </p>
+                <p className="text-lg text-gray-800 dark:text-gray-200 mt-2">
+                  I worked in the Cross Borders Organization, specifically the
+                  Crosslistings team, which allows customers to buy different
+                  products from different Amazon marketplaces. This was my first
+                  big tech internship, which allowed me to gain full development
+                  experience in a large-scale, high-impact environment.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
       </main>
