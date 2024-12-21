@@ -16,6 +16,14 @@ interface Internship {
 const internships: Internship[] = [
   {
     company: "Amazon",
+    role: "Software Development",
+    date: "August 2025",
+    description: "Incoming Engineer for Crosslistings Team",
+    details:
+      "I have so much time before I start this job so Im relaxing till then !",
+  },
+  {
+    company: "Amazon",
     role: "Software Development Engineer Intern",
     date: "Summer 2024",
     description:
@@ -80,30 +88,32 @@ export default function Home() {
           </div>
         </section>
         <section className="mt-80 items-center" id="about">
-          <div className="text-2xl flex flex-col gap-4 w-full max-w-[1000px] items-center">
+          <div className="text-2xl flex flex-col gap-4 w-full max-w-[1200px] items-center">
             <div className="flex flex-col gap-4 items-center">
               <h2 className="text-5xl font-bold text-center mb-10">
                 About Me !
               </h2>
+              <p className="text-center text-gray-800 dark:text-gray-200">
+                I am passionate about learning about anything and figuring out
+                how to make my life easier with technology.
+              </p>
               <p className="text-center text-gray-800 dark:text-gray-200">
                 I'm Adam Sulemanji. I am a recent graduate from Texas A&M
                 University. I earned my Bachelors of Science in Computer Science
                 in December 2023 and continued onto my Masters of Computer
                 Science and graduated in December of 2024.
               </p>
-              <p className="text-center text-gray-800 dark:text-gray-200">
-                I am passionate about learning about anything and figuring out
-                how to make my life easier with technology.
-              </p>
             </div>
             <h3 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-200 mt-10">
-              Internships
+              Work Experience
             </h3>
             <div className="flex flex-col gap-8 mt-6 items-center">
               {internships.map((internship, index) => (
                 <div
                   key={index}
-                  className="border border-gray-300 dark:border-gray-700 rounded-lg p-4 cursor-pointer w-full max-w-[800px]"
+                  className={`border border-gray-300 dark:border-gray-700 rounded-lg p-4 cursor-pointer w-full max-w-[1000px] transition-all duration-300 ${
+                    expanded === index ? "max-h-[500px]" : "max-h-[150px]"
+                  } overflow-hidden`}
                   onClick={() => toggleExpand(index)}
                 >
                   <div className="flex justify-between items-center">
