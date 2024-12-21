@@ -36,7 +36,7 @@ export default function Home() {
         </section>
         <section className="mt-96" id="about">
           <h2 className="text-5xl font-bold text-center sm:text-left mb-10">
-            About
+            About Me !
           </h2>
           <div className="flex flex-col gap-4 w-full max-w-[1000px]">
             <p className="text-lg text-center sm:text-left text-gray-800 dark:text-gray-200">
@@ -44,6 +44,10 @@ export default function Home() {
               University. I earned my Bachelors of Science in Computer Science
               in December 2023 and continued onto my Masters of Computer Science
               and graduated in December of 2024.
+            </p>
+            <p className="text-lg text-center sm:text-left text-gray-800 dark:text-gray-200">
+              I am passionate about learning about anything and figuring out how
+              to make my life easier with technology.
             </p>
             <h3 className="text-3xl font-bold text-center sm:text-left text-gray-800 dark:text-gray-200 mt-10">
               Internships
