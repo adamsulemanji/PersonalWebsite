@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <NavBar />
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center w-full max-w-[1400px]">
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
         <section
           id="about"
           className="text-9xl font-bold text-center relative one group bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 dark:from-red-600 dark:via-orange-500 dark:to-yellow-400 inline-block text-transparent bg-clip-text transition-opacity duration-5000"
@@ -35,7 +35,7 @@ export default function Home() {
           id="fun"
           className={`w-full overflow-hidden whitespace-nowrap ${styles.marqueeContainer} transition-opacity duration-500 mt-5`}
         >
-          <div className={styles.marquee}>
+          <div className={`w-full ${styles.marquee}`}>
             <span className="mx-4">Welcome to my personal website!</span>
             <span className="mx-4">Stay tuned for updates and progress!</span>
             <span className="mx-4">
