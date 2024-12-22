@@ -4,52 +4,8 @@ import Image from "next/image";
 import NavBar from "@/components/NavBar";
 import styles from "@/styles/Banner.module.css";
 import { useState } from "react";
-
-interface Internship {
-  company: string;
-  role: string;
-  date: string;
-  description: string;
-  details: string;
-}
-
-const internships: Internship[] = [
-  {
-    company: "Amazon",
-    role: "Software Development",
-    date: "August 2025",
-    description: "Incoming Engineer for Crosslistings Team",
-    details:
-      "I have so much time before I start this job so Im relaxing till then !",
-  },
-  {
-    company: "Amazon",
-    role: "Software Development Engineer Intern",
-    date: "Summer 2024",
-    description:
-      "Worked in the Cross Borders Organization on the Crosslistings team. Gained full development experience in a large-scale, high-impact environment.",
-    details:
-      "This was my first big tech internship, which allowed me to gain full development experience in a large-scale, high-impact environment.",
-  },
-  {
-    company: "Goldman Sachs",
-    role: "Market Risk Summer Analyst",
-    date: "Summer 2023",
-    description:
-      "Managed interest rate risk for the Goldman Sachs Bank Legal Entity. Developed a new risk metric correlating delta values with bond tenures.",
-    details:
-      "I specifically looked at how Delta and Gamma values changed over time with the fluctuating interest rates climate.",
-  },
-  {
-    company: "PricewaterhouseCoopers (PwC)",
-    role: "Data and Technology Start Intern",
-    date: "Summer 2022",
-    description:
-      "Delivered key insights to a non-profit leadership team to enhance donor engagement and retention.",
-    details:
-      "This was my first internship, so the whole experience was a learning opportunity. After this, I was able to take what I learned and apply it to my next internship, although it was not directly related.",
-  },
-];
+import { internships } from "@/interfaces/internship";
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa";
 
 export default function Home() {
   const [expanded, setExpanded] = useState<number | null>(null);
@@ -61,7 +17,7 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <NavBar />
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center w-full max-w-[1400px]">
         <section
           id="about"
           className="text-9xl font-bold text-center relative one group bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 dark:from-red-600 dark:via-orange-500 dark:to-yellow-400 inline-block text-transparent bg-clip-text transition-opacity duration-5000"
@@ -94,24 +50,25 @@ export default function Home() {
                 About Me !
               </h2>
               <p className="text-center text-gray-800 dark:text-gray-200">
-                I am passionate about learning about anything and figuring out
-                how to make my life easier with technology.
+                I'm Adam Sulemanji. I am passionate about learning about
+                anything and figuring out how to make my life easier with
+                technology.
               </p>
               <p className="text-center text-gray-800 dark:text-gray-200">
-                I'm Adam Sulemanji. I am a recent graduate from Texas A&M
-                University. I earned my Bachelors of Science in Computer Science
-                in December 2023 and continued onto my Masters of Computer
-                Science and graduated in December of 2024.
+                I am a recent graduate from Texas A&M University. I earned my
+                Bachelors of Science in Computer Science in December 2023 and
+                continued onto my Masters of Computer Science and graduated in
+                December of 2024.
               </p>
             </div>
             <h3 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-200 mt-10">
               Work Experience
             </h3>
-            <div className="flex flex-col gap-8 mt-6 items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-6 items-center">
               {internships.map((internship, index) => (
                 <div
                   key={index}
-                  className={`border border-gray-300 dark:border-gray-700 rounded-lg p-4 cursor-pointer w-full max-w-[1000px] transition-all duration-300 ${
+                  className={`border border-gray-300 dark:border-gray-700 rounded-lg p-4 cursor-pointer w-full transition-all duration-300 ${
                     expanded === index ? "max-h-[500px]" : "max-h-[150px]"
                   } overflow-hidden`}
                   onClick={() => toggleExpand(index)}
@@ -147,25 +104,42 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <footer
-        id="contact"
-        className="row-start-3 flex gap-6 flex-wrap items-center justify-center transition-opacity duration-500 mt-20"
-      >
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="www.adamsulemanji.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
+      <footer id="contact" className="transition-opacity duration-500 mt-20">
+        <h6 className="flex items-center justify-center mb-5">
+          If you want to contact me, DONT, Just Kidding{" "}
+        </h6>
+        <div className="items-center flex gap-36">
+          <a
+            className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+            href="https://github.com/adamsulemanji"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaGithub className="h-4 w-4 hover:bg-gray-200 dark:hover:bg-gray-800" />
+          </a>
+          <a
+            className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+            href="https://www.linkedin.com/in/adamsulemanji/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaLinkedin className="h-4 w-4 hover:bg-gray-200 dark:hover:bg-gray-800" />
+          </a>
+          <a
+            className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+            href="https://www.instagram.com/adam_sulemanji"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaInstagram className="h-4 w-4 hover:bg-gray-200 dark:hover:bg-gray-800" />
+          </a>
+          <a
+            className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+            href="mailto:adam.k.sulemanji@gmail.com"
+          >
+            <FaEnvelope className="h-4 w-4 hover:bg-gray-200 dark:hover:bg-gray-800" />
+          </a>
+        </div>
       </footer>
     </div>
   );
