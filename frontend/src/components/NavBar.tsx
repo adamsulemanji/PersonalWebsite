@@ -24,19 +24,19 @@ interface NavItem {
 const navItems: NavItem[] = [
   {
     title: "About",
-    id: "about",
+    id: "section-about",
   },
   {
     title: "Projects",
-    id: "projects",
+    id: "section-projects",
   },
   {
     title: "Fun Things",
-    id: "fun",
+    id: "section-fun",
   },
   {
     title: "Contact",
-    id: "contact",
+    id: "section-contact",
   },
 ];
 

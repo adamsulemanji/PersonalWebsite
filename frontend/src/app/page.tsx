@@ -18,7 +18,7 @@ export default function Home() {
       <NavBar />
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
         <section
-          id="about"
+          id="section-about"
           className="text-6xl text-center relative one group "
         >
           <div className="text-left">
@@ -32,14 +32,14 @@ export default function Home() {
           <span className="absolute mt-5 -bottom-5 left-0 w-0 transition-all h-2 bg-green-400 group-hover:w-full dark:bg-blue-500"></span>
         </section>
         <section
-          id="projects"
+          id="section-projects"
           className="text-lg text-center transition-opacity duration-500 mt-5"
         >
           This website is still under construction. Check back soon for updates
           !
         </section>
         <section
-          id="fun"
+          id="section-fun"
           className={`w-full overflow-hidden whitespace-nowrap ${styles.marqueeContainer} transition-opacity duration-500 mt-5`}
         >
           <div className={`w-full ${styles.marquee}`}>
@@ -50,23 +50,26 @@ export default function Home() {
             </span>
           </div>
         </section>
-        <div className="flex flex-col items-center">
-          <p className="text-sm italic mb-2">Scroll !</p>
-          <div className="flex items-center">
-            <svg height="750" width="1" className="">
-              <line
-                x1="1"
-                y1="0"
-                x2="1"
-                y2="5000"
-                stroke="black"
-                strokeWidth="1"
-                className="dark:stroke-white"
-              />
-            </svg>
+        <section className="w-full mt-36">
+          <div className="left-8 sm:left-20 items-center">
+            <p className="text-sm italic mb-2">Scroll !</p>
+            <div>
+              <svg height="750" width="1">
+                <line
+                  x1="1"
+                  y1="0"
+                  x2="1"
+                  y2="5000"
+                  stroke="black"
+                  strokeWidth="1"
+                  className="dark:stroke-white"
+                />
+              </svg>
+            </div>
           </div>
-        </div>
-        <section className="mt-64 items-center" id="about">
+        </section>
+
+        <section className="mt-64 items-center" id="section-about">
           <div className="text-2xl flex flex-col gap-4 w-full max-w-[1200px] items-center">
             <div className="flex flex-col gap-4 items-center">
               <span className="text-5xl">
@@ -128,7 +131,10 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <footer id="contact" className="transition-opacity duration-500 mt-20">
+      <footer
+        id="section-contact"
+        className="transition-opacity duration-500 mt-20"
+      >
         <h6 className="flex items-center justify-center mb-5">
           If you want to contact me, DONT, Just Kidding{" "}
         </h6>
