@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import NavBar from "@/components/NavBar";
 import styles from "@/styles/Banner.module.css";
 import { useState } from "react";
