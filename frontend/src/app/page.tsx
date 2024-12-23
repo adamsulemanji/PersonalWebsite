@@ -15,21 +15,29 @@ export default function Home() {
   };
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20]">
       <NavBar />
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
         <section
           id="about"
-          className="text-9xl font-bold text-center relative one group bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 dark:from-red-600 dark:via-orange-500 dark:to-yellow-400 inline-block text-transparent bg-clip-text transition-opacity duration-5000"
+          className="text-6xl text-center relative one group "
         >
-          <span>Hi! I'm Adam Sulemanji</span>
-          <span className="absolute mt-5 -bottom-5 left-0 w-0 transition-all h-2 bg-yellow-400 group-hover:w-full dark:bg-blue-400"></span>
+          <div className="text-left">
+            <span className="block">Hi! my</span>
+            <span className="block">
+              name is <b>Adam</b>
+              <span className="text-green-400 dark:text-blue-500">.</span>
+            </span>
+          </div>
+
+          <span className="absolute mt-5 -bottom-5 left-0 w-0 transition-all h-2 bg-green-400 group-hover:w-full dark:bg-blue-500"></span>
         </section>
         <section
           id="projects"
           className="text-lg text-center transition-opacity duration-500 mt-5"
         >
-          This website is still under construction. Check back soon!
+          This website is still under construction. Check back soon for updates
+          !
         </section>
         <section
           id="fun"
@@ -43,12 +51,29 @@ export default function Home() {
             </span>
           </div>
         </section>
-        <section className="mt-80 items-center" id="about">
+        <div className="flex flex-col items-center">
+          <p className="text-sm italic mb-2">Scroll !</p>
+          <div className="flex items-center">
+            <svg height="750" width="1" className="">
+              <line
+                x1="1"
+                y1="0"
+                x2="1"
+                y2="5000"
+                stroke="black"
+                strokeWidth="1"
+                className="dark:stroke-white"
+              />
+            </svg>
+          </div>
+        </div>
+        <section className="mt-64 items-center" id="about">
           <div className="text-2xl flex flex-col gap-4 w-full max-w-[1200px] items-center">
             <div className="flex flex-col gap-4 items-center">
-              <h2 className="text-5xl font-bold text-center mb-10">
-                About Me !
-              </h2>
+              <span className="text-5xl">
+                <b>About Me </b>
+                <span className="text-green-400 dark:text-blue-500">!</span>
+              </span>
               <p className="text-center text-gray-800 dark:text-gray-200">
                 I'm Adam Sulemanji. I am passionate about learning about
                 anything and figuring out how to make my life easier with
