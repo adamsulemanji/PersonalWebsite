@@ -115,7 +115,7 @@ export default function Navbar() {
           </Button>
           <Button
             variant="ghost"
-            className="px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0"
+            className="p-10 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0"
             onClick={() => setDarkMode(!darkMode)}
           >
             {darkMode ? (
@@ -123,7 +123,7 @@ export default function Navbar() {
             ) : (
               <Moon className="h-5 w-5" />
             )}
-            <span className="sr-only">Toggle Dark Mode</span>
+            <span className="sr-only p-10">Toggle Dark Mode</span>
           </Button>
           <Button
             variant="ghost"

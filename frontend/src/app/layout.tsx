@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -14,16 +16,21 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
-  title: "Adam Sulemanji",
-  description: "Adam Sulemanji's personal website",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [showBorders, setShowBorders] = React.useState(false);
+
+  React.useEffect(() => {
+    if (showBorders) {
+      document.documentElement.classList.add("show-borders");
+    } else {
+      document.documentElement.classList.remove("show-borders");
+    }
+  }, [showBorders]);
+
   return (
     <html lang="en">
       <head>
@@ -56,6 +63,12 @@ export default function RootLayout({
       <body
         className={`${geistMono.variable} ${geistMono.variable} antialiased`}
       >
+        <button
+          onClick={() => setShowBorders(!showBorders)}
+          className="fixed top-4 right-4 z-50 p-2 bg-gray-800 text-white rounded"
+        >
+          Toggle Borders
+        </button>
         {children}
       </body>
     </html>
