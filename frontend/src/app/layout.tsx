@@ -21,16 +21,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [showBorders, setShowBorders] = React.useState(false);
-
-  React.useEffect(() => {
-    if (showBorders) {
-      document.documentElement.classList.add("show-borders");
-    } else {
-      document.documentElement.classList.remove("show-borders");
-    }
-  }, [showBorders]);
-
   return (
     <html lang="en">
       <head>
@@ -63,12 +53,6 @@ export default function RootLayout({
       <body
         className={`${geistMono.variable} ${geistMono.variable} antialiased`}
       >
-        <button
-          onClick={() => setShowBorders(!showBorders)}
-          className="fixed top-4 right-4 z-50 p-2 bg-gray-800 text-white rounded"
-        >
-          Toggle Borders
-        </button>
         {children}
       </body>
     </html>

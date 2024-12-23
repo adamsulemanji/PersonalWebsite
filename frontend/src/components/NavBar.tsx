@@ -43,6 +43,15 @@ const navItems: NavItem[] = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [darkMode, setDarkMode] = React.useState(false);
+  const [showBorders, setShowBorders] = React.useState(false);
+
+  React.useEffect(() => {
+    if (showBorders) {
+      document.documentElement.classList.add("show-borders");
+    } else {
+      document.documentElement.classList.remove("show-borders");
+    }
+  }, [showBorders]);
 
   React.useEffect(() => {
     if (darkMode) {
@@ -107,7 +116,14 @@ export default function Navbar() {
         <div className="flex items-center">
           <Button
             variant="ghost"
-            className="px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 md:hidden"
+            className="px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0"
+            onClick={() => setShowBorders(!showBorders)}
+          >
+            Toggle Borders
+          </Button>
+          <Button
+            variant="ghost"
+            className="p-10 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 md:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
             <Menu className="h-5 w-5" />
