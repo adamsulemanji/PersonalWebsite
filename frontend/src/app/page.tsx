@@ -2,16 +2,22 @@
 
 import NavBar from "@/components/NavBar";
 import styles from "@/styles/Banner.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { internships } from "@/interfaces/internship";
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa";
 
 export default function Home() {
   const [expanded, setExpanded] = useState<number | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const toggleExpand = (index: number) => {
     setExpanded(expanded === index ? null : index);
   };
+
+  useEffect(() => {
+    // Trigger animation after component mounts
+    setIsVisible(true);
+  }, []);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20]">
@@ -19,7 +25,11 @@ export default function Home() {
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
         <section
           id="section-about"
-          className="text-6xl text-center relative one group"
+          className={`text-6xl text-center relative one group transform transition-all duration-3000 ease-out ${
+            isVisible
+              ? "translate-x-0 opacity-100"
+              : "-translate-x-full opacity-0"
+          }`}
         >
           <div className="text-left mt-96 text-7xl font-serif font-light">
             <span className="block">Hi! my</span>
