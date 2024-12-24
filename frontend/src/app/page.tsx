@@ -85,57 +85,6 @@ export default function Home() {
                 <b>About Me </b>
                 <span className="text-green-400 dark:text-blue-500">!</span>
               </span>
-              <p className="text-center text-gray-800 dark:text-gray-200">
-                I'm Adam Sulemanji. I am passionate about learning about
-                anything and figuring out how to make my life easier with
-                technology.
-              </p>
-              <p className="text-center text-gray-800 dark:text-gray-200">
-                I am a recent graduate from Texas A&M University. I earned my
-                Bachelors of Science in Computer Science in December 2023 and
-                continued onto my Masters of Computer Science and graduated in
-                December of 2024.
-              </p>
-            </div>
-            <h3 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-200 mt-10">
-              Work Experience
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-6 items-center">
-              {internships.map((internship, index) => (
-                <div
-                  key={index}
-                  className={`border border-gray-300 dark:border-gray-700 rounded-lg p-4 cursor-pointer w-full transition-all duration-300 ${
-                    expanded === index ? "max-h-[500px]" : "max-h-[150px]"
-                  } overflow-hidden`}
-                  onClick={() => toggleExpand(index)}
-                >
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <h4 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
-                        {internship.company}
-                      </h4>
-                      <p className="text-lg text-gray-800 dark:text-gray-200">
-                        <b>{internship.role}</b> - {internship.date}
-                      </p>
-                      <p className="text-lg text-gray-800 dark:text-gray-200 mt-2">
-                        {internship.description}
-                      </p>
-                    </div>
-                    <div>
-                      {expanded === index ? (
-                        <span className="text-xl">-</span>
-                      ) : (
-                        <span className="text-xl">+</span>
-                      )}
-                    </div>
-                  </div>
-                  {expanded === index && (
-                    <div className="mt-4 text-lg text-gray-800 dark:text-gray-200">
-                      {internship.details}
-                    </div>
-                  )}
-                </div>
-              ))}
             </div>
           </div>
         </section>
