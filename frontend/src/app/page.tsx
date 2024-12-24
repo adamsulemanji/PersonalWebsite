@@ -59,29 +59,45 @@ export default function Home() {
             </span>
           </div>
         </section>
-        <section className="w-full mt-36">
+        <section className="w-full mt-36 relative">
           <div className="left-8 sm:left-20 items-center">
             <p className="text-sm italic mb-2">Scroll !</p>
-            <div>
-              <svg height="750" width="1">
-                <line
-                  x1="1"
-                  y1="0"
-                  x2="1"
-                  y2="5000"
-                  stroke="black"
-                  strokeWidth="1"
-                  className="dark:stroke-white"
-                />
-              </svg>
-            </div>
+            {/* <svg height="3000" width="100%">
+  <path
+    d="
+      M1,0 
+      L1,300
+      C1,450, 100,500, 250,500
+      S500,550, 500,750
+      L500,1250
+      C500,1350, 600,1400, 750,1400
+      S1000,1450, 1000,2000
+      L2000,3000
+    "
+    stroke="currentColor"
+    fill="none"
+    strokeWidth="1"
+    className="dark:stroke-white"
+  />
+</svg> */}
+            <svg height="750" width="1">
+              <line
+                x1="1"
+                y1="0"
+                x2="1"
+                y2="5000"
+                stroke="black"
+                strokeWidth="1"
+                className="dark:stroke-white"
+              />
+            </svg>
           </div>
         </section>
 
         <section className="mt-64 items-center" id="section-about">
           <div className="text-2xl flex flex-col gap-4 w-full max-w-[1200px] items-center">
             <div className="flex flex-col gap-4 items-center">
-              <span className="text-5xl">
+              <span className="text-5xl font-serif font-light">
                 <b>About Me </b>
                 <span className="text-green-400 dark:text-blue-500">!</span>
               </span>
