@@ -19,12 +19,12 @@ export default function Home() {
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
         <section
           id="section-about"
-          className="text-6xl text-center relative one group "
+          className="text-6xl text-center relative one group"
         >
-          <div className="text-left">
+          <div className="text-left mt-96 text-7xl font-serif font-light">
             <span className="block">Hi! my</span>
             <span className="block">
-              name is <b>Adam</b>
+              name is <b className="text-8xl">Adam</b>
               <span className="text-green-400 dark:text-blue-500">.</span>
             </span>
           </div>
@@ -33,7 +33,7 @@ export default function Home() {
         </section>
         <section
           id="section-projects"
-          className="text-lg text-center transition-opacity duration-500 mt-5"
+          className="text-lg text-center transition-opacity duration-500 mt-5 w-full"
         >
           This website is still under construction. Check back soon for updates
           !
