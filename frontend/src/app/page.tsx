@@ -63,23 +63,23 @@ export default function Home() {
           <div className="left-8 sm:left-20 items-center">
             <p className="text-sm italic mb-2">Scroll !</p>
             {/* <svg height="3000" width="100%">
-  <path
-    d="
-      M1,0 
-      L1,300
-      C1,450, 100,500, 250,500
-      S500,550, 500,750
-      L500,1250
-      C500,1350, 600,1400, 750,1400
-      S1000,1450, 1000,2000
-      L2000,3000
-    "
-    stroke="currentColor"
-    fill="none"
-    strokeWidth="1"
-    className="dark:stroke-white"
-  />
-</svg> */}
+              <path
+                d="
+                  M1,0 
+                  L1,300
+                  C1,450, 100,500, 250,500
+                  S500,550, 500,750
+                  L500,1250
+                  C500,1350, 600,1400, 750,1400
+                  S1000,1450, 1000,2000
+                  L2000,3000
+                "
+                stroke="currentColor"
+                fill="none"
+                strokeWidth="1"
+                className="dark:stroke-white"
+              />
+            </svg> */}
             <svg height="750" width="1">
               <line
                 x1="1"
