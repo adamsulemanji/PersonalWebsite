@@ -15,7 +15,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // Trigger animation after component mounts
     setIsVisible(true);
   }, []);
 
