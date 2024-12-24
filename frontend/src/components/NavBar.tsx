@@ -195,6 +195,23 @@ export default function Navbar() {
                     </MobileLink>
                   )
                 )}
+                <MobileLink
+                  href="#"
+                  onClick={() => setShowBorders(!showBorders)}
+                  className="mt-4"
+                >
+                  Toggle Borders
+                </MobileLink>
+                <MobileLink
+                  href="#"
+                  onClick={() => setDarkMode(!darkMode)}
+                  className="mt-4"
+                >
+                  Toggle Dark Mode
+                </MobileLink>
+                <MobileLink href="/resume.pdf" target="_blank" className="mt-4">
+                  Resume
+                </MobileLink>
               </div>
             </div>
           </SheetContent>
@@ -209,6 +226,8 @@ interface MobileLinkProps {
   onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
+  target?: string;
 }
 
 function MobileLink({
