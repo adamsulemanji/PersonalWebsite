@@ -7,12 +7,7 @@ import styles from "@/styles/Banner.module.css";
 import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [expanded, setExpanded] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
-
-  const toggleExpand = (index: number) => {
-    setExpanded(expanded === index ? null : index);
-  };
 
   useEffect(() => {
     setIsVisible(true);
