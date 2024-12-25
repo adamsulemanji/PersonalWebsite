@@ -29,7 +29,7 @@ export default function Home() {
             <span className="block">Hi! my</span>
             <span className="block">
               name is <b className="text-8xl">Adam</b>
-              <span className="text-green-400 dark:text-blue-500">.</span>
+              <span className="accent">.</span>
             </span>
           </div>
 
@@ -93,8 +93,8 @@ export default function Home() {
           <div className="text-2xl flex flex-col gap-4 w-full max-w-[1200px] items-center">
             <div className="flex flex-col gap-4 items-center">
               <span className="text-5xl font-serif font-light">
-                <b>About Me </b>
-                <span className="text-green-400 dark:text-blue-500">!</span>
+                <b>About Me</b>
+                <span className="accent">!</span>
               </span>
             </div>
           </div>

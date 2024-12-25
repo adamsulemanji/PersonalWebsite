@@ -75,3 +75,11 @@ body {
 .show-borders * {
   border: 1px solid red !important;
 }
+
+.accent {
+  color: #68d391; /* Tailwind's green-400 */
+}
+
+.dark .accent {
+  color: #63b3ed; /* Tailwind's blue-400 */
+}
