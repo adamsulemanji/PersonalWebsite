@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20]">
       <NavBar />
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center w-full max-w-[1200px]">
         <section
           id="section-about"
           className={`text-6xl text-center relative one group transform transition-all duration-3000 ease-out ${
@@ -89,13 +89,29 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mt-64 items-center" id="section-about">
-          <div className="text-2xl flex flex-col gap-4 w-full max-w-[1200px] items-center">
+        <section className="mt-32" id="section-about">
+          <div className="w-full max-w-[1200px]">
             <div className="flex flex-col gap-4 items-center">
-              <span className="text-5xl font-serif font-light">
+              <div className="text-5xl font-serif font-light pb-10">
                 <b>About Me</b>
                 <span className="accent">!</span>
-              </span>
+              </div>
+              <div className="text-xl mt-5 mb-10 w-3/4">
+                I am an aspiring developer and creator looking to make a
+                positive impact through technology. My passion lies in building
+                innovative solutions that solve real-world problems. I enjoy
+                learning new technologies and continuously improving my skills.
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-10 w-full">
+              <div>1</div>
+              <div>2</div>
+              <div>3</div>
+              <div>4</div>
+              <div>1</div>
+              <div>2</div>
+              <div>3</div>
+              <div>4</div>
             </div>
           </div>
         </section>
