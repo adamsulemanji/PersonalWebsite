@@ -88,8 +88,11 @@ export default function Home() {
           <div className="w-full max-w-[1200px]">
             <div className="flex flex-col gap-4 items-center"></div>
             <div className="grid grid-cols-2 w-full">
-              <div className="">
-                <p>
+              <div className="items-center justify-center">
+                <div>
+                  <p className="mb-12 text-3xl">
+                    Heading<span className="accent text-7xl">.</span>
+                  </p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -98,8 +101,8 @@ export default function Home() {
                   dolore eu fugiat nulla pariatur. Excepteur sint occaecat
                   cupidatat non proident, sunt in culpa qui officia deserunt
                   mollit anim id est laborum.
-                </p>
-                <p className="mt-4">
+                </div>
+                <div className="mt-4">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -108,8 +111,8 @@ export default function Home() {
                   dolore eu fugiat nulla pariatur. Excepteur sint occaecat
                   cupidatat non proident, sunt in culpa qui officia deserunt
                   mollit anim id est laborum.{" "}
-                </p>
-                <p className="mt-4">
+                </div>
+                <div className="mt-4">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -118,7 +121,7 @@ export default function Home() {
                   dolore eu fugiat nulla pariatur. Excepteur sint occaecat
                   cupidatat non proident, sunt in culpa qui officia deserunt
                   mollit anim id est laborum.
-                </p>
+                </div>
               </div>
               <div className="flex items-center justify-center">
                 <p>Image PlaceHolder</p>
