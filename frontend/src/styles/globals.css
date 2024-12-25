@@ -77,7 +77,7 @@ body {
 }
 
 .accent {
-  color: #68d391; /* Tailwind's green-400 */
+  color: #15803d; /* Tailwind's green-700 */
 }
 
 .dark .accent {

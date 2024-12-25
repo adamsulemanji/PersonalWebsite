@@ -33,7 +33,7 @@ export default function Home() {
             </span>
           </div>
 
-          <span className="absolute mt-5 -bottom-5 left-0 w-0 transition-all h-2 bg-green-400 group-hover:w-full dark:bg-blue-500"></span>
+          <span className="absolute mt-5 -bottom-5 left-0 w-0 transition-all h-2 bg-green-700 group-hover:w-full dark:bg-blue-500"></span>
         </section>
         <section
           id="section-projects"
@@ -51,6 +51,9 @@ export default function Home() {
             <span className="mx-4">Stay tuned for updates and progress!</span>
             <span className="mx-4">
               Check out my projects once they are done!
+            </span>
+            <span className="mx-4">
+              I am trying to use AI as little as possible to build this!
             </span>
           </div>
         </section>
@@ -92,26 +95,90 @@ export default function Home() {
         <section className="mt-32" id="section-about">
           <div className="w-full max-w-[1200px]">
             <div className="flex flex-col gap-4 items-center">
-              <div className="text-5xl font-serif font-light pb-10">
-                <b>About Me</b>
+              {/* <div className="text-5xl font-serif font-light pb-10">
+                <b>About Me </b>
                 <span className="accent">!</span>
-              </div>
-              <div className="text-xl mt-5 mb-10 w-3/4">
-                I am an aspiring developer and creator looking to make a
-                positive impact through technology. My passion lies in building
-                innovative solutions that solve real-world problems. I enjoy
-                learning new technologies and continuously improving my skills.
+              </div> */}
+              <div className="text-xl mt-3 mb-10 w-3/4 leading-loose">
+                I am an aspiring <b className="accent">Developer</b> and{" "}
+                <b className="accent">Creator</b> looking to make a positive
+                impact through technology. My interest lies in building creating
+                solutions that help me and others in their lives.
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-10 w-full">
-              <div>1</div>
-              <div>2</div>
-              <div>3</div>
-              <div>4</div>
-              <div>1</div>
-              <div>2</div>
-              <div>3</div>
-              <div>4</div>
+            <div className="grid grid-cols-2 w-full">
+              <div className="">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </p>
+                <p className="mt-4">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.{" "}
+                </p>
+                <p className="mt-4">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </p>
+              </div>
+              <div className="flex items-center justify-center">
+                <p>Image PlaceHolder</p>
+              </div>
+              <div className="mt-36"></div>
+              <div></div>
+              <div className="flex items-center justify-center">
+                <p>Image PlaceHolder</p>
+              </div>
+              <div className="">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </p>
+                <p className="mt-4">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.{" "}
+                </p>
+                <p className="mt-4">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </p>
+              </div>
             </div>
           </div>
         </section>
