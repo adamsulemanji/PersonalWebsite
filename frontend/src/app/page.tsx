@@ -166,8 +166,11 @@ export default function Home() {
                     <span className="font-bold accent">Statistics</span>. During
                     sophomore year of college, I knew I wanted to continue my
                     education and get a masters degree. I decided to do an
-                    accelerated masters program in Computer Science and
-                    graduated with my masters in December of 2024.{" "}
+                    accelerated masters program in Computer Science and{" "}
+                    <b className="text-2xl accent underline underline-offset-auto">
+                      Amazon
+                    </b>{" "}
+                    in Seattle a part of the Crosslistings Crossborders team{" "}
                   </p>
                 </div>
                 <div className="flex items-center justify-center">
@@ -278,7 +281,7 @@ export default function Home() {
                   Photographs
                   <span className="accent text-6xl font-serif">.</span>
                 </p>
-                <p>
+                <p className="text-xl leading-relaxed">
                   Here are a collection of photographs of that define me and my
                   life.
                 </p>
@@ -310,6 +313,85 @@ export default function Home() {
                   alt="Texans Game"
                   className="rounded-sm"
                 />
+              </div>
+            </div>
+          </section>
+          <section className="mt-24 w-full max-w-[1500px]">
+            <div className="grid grid-cols-2 w-full gap-10">
+              <div className="mt-10">
+                <p className="mb-5 text-5xl font-bold">
+                  Projects
+                  <span className="accent text-6xl font-serif">.</span>
+                </p>
+                <p className="text-xl leading-relaxed">
+                  Here are a collection of things I have been working on and/or
+                  built recently.
+                </p>
+              </div>
+              <div>
+                <div className="w-full h-[150px] bg-[length:10px_10px] rounded-lg staggered-dots"></div>
+              </div>
+
+              <div className="flex items-center justify-center">
+                Image Placeholder
+              </div>
+              <div className="text-xl leading-relaxed">
+                <h3 className="mb-5 text-3xl font-bold">
+                  This website
+                  <span className="accent text-4xl font-serif">.</span>
+                </h3>
+                <p>
+                  Interesting enough this website serves as a project itself.
+                  From the design to implementation, I have built this website
+                  from scratch. I have used Next.js as the framework and
+                  TailwindCSS as the styling library.
+                </p>
+                <p className="mt-4">
+                  The website is completely served through AWS using S3 buckets,
+                  cloudfront and route 53. The website is also served through a
+                  custom domain that I own that my uncle bought for me 5 years
+                  ago as a joke.
+                </p>
+              </div>
+            </div>
+            <hr className="my-10 border-t border-gray-300" />
+            <div className="grid grid-cols-2 w-full gap-10">
+              <div className="flex items-center justify-center">
+                Image Placeholder
+              </div>
+              <div className="text-xl leading-relaxed">
+                <h3 className="mb-5 text-3xl font-bold">
+                  Course Monitoring
+                  <span className="accent text-4xl font-serif">.</span>
+                </h3>
+                <p>
+                  During my sophomore year, I tried to register for classes but
+                  was unable to get into ANY classes. I started a simple web
+                  scraping SMS project to monitor the classes I wanted to get
+                  into.
+                </p>
+                <p className="mt-4">
+                  Over the years, I have slowly improved into first turning it
+                  into a web app using a MERN stack then more recently
+                  transforming it into a full CDK application through AWS. It's
+                  still a WIP.
+                </p>
+                <button className="mt-4 px-6 py-2 border-4 border-green-600 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20">
+                  Go to Course Monitoring
+                </button>
+              </div>
+            </div>
+            <hr className="my-10 border-t border-gray-300" />
+            <div className="grid grid-cols-2 w-full gap-10">
+              <div className="flex items-center justify-center">
+                Image Placeholder
+              </div>
+              <div className="text-xl leading-relaxed">
+                <h3 className="mb-5 text-3xl font-bold">
+                  Yet Another Project
+                  <span className="accent text-4xl font-serif">.</span>
+                </h3>
+                <p>Description of yet another project goes here.</p>
               </div>
             </div>
           </section>
