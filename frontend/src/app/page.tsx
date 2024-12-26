@@ -9,19 +9,35 @@ import useScrollAnimation from "@/hooks/useScrollAnimation";
 export default function Home() {
   const [introShown, setIntroShown] = useState(false);
   const [introVisible, setIntroVisible] = useState(false);
+  const [hiVisible, setHiVisible] = useState(false);
+  const [nameVisible, setNameVisible] = useState(false);
+  const [constructionVisible, setConstructionVisible] = useState(false);
+  const [descriptionVisible, setDescriptionVisible] = useState(false);
+  const [scrollPromptVisible, setScrollPromptVisible] = useState(false);
+
   const [aboutRef, aboutVisible] = useScrollAnimation();
   const [sportsRef, sportsVisible] = useScrollAnimation();
   const [randomRef, randomVisible] = useScrollAnimation();
 
   useEffect(() => {
     if (!introShown) {
-      const timer = setTimeout(() => {
-        setIntroVisible(true);
-        setIntroShown(true);
-      }, 100);
-      return () => clearTimeout(timer);
-    } else {
-      setIntroVisible(true);
+      const animations = [
+        { setter: setIntroVisible, delay: 100 },
+        { setter: setHiVisible, delay: 600 },
+        { setter: setNameVisible, delay: 1200 },
+        { setter: setConstructionVisible, delay: 1800 },
+        { setter: setDescriptionVisible, delay: 2400 },
+        { setter: setScrollPromptVisible, delay: 3000 },
+      ];
+
+      animations.forEach(({ setter, delay }) => {
+        const timer = setTimeout(() => {
+          setter(true);
+        }, delay);
+        return () => clearTimeout(timer);
+      });
+
+      setIntroShown(true);
     }
   }, [introShown]);
 
@@ -30,39 +46,66 @@ export default function Home() {
       <NavBar />
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center w-full max-w-[1500px]">
         <section
-          className={`text-6xl text-center relative one group transform transition-all duration-3000 ease-out ${
+          className={`text-6xl text-center relative one group transform transition-all duration-1000 ease-out ${
             introVisible
               ? "translate-x-0 opacity-100"
               : "-translate-x-full opacity-0"
           }`}
         >
           <div className="text-left mt-80 text-7xl font-serif font-light leading-tight">
-            <span className="block">Hi, my</span>
-            <span className="block">
+            <span
+              className={`block transform transition-all duration-1000 ease-out ${
+                hiVisible ? "translate-x-0 " : "-translate-x-10 "
+              }`}
+            >
+              Hi, my
+            </span>
+            <span
+              className={`block transform transition-all duration-1000 ease-out ${
+                nameVisible ? "translate-x-0" : "translate-x-10 "
+              }`}
+            >
               name is <b className="text-8xl">Adam</b>
               <span className="accent">.</span>
             </span>
           </div>
+
           <span className="absolute mt-5 -bottom-5 left-0 w-0 transition-all h-2 bg-green-700 group-hover:w-full dark:bg-blue-500"></span>
         </section>
 
         <section
           id="section-projects"
-          className="text-lg text-center transition-opacity duration-500 mt-5 w-full"
+          className={`text-lg text-center transition-all duration-1000 ${
+            constructionVisible
+              ? "translate-y-0 opacity-100"
+              : "translate-y-10 opacity-0"
+          }`}
         >
           This website is still under construction. Check back soon for updates!
         </section>
 
-        <div className="text-2xl mt-3 leading-loose line-wrapped">
+        <div
+          className={`text-2xl mt-3 leading-loose line-wrapped transition-all duration-1000 ${
+            descriptionVisible
+              ? "translate-y-0 opacity-100"
+              : "translate-y-10 opacity-0"
+          }`}
+        >
           I am an aspiring <b className="accent">Developer</b> and{" "}
           <b className="accent">Creator</b> looking to make a positive impact
           through technology. My interest lies in building creating solutions
           that help me and others in their lives.
         </div>
 
-        <section className="grid grid-cols-2 w-full mt-32">
+        <section
+          className={`grid grid-cols-2 w-full mt-32 transition-all duration-1000 ${
+            scrollPromptVisible
+              ? "translate-y-0 opacity-100"
+              : "translate-y-10 opacity-0"
+          }`}
+        >
           <div className="flex flex-col gap-4 items-center">
-            <p className="text-m mb-2 2xl:animate-bounce tracking-widest">
+            <p className="text-m mb-2 animate-bounce tracking-widest">
               Scroll !
             </p>
             <svg height="750" width="1">
@@ -73,7 +116,9 @@ export default function Home() {
                 y2="5000"
                 stroke="black"
                 strokeWidth="1"
-                className="dark:stroke-white"
+                className={`transition-transform duration-[3s] ease-out dark:stroke-white ${
+                  scrollPromptVisible ? "grow-line" : ""
+                }`}
               />
             </svg>
           </div>
