@@ -126,7 +126,6 @@ export default function Home() {
             </div>
             <div></div>
           </section>
-
           <section
             ref={aboutRef}
             className={`mt-32 transform transition-all duration-1000 ease-out ${
@@ -138,19 +137,19 @@ export default function Home() {
           >
             <div className="w-full max-w-[1500px]">
               <div className="flex flex-col gap-4 items-center"></div>
-              <div className="grid grid-cols-2 w-full">
+              <div className="grid grid-cols-2 w-full gap-10">
                 <div className="items-center justify-center text-xl leading-relaxed">
                   <p>
                     My first day of college I wasnt sure what I really wanted to
                     be. My parents and friends told me I should become a{" "}
-                    <span className="font-bold accent">doctor</span> so I tried
+                    <span className="font-bold accent">Doctor</span> so I tried
                     and pursued{" "}
                     <span className="font-bold accent">
-                      biomedical engineering
+                      Biomedical Engineering
                     </span>
                     . Texas A&M requires all engineering students to take one
                     coding class in{" "}
-                    <span className="font-bold accent">python</span> their first
+                    <span className="font-bold accent">Python</span> their first
                     semester so I did. Since then, I loved the idea of{" "}
                     <span className="font-bold accent">programming</span> but
                     even more so the idea of{" "}
@@ -160,10 +159,10 @@ export default function Home() {
                     After my first year, I declared{" "}
                     <span className="font-bold accent">Computer Science</span>{" "}
                     as my major not really knowing the journey I was getting
-                    myself into. The next 3 years were filled with endless days
-                    of learning and building and everything in between. After
-                    3.5 long but actually short years, I graduated with a degree
-                    in Computer Science and a minor in{" "}
+                    myself into. The next 2.5 years were filled with endless
+                    days of learning and building and everything in between.
+                    After 3.5 long but actually short years, I graduated with a
+                    degree in Computer Science and a minor in{" "}
                     <span className="font-bold accent">Statistics</span>. During
                     sophomore year of college, I knew I wanted to continue my
                     education and get a masters degree. I decided to do an
@@ -188,7 +187,7 @@ export default function Home() {
                 : "translate-x-full opacity-0"
             }`}
           >
-            <div className="grid grid-cols-2 w-full">
+            <div className="grid grid-cols-2 w-full gap-10">
               <div className="flex items-center justify-center">
                 <p>Image PlaceHolder</p>
               </div>
@@ -246,41 +245,25 @@ export default function Home() {
                 : "-translate-x-full opacity-0"
             }`}
           >
-            <div className="grid grid-cols-2 w-full">
+            <div className="grid grid-cols-2 w-full gap-10">
               <div className="text-xl leading-relaxed">
                 <p className="mb-5 text-5xl font-bold">
-                  Random placeholder
+                  Houston and Media
                   <span className="accent text-6xl font-serif">.</span>
                 </p>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
+                  I was born and raised in Houston, technically Katy for anyone
+                  in Texas.
                 </p>
                 <p className="mt-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.{" "}
-                </p>
-                <p className="mt-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
+                  Houston is notorisoulsy good for food and sports. As a
+                  lifelong fan of the Houston Astros, Rockets and Texans.
+                  Currently, my attention is on the Rockets as we have strong
+                  defensive young core under new coaching. Thesse factors have
+                  led use to be 3rd in the west, which itself is a extremely
+                  hard division. I am watching Naruto right. Honestly not a fan
+                  of anime in general, but I have made an exception for this one
+                  so far.{" "}
                 </p>
               </div>
               <div className="flex items-center justify-center">
@@ -288,8 +271,49 @@ export default function Home() {
               </div>
             </div>
           </section>
+          <section className="mt-24 w-full max-w-[1500px]">
+            <div className="grid grid-cols-2 w-full gap-10">
+              <div className="mt-10">
+                <p className="mb-5 text-5xl font-bold">
+                  Photographs
+                  <span className="accent text-6xl font-serif">.</span>
+                </p>
+                <p>
+                  Here are a collection of photographs of that define me and my
+                  life.
+                </p>
+              </div>
+              <div>
+                <div className="w-full h-[150px] bg-[length:10px_10px] rounded-lg staggered-dots"></div>
+              </div>
+              <div className="flex flex-col gap-10">
+                <img
+                  src="/images/nikki.jpg"
+                  alt="Nikki"
+                  className="rounded-sm"
+                />
+                <img
+                  src="/images/aggiefootball.jpg"
+                  alt="Aggie Football"
+                  className="rounded-sm"
+                />
+              </div>
+              <div className="flex flex-col gap-10">
+                <img src="/images/food.jpg" alt="Nikki" />
+                <img
+                  src="/images/roommates.jpg"
+                  alt="Some of my Roommates"
+                  className="rounded-sm"
+                />
+                <img
+                  src="/images/texans.jpg"
+                  alt="Texans Game"
+                  className="rounded-sm"
+                />
+              </div>
+            </div>
+          </section>
         </main>
-
         <section id="section-contact">
           <Footer />
         </section>

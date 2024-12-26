@@ -57,6 +57,9 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
     },
+    backgroundImage: {
+      "dot-pattern": "radial-gradient(currentColor 1px, transparent 1px)",
+    },
   },
   plugins: [require("tailwindcss-animate")],
 };

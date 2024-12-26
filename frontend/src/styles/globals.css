@@ -33,6 +33,7 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --main: #15803d;
   }
 
   .dark {
@@ -60,6 +61,7 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --main: #63b3ed;
   }
 }
 
@@ -77,9 +79,21 @@ body {
 }
 
 .accent {
-  color: #15803d; /* Tailwind's green-700 */
+  color: var(--main); /* Tailwind's green-700 */
 }
 
 .dark .accent {
-  color: #63b3ed; /* Tailwind's blue-400 */
+  color: var(--main); /* Tailwind's blue-400 */
+}
+
+.staggered-dots {
+  background-image: radial-gradient(var(--main) 1px, transparent 1px),
+    radial-gradient(var(--main) 1px, transparent 1px);
+  background-size: 10px 20px; /* Horizontal spacing 10px, vertical 20px */
+  background-position: 0 0, 5px 10px; /* Staggered pattern */
+}
+
+.dark .staggered-dots {
+  background-image: radial-gradient(var(--main) 1px, transparent 1px),
+    radial-gradient(var(--main) 1px, transparent 1px);
 }
