@@ -18,7 +18,6 @@ export default function Home() {
       <NavBar />
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center w-full max-w-[1200px]">
         <section
-          id="section-about"
           className={`text-6xl text-center relative one group transform transition-all duration-3000 ease-out ${
             isVisible
               ? "translate-x-0 opacity-100"
@@ -43,6 +42,12 @@ export default function Home() {
           This website is still under construction. Check back soon for updates
           !
         </section>
+        <div className="text-xl mt-3 leading-loose line-wrapped">
+          I am an aspiring <b className="accent">Developer</b> and{" "}
+          <b className="accent">Creator</b> looking to make a positive impact
+          through technology. My interest lies in building creating solutions
+          that help me and others in their lives.
+        </div>
         <section
           id="section-fun"
           className={`w-full overflow-hidden ${styles.marqueeContainer} transition-opacity duration-500 mt-5`}
@@ -56,12 +61,6 @@ export default function Home() {
             <span className="mx-4">
               I am trying to use AI as little as possible to build this!
             </span>
-          </div>
-          <div className="text-xl mt-3 leading-loose line-wrapped">
-            I am an aspiring <b className="accent">Developer</b> and{" "}
-            <b className="accent">Creator</b> looking to make a positive impact
-            through technology. My interest lies in building creating solutions
-            that help me and others in their lives.
           </div>
         </section>
         <section className="grid grid-cols-2 w-full mt-32">
@@ -88,10 +87,10 @@ export default function Home() {
           <div className="w-full max-w-[1200px]">
             <div className="flex flex-col gap-4 items-center"></div>
             <div className="grid grid-cols-2 w-full">
-              <div className="items-center justify-center">
+              <div className="items-center justify-center text-xl">
                 <div>
-                  <p className="mb-12 text-3xl">
-                    Heading<span className="accent text-7xl">.</span>
+                  <p className="mb-5 text-5xl font-bold">
+                    Heading<span className="accent text-7xl font-serif">.</span>
                   </p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -111,16 +110,6 @@ export default function Home() {
                   dolore eu fugiat nulla pariatur. Excepteur sint occaecat
                   cupidatat non proident, sunt in culpa qui officia deserunt
                   mollit anim id est laborum.{" "}
-                </div>
-                <div className="mt-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
                 </div>
               </div>
               <div className="flex items-center justify-center">
@@ -204,7 +193,9 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <Footer />
+      <section id="section-contact">
+        <Footer />
+      </section>
     </div>
   );
 }

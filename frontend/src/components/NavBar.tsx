@@ -64,7 +64,11 @@ export default function Navbar() {
   const handleScroll = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const offset = 500 + window.innerHeight / 2 - element.clientHeight / 2;
+      window.scrollTo({
+        top: element.offsetTop - offset,
+        behavior: "smooth",
+      });
     }
   };
 
