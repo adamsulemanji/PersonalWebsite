@@ -2,16 +2,28 @@
 
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-
 import styles from "@/styles/Banner.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import useScrollAnimation from "@/hooks/useScrollAnimation";
 
 export default function Home() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [introShown, setIntroShown] = useState(false);
+  const [introVisible, setIntroVisible] = useState(false);
+  const [aboutRef, aboutVisible] = useScrollAnimation();
+  const [sportsRef, sportsVisible] = useScrollAnimation();
+  const [randomRef, randomVisible] = useScrollAnimation();
 
   useEffect(() => {
-    setIsVisible(true);
-  }, []);
+    if (!introShown) {
+      const timer = setTimeout(() => {
+        setIntroVisible(true);
+        setIntroShown(true);
+      }, 100);
+      return () => clearTimeout(timer);
+    } else {
+      setIntroVisible(true);
+    }
+  }, [introShown]);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20]">
@@ -19,7 +31,7 @@ export default function Home() {
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center w-full max-w-[1500px]">
         <section
           className={`text-6xl text-center relative one group transform transition-all duration-3000 ease-out ${
-            isVisible
+            introVisible
               ? "translate-x-0 opacity-100"
               : "-translate-x-full opacity-0"
           }`}
@@ -33,39 +45,21 @@ export default function Home() {
           </div>
           <span className="absolute mt-5 -bottom-5 left-0 w-0 transition-all h-2 bg-green-700 group-hover:w-full dark:bg-blue-500"></span>
         </section>
+
         <section
           id="section-projects"
           className="text-lg text-center transition-opacity duration-500 mt-5 w-full"
         >
-          This website is still under construction. Check back soon for updates
-          !
+          This website is still under construction. Check back soon for updates!
         </section>
-        <div className="text-xl mt-3 leading-loose line-wrapped">
+
+        <div className="text-2xl mt-3 leading-loose line-wrapped">
           I am an aspiring <b className="accent">Developer</b> and{" "}
           <b className="accent">Creator</b> looking to make a positive impact
           through technology. My interest lies in building creating solutions
           that help me and others in their lives.
         </div>
-        {/* <section
-					id="section-fun"
-					className={`w-full overflow-hidden ${styles.marqueeContainer} transition-opacity duration-500 mt-5`}
-				>
-					<div className={`w-full ${styles.marquee}`}>
-						<span className="mx-4">
-							Welcome to my personal website!
-						</span>
-						<span className="mx-4">
-							Stay tuned for updates and progress!
-						</span>
-						<span className="mx-4">
-							Check out my projects once they are done!
-						</span>
-						<span className="mx-4">
-							I am trying to use AI as little as possible to build
-							this!
-						</span>
-					</div>
-				</section> */}
+
         <section className="grid grid-cols-2 w-full mt-32">
           <div className="flex flex-col gap-4 items-center">
             <p className="text-m mb-2 2xl:animate-bounce tracking-widest">
@@ -86,7 +80,15 @@ export default function Home() {
           <div></div>
         </section>
 
-        <section className="mt-32" id="section-about">
+        <section
+          ref={aboutRef}
+          className={`mt-32 transform transition-all duration-1000 ease-out ${
+            aboutVisible
+              ? "translate-x-0 opacity-100"
+              : "-translate-x-full opacity-0"
+          }`}
+          id="section-about"
+        >
           <div className="w-full max-w-[1500px]">
             <div className="flex flex-col gap-4 items-center"></div>
             <div className="grid grid-cols-2 w-full">
@@ -127,97 +129,115 @@ export default function Home() {
               </div>
               <div className="mt-36"></div>
               <div></div>
-              <div className="flex items-center justify-center">
-                <p>Image PlaceHolder</p>
-              </div>
-              <div className="text-xl leading-relaxed">
-                <p className="mb-5 text-5xl font-bold">
-                  Sports all the time
-                  <span className="accent text-6xl font-serif">.</span>
-                </p>
-                <p>
-                  During my days of youth (technically Im still young, Im only
-                  22), I tried to play every sport. My dad signed me up for{" "}
-                  <span className="font-bold accent">KYS</span> (Katy Youth
-                  Soccer) but I realized I wasnt very good. I later switched
-                  into <span className="font-bold accent">basketball</span>{" "}
-                  through the local{" "}
-                  <span className="font-bold accent">KYB</span> (Katy Youth
-                  Basketball) league and played for a few years with of course
-                  my dad as the coach as well.
-                </p>
-                <p className="mt-4">
-                  During my middle school years, I transitioned into{" "}
-                  <span className="font-bold accent">baseball</span> as I
-                  realized I could pitch pretty well. But throughout all of
-                  this, I was playing{" "}
-                  <span className="font-bold accent">tennis</span> because thats
-                  the sport my dad played growing up. When I got to high school
-                  I decided to switch into{" "}
-                  <span className="font-bold accent">tennis</span> full time
-                  dropping both organized baseball and basketball.{" "}
-                </p>
-                <p className="mt-4">
-                  These days I now spend my time playing{" "}
-                  <span className="font-bold accent">tennis</span>{" "}
-                  <span className="text-md">
-                    (pickleball isnt a real sport...sorry)
-                  </span>
-                  , trying to fix my slice in{" "}
-                  <span className="font-bold accent">golf</span> (thanks
-                  baseball...), playing 3 v 3{" "}
-                  <span className="font-bold accent">basketball</span> (dont
-                  like running), running half marathon races (I like the medals)
-                  and trying to become a great{" "}
-                  <span className="font-bold accent">Quarterback</span> in flag
-                  football.
-                </p>
-              </div>
-              <div className="mt-36"></div>
-              <div></div>
-              <div className="text-xl leading-relaxed">
-                <p className="mb-5 text-5xl font-bold">
-                  Random placeholder
-                  <span className="accent text-6xl font-serif">.</span>
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </p>
-                <p className="mt-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.{" "}
-                </p>
-                <p className="mt-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </p>
-              </div>
-              <div className="flex items-center justify-center">
-                <p>Image PlaceHolder</p>
-              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          ref={sportsRef}
+          className={`w-full mt-32 transform transition-all duration-1000 ease-out ${
+            sportsVisible
+              ? "translate-x-0 opacity-100"
+              : "translate-x-full opacity-0"
+          }`}
+        >
+          <div className="grid grid-cols-2 w-full">
+            <div className="flex items-center justify-center">
+              <p>Image PlaceHolder</p>
+            </div>
+            <div className="text-xl leading-relaxed">
+              <p className="mb-5 text-5xl font-bold">
+                Sports all the time
+                <span className="accent text-6xl font-serif">.</span>
+              </p>
+              <p>
+                During my days of youth (technically Im still young, Im only
+                22), I tried to play every sport. My dad signed me up for{" "}
+                <span className="font-bold accent">KYS</span> (Katy Youth
+                Soccer) but I realized I wasnt very good. I later switched into{" "}
+                <span className="font-bold accent">basketball</span> through the
+                local <span className="font-bold accent">KYB</span> (Katy Youth
+                Basketball) league and played for a few years with of course my
+                dad as the coach as well.
+              </p>
+              <p className="mt-4">
+                During my middle school years, I transitioned into{" "}
+                <span className="font-bold accent">baseball</span> as I realized
+                I could pitch pretty well. But throughout all of this, I was
+                playing <span className="font-bold accent">tennis</span> because
+                thats the sport my dad played growing up. When I got to high
+                school I decided to switch into{" "}
+                <span className="font-bold accent">tennis</span> full time
+                dropping both organized baseball and basketball.{" "}
+              </p>
+              <p className="mt-4">
+                These days I now spend my time playing{" "}
+                <span className="font-bold accent">tennis</span>{" "}
+                <span className="text-md">
+                  (pickleball isnt a real sport...sorry)
+                </span>
+                , trying to fix my slice in{" "}
+                <span className="font-bold accent">golf</span> (thanks
+                baseball...), playing 3 v 3{" "}
+                <span className="font-bold accent">basketball</span> (dont like
+                running), running half marathon races (I like the medals) and
+                trying to become a great{" "}
+                <span className="font-bold accent">Quarterback</span> in flag
+                football.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section
+          ref={randomRef}
+          className={`w-full mt-32 transform transition-all duration-1000 ease-out ${
+            randomVisible
+              ? "translate-x-0 opacity-100"
+              : "-translate-x-full opacity-0"
+          }`}
+        >
+          <div className="grid grid-cols-2 w-full">
+            <div className="text-xl leading-relaxed">
+              <p className="mb-5 text-5xl font-bold">
+                Random placeholder
+                <span className="accent text-6xl font-serif">.</span>
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+              <p className="mt-4">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.{" "}
+              </p>
+              <p className="mt-4">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+            </div>
+            <div className="flex items-center justify-center">
+              <p>Image PlaceHolder</p>
             </div>
           </div>
         </section>
       </main>
+
       <section id="section-contact">
         <Footer />
       </section>
