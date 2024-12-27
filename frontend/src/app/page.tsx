@@ -2,9 +2,9 @@
 
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import styles from "@/styles/Banner.module.css";
 import { useState, useEffect, useRef } from "react";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
+import { useInView } from "react-intersection-observer";
 
 export default function Home() {
   const [introShown, setIntroShown] = useState(false);
@@ -21,6 +21,19 @@ export default function Home() {
 
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     window.onbeforeunload = function () {
+  //       window.scrollTo(0, 0);
+  //     };
+  //   }
+  //   return () => {
+  //     if (typeof window !== "undefined") {
+  //       window.onbeforeunload = null;
+  //     }
+  //   };
+  // }, []);
 
   const handlePasswordSubmit = () => {
     if (password === "nikki") {
@@ -52,6 +65,55 @@ export default function Home() {
       setIntroShown(true);
     }
   }, [introShown]);
+
+  const renderImage = (src: string, alt: string) => {
+    const { ref, inView } = useInView({
+      threshold: 0.25,
+      triggerOnce: true,
+    });
+
+    return (
+      <div ref={ref} className="relative w-full h-full">
+        <div className="absolute inset-0 bg-[length:10px_10px] rounded-lg staggered-dots transition-opacity duration-1000"></div>
+        {/* <div
+          className={`absolute inset-0 bg-green-700 dark:bg-blue-400 rounded-lg transition-transform duration-1000 delay-2000 ${
+            inView ? "translate-y-0" : "translate-y-full"
+          }`}
+        ></div> */}
+        <img
+          src={src}
+          alt={alt}
+          className={`rounded-sm transition-transform duration-1000 delay-[2500ms] ${
+            inView ? "translate-y-0" : "translate-y-full"
+          }`}
+        />
+      </div>
+    );
+  };
+
+  const imagesLeft = [
+    { src: "/images/nikki.jpg", alt: "Nikki" },
+    { src: "/images/aggiefootball.jpg", alt: "Aggie Football" },
+    { src: "/images/mountain.jpg", alt: "Mountain" },
+    { src: "/images/ringday.jpg", alt: "Ring Day" },
+    { src: "/images/ringday2.png", alt: "Ring Day" },
+    { src: "/images/ringday3.png", alt: "Ring Day 3" },
+    { src: "/images/river.jpg", alt: "River" },
+    { src: "/images/skiing.jpg", alt: "Skiing" },
+  ];
+
+  const imagesRight = [
+    { src: "/images/food.jpg", alt: "Food" },
+    { src: "/images/roommates.jpg", alt: "Some of my Roommates" },
+    { src: "/images/texans.jpg", alt: "Texans Game" },
+    { src: "/images/bday.jpg", alt: "Birthday" },
+    { src: "/images/bean.jpg", alt: "Bean" },
+    { src: "/images/exec.png", alt: "Exec" },
+    { src: "/images/gameday.jpg", alt: "Gameday !" },
+    { src: "/images/kfd.png", alt: "Kyle Field Day" },
+  ];
+
+  const maxImages = Math.max(imagesLeft.length, imagesRight.length);
 
   return (
     <div>
@@ -175,7 +237,9 @@ export default function Home() {
                     <span className="font-bold accent">Statistics</span>. During
                     sophomore year of college, I knew I wanted to continue my
                     education and get a masters degree. I decided to do an
-                    accelerated masters program in Computer Science and{" "}
+                    accelerated masters program in Computer Science and which I
+                    graduated in December 2024. Postgrad I plan on returning
+                    back to{" "}
                     <b className="text-2xl accent underline underline-offset-auto">
                       Amazon
                     </b>{" "}
@@ -299,29 +363,20 @@ export default function Home() {
                 <div className="w-full h-[150px] bg-[length:10px_10px] rounded-lg staggered-dots"></div>
               </div>
               <div className="flex flex-col gap-10">
-                <img
-                  src="/images/nikki.jpg"
-                  alt="Nikki"
-                  className="rounded-sm"
-                />
-                <img
-                  src="/images/aggiefootball.jpg"
-                  alt="Aggie Football"
-                  className="rounded-sm"
-                />
+                {imagesLeft.map((image, index) => (
+                  <div key={index}>{renderImage(image.src, image.alt)}</div>
+                ))}
+                {imagesLeft.length < maxImages && (
+                  <div className="w-full h-[275px] bg-[length:10px_10px] rounded-lg staggered-dots"></div>
+                )}
               </div>
               <div className="flex flex-col gap-10">
-                <img src="/images/food.jpg" alt="Nikki" />
-                <img
-                  src="/images/roommates.jpg"
-                  alt="Some of my Roommates"
-                  className="rounded-sm"
-                />
-                <img
-                  src="/images/texans.jpg"
-                  alt="Texans Game"
-                  className="rounded-sm"
-                />
+                {imagesRight.map((image, index) => (
+                  <div key={index}>{renderImage(image.src, image.alt)}</div>
+                ))}
+                {imagesRight.length < maxImages && (
+                  <div className="w-full h-[275px] bg-[length:10px_10px] rounded-lg staggered-dots"></div>
+                )}
               </div>
             </div>
           </section>
@@ -443,7 +498,7 @@ export default function Home() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Enter password"
-                      className="mt-4 px-4 py-2 border rounded-lg mr-5 focus:outline-none focus:ring-2 focus:ring-green-700 dark:focus:ring-blue-400"
+                      className="mt-4 px-4 py-2 border-2 rounded-lg mr-5 focus:outline-none focus:ring-4 focus:ring-green-600 dark:focus:ring-blue-300 border-green-700 dark:border-blue-400 dark:text-white dark:bg-black"
                     />
                     <button
                       onClick={handlePasswordSubmit}
