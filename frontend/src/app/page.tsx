@@ -4,7 +4,7 @@ import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { useState, useEffect, useRef } from "react";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
-import { useInView } from "react-intersection-observer";
+import RenderImage from "@/components/RenderImages";
 
 export default function Home() {
   const [introShown, setIntroShown] = useState(false);
@@ -66,31 +66,6 @@ export default function Home() {
     }
   }, [introShown]);
 
-  const renderImage = (src: string, alt: string) => {
-    const { ref, inView } = useInView({
-      threshold: 0.25,
-      triggerOnce: true,
-    });
-
-    return (
-      <div ref={ref} className="relative w-full h-full">
-        <div className="absolute inset-0 bg-[length:10px_10px] rounded-lg staggered-dots transition-opacity duration-1000"></div>
-        {/* <div
-          className={`absolute inset-0 bg-green-700 dark:bg-blue-400 rounded-lg transition-transform duration-1000 delay-2000 ${
-            inView ? "translate-y-0" : "translate-y-full"
-          }`}
-        ></div> */}
-        <img
-          src={src}
-          alt={alt}
-          className={`rounded-sm transition-transform duration-1000 delay-[2500ms] ${
-            inView ? "translate-y-0" : "translate-y-full"
-          }`}
-        />
-      </div>
-    );
-  };
-
   const imagesLeft = [
     { src: "/images/nikki.jpg", alt: "Nikki" },
     { src: "/images/aggiefootball.jpg", alt: "Aggie Football" },
@@ -112,8 +87,6 @@ export default function Home() {
     { src: "/images/gameday.jpg", alt: "Gameday !" },
     { src: "/images/kfd.png", alt: "Kyle Field Day" },
   ];
-
-  const maxImages = Math.max(imagesLeft.length, imagesRight.length);
 
   return (
     <div>
@@ -365,19 +338,13 @@ export default function Home() {
               </div>
               <div className="flex flex-col gap-10">
                 {imagesLeft.map((image, index) => (
-                  <div key={index}>{renderImage(image.src, image.alt)}</div>
+                  <div key={index}>{RenderImage(image.src, image.alt)}</div>
                 ))}
-                {imagesLeft.length < maxImages && (
-                  <div className="w-full h-[275px] bg-[length:10px_10px] rounded-lg staggered-dots"></div>
-                )}
               </div>
               <div className="flex flex-col gap-10">
                 {imagesRight.map((image, index) => (
-                  <div key={index}>{renderImage(image.src, image.alt)}</div>
+                  <div key={index}>{RenderImage(image.src, image.alt)}</div>
                 ))}
-                {imagesRight.length < maxImages && (
-                  <div className="w-full h-[275px] bg-[length:10px_10px] rounded-lg staggered-dots"></div>
-                )}
               </div>
             </div>
           </section>
@@ -401,7 +368,7 @@ export default function Home() {
               </div>
 
               <div className="flex items-center justify-center">
-                Image Placeholder
+                <p>Image Placeholder</p>
               </div>
               <div className="text-xl leading-relaxed">
                 <h3 className="mb-5 text-3xl font-bold">
@@ -435,7 +402,7 @@ export default function Home() {
             <hr className="my-10 border-t border-gray-300" />
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="flex items-center justify-center">
-                Image Placeholder
+                <p>Image Placeholder</p>
               </div>
               <div className="text-xl leading-relaxed">
                 <h3 className="mb-5 text-3xl font-bold">
@@ -468,7 +435,7 @@ export default function Home() {
             <hr className="my-10 border-t border-gray-300" />
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="flex items-center justify-center">
-                Image Placeholder
+                <p>Image Placeholder</p>
               </div>
               <div className="text-xl leading-relaxed">
                 <h3 className="mb-5 text-3xl font-bold">
