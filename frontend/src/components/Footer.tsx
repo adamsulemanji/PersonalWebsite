@@ -4,12 +4,12 @@ export default function Footer() {
   return (
     <footer
       id="section-contact"
-      className="transition-opacity duration-500 mt-20"
+      className="transition-opacity duration-500 mt-20 px-4 sm:px-8"
     >
-      <h6 className="flex items-center justify-center mb-5">
+      <h6 className="flex items-center justify-center mb-5 text-center">
         If you want to contact me, DONT, Just Kidding{" "}
       </h6>
-      <div className="items-center flex gap-36">
+      <div className="flex flex-wrap justify-center gap-8 sm:gap-36">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="https://github.com/adamsulemanji"

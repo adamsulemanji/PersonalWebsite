@@ -124,7 +124,7 @@ export default function Navbar() {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center space-x-4 md:space-x-6">
           <Button
             variant="ghost"
             className="px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0"
@@ -134,7 +134,7 @@ export default function Navbar() {
           </Button>
           <Button
             variant="ghost"
-            className="p-10 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 md:hidden"
+            className="p-2 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 md:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
             <Menu className="h-5 w-5" />
@@ -142,7 +142,7 @@ export default function Navbar() {
           </Button>
           <Button
             variant="ghost"
-            className="p-10 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0"
+            className="p-2 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0"
             onClick={() => setDarkMode(!darkMode)}
           >
             {darkMode ? (
@@ -150,11 +150,11 @@ export default function Navbar() {
             ) : (
               <Moon className="h-5 w-5" />
             )}
-            <span className="sr-only p-10">Toggle Dark Mode</span>
+            <span className="sr-only">Toggle Dark Mode</span>
           </Button>
           <Button
             variant="ghost"
-            className="px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 p-10"
+            className="px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0"
             onClick={() => window.open("/resume.pdf", "_blank")}
           >
             Resume
@@ -172,7 +172,7 @@ export default function Navbar() {
           </SheetTrigger>
           <SheetContent side="left" className="pr-0">
             <MobileLink
-              href="#"
+              href="#section-intro"
               className="flex items-center"
               onOpenChange={setIsOpen}
             >

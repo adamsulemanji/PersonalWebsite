@@ -119,7 +119,7 @@ export default function Home() {
     <div>
       <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen m-4 pb-20 gap-16 sm:p-20">
         <NavBar />
-        <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center w-full max-w-[1500px]">
+        <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center w-full max-w-[1500px] px-4 sm:px-8">
           <section
             className={`text-6xl text-center relative one group transform transition-all duration-1000 ease-out ${
               introVisible
@@ -171,7 +171,7 @@ export default function Home() {
           </div>
 
           <section
-            className={`grid grid-cols-2 w-full mt-32 transition-all duration-1000 ${
+            className={`grid grid-cols-1 md:grid-cols-2 w-full mt-32 transition-all duration-1000 ${
               scrollPromptVisible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-10 opacity-0"
@@ -181,7 +181,7 @@ export default function Home() {
               <p className="text-m mb-2 animate-bounce tracking-widest">
                 Scroll !
               </p>
-              <svg height="750" width="1">
+              <svg height="750" width="1" className="hidden md:block">
                 <line
                   x1="1"
                   y1="0"
@@ -195,11 +195,12 @@ export default function Home() {
                 />
               </svg>
             </div>
-            <div></div>
+            <div className="mt-8 md:mt-0"></div>
           </section>
+
           <section
             ref={aboutRef}
-            className={`mt-32 transform transition-all duration-1000 ease-out ${
+            className={`mt-32 sm:mt-8 transform transition-all duration-1000 ease-out ${
               aboutVisible
                 ? "translate-x-0 opacity-100"
                 : "-translate-x-full opacity-0"
@@ -208,7 +209,7 @@ export default function Home() {
           >
             <div className="w-full max-w-[1500px]">
               <div className="flex flex-col gap-4 items-center"></div>
-              <div className="grid grid-cols-2 w-full gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
                 <div className="items-center justify-center text-xl leading-relaxed">
                   <p>
                     My first day of college I wasnt sure what I really wanted to
@@ -263,7 +264,7 @@ export default function Home() {
                 : "translate-x-full opacity-0"
             }`}
           >
-            <div className="grid grid-cols-2 w-full gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="flex items-center justify-center">
                 <p>Image PlaceHolder</p>
               </div>
@@ -321,7 +322,7 @@ export default function Home() {
                 : "-translate-x-full opacity-0"
             }`}
           >
-            <div className="grid grid-cols-2 w-full gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="text-xl leading-relaxed">
                 <p className="mb-5 text-5xl font-bold">
                   Houston and Media
@@ -348,7 +349,7 @@ export default function Home() {
             </div>
           </section>
           <section className="mt-24 w-full max-w-[1500px]">
-            <div className="grid grid-cols-2 w-full gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="mt-10">
                 <p className="mb-5 text-5xl font-bold">
                   Fotographs and Friends
@@ -384,7 +385,7 @@ export default function Home() {
             className="mt-24 w-full max-w-[1500px]"
             id="section-projects"
           >
-            <div className="grid grid-cols-2 w-full gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="mt-10">
                 <p className="mb-5 text-5xl font-bold">
                   Projects
@@ -432,7 +433,7 @@ export default function Home() {
               </div>
             </div>
             <hr className="my-10 border-t border-gray-300" />
-            <div className="grid grid-cols-2 w-full gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="flex items-center justify-center">
                 Image Placeholder
               </div>
@@ -465,7 +466,7 @@ export default function Home() {
               </div>
             </div>
             <hr className="my-10 border-t border-gray-300" />
-            <div className="grid grid-cols-2 w-full gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="flex items-center justify-center">
                 Image Placeholder
               </div>
