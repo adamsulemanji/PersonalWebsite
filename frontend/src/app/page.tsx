@@ -22,18 +22,18 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     window.onbeforeunload = function () {
-  //       window.scrollTo(0, 0);
-  //     };
-  //   }
-  //   return () => {
-  //     if (typeof window !== "undefined") {
-  //       window.onbeforeunload = null;
-  //     }
-  //   };
-  // }, []);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+      };
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.onbeforeunload = null;
+      }
+    };
+  }, []);
 
   const handlePasswordSubmit = () => {
     if (password === "nikki") {
@@ -351,7 +351,7 @@ export default function Home() {
             <div className="grid grid-cols-2 w-full gap-10">
               <div className="mt-10">
                 <p className="mb-5 text-5xl font-bold">
-                  Photographs
+                  Fotographs and Friends
                   <span className="accent text-6xl font-serif">.</span>
                 </p>
                 <p className="text-xl leading-relaxed">
