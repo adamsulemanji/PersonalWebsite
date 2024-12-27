@@ -19,6 +19,18 @@ export default function Home() {
   const [sportsRef, sportsVisible] = useScrollAnimation();
   const [randomRef, randomVisible] = useScrollAnimation();
 
+  const [password, setPassword] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handlePasswordSubmit = () => {
+    if (password === "nikki") {
+      setIsAuthenticated(true);
+      window.open("https://mealtracker.adamsulemanji.com", "_blank");
+    } else {
+      alert("Incorrect password");
+    }
+  };
+
   useEffect(() => {
     if (!introShown) {
       const animations = [
@@ -52,6 +64,7 @@ export default function Home() {
                 ? "translate-x-0 opacity-100"
                 : "-translate-x-full opacity-0"
             }`}
+            id="section-intro"
           >
             <div className="text-left mt-80 text-7xl font-serif font-light leading-tight">
               <span
@@ -75,16 +88,12 @@ export default function Home() {
           </section>
 
           <section
-            id="section-projects"
             className={`text-lg text-center transition-all duration-1000 ${
               constructionVisible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-10 opacity-0"
             }`}
-          >
-            This website is still under construction. Check back soon for
-            updates!
-          </section>
+          ></section>
 
           <div
             className={`text-2xl mt-3 leading-loose line-wrapped transition-all duration-1000 ${
@@ -316,7 +325,10 @@ export default function Home() {
               </div>
             </div>
           </section>
-          <section className="mt-24 w-full max-w-[1500px]">
+          <section
+            className="mt-24 w-full max-w-[1500px]"
+            id="section-projects"
+          >
             <div className="grid grid-cols-2 w-full gap-10">
               <div className="mt-10">
                 <p className="mb-5 text-5xl font-bold">
@@ -352,6 +364,15 @@ export default function Home() {
                   custom domain that I own that my uncle bought for me 5 years
                   ago as a joke.
                 </p>
+                <button className="mt-4 px-6 py-2 border-4 border-green-700 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20 hover:bg-green-700 dark:hover:bg-blue-400 hover:text-white">
+                  <a
+                    href="https://www.adamsulemanji.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Go to Website
+                  </a>
+                </button>
               </div>
             </div>
             <hr className="my-10 border-t border-gray-300" />
@@ -376,8 +397,14 @@ export default function Home() {
                   transforming it into a full CDK application through AWS. It's
                   still a WIP.
                 </p>
-                <button className="mt-4 px-6 py-2 border-4 border-green-600 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20">
-                  Go to Course Monitoring
+                <button className="mt-4 px-6 py-2 border-4 border-green-700 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20 hover:bg-green-700 dark:hover:bg-blue-400 hover:text-white">
+                  <a
+                    href="https://courses.adamsulemanji.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Go to Course Monitoring
+                  </a>
                 </button>
               </div>
             </div>
@@ -388,13 +415,51 @@ export default function Home() {
               </div>
               <div className="text-xl leading-relaxed">
                 <h3 className="mb-5 text-3xl font-bold">
-                  Yet Another Project
+                  Meal Tracker for Nikki
                   <span className="accent text-4xl font-serif">.</span>
                 </h3>
-                <p>Description of yet another project goes here.</p>
+                <p>
+                  Nikki used to track her meals on a spreadsheet, I could not
+                  allow that as a developer
+                </p>
+                <p className="mt-4">
+                  This simple website allows her to track her meals. The site
+                  was built completely from my CDK template project I created.{" "}
+                </p>
+                {isAuthenticated ? (
+                  <button className="mt-4 px-6 py-2 border-4 border-green-700 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20 hover:bg-green-700 dark:hover:bg-blue-400 hover:text-white">
+                    <a
+                      href="https://courses.adamsulemanji.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Go to Meal Tracker
+                    </a>
+                  </button>
+                ) : (
+                  <div>
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter password"
+                      className="mt-4 px-4 py-2 border rounded-lg mr-5 focus:outline-none focus:ring-2 focus:ring-green-700 dark:focus:ring-blue-400"
+                    />
+                    <button
+                      onClick={handlePasswordSubmit}
+                      className="mt-4 px-6 py-2 border-4 border-green-700 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20 hover:bg-green-700 dark:hover:bg-blue-400 hover:text-white"
+                    >
+                      Go to Meal Tracker
+                    </button>
+                  </div>
+                )}
+                <p className="mt-4 italic text-xs">
+                  I put a password on this to protect the information. Sorry{" "}
+                </p>
               </div>
             </div>
           </section>
+          <hr className="my-10 border-t border-gray-300 w-full" />
         </main>
         <section id="section-contact">
           <Footer />
