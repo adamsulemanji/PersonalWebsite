@@ -411,7 +411,8 @@ export default function Home() {
                   Interesting enough this website serves as a project itself.
                   From the design to implementation, I have built this website
                   from scratch. I have used Next.js as the framework and
-                  TailwindCSS as the styling library.
+                  TailwindCSS as the styling library. (Not really from scratch
+                  but you get the idea)
                 </p>
                 <p className="mt-4">
                   The website is completely served through AWS using S3 buckets,
