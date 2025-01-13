@@ -28,9 +28,9 @@ const leftNavItems: NavItem[] = [
 ];
 
 const rightNavItems = [
-  { title: "Toggle Borders", action: "toggleBorders" },
+  // { title: "Toggle Borders", action: "toggleBorders" },
   { title: "Resume", action: "resume" },
-  { title: "Toggle Dark Mode", action: "toggleDarkMode" },
+  { title: "Dark Mode", action: "toggleDarkMode" },
 ];
 
 export default function Navbar() {
