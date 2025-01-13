@@ -80,25 +80,36 @@ export default function Home() {
             }`}
             id="section-intro"
           >
-            <div className="text-left mt-80 text-7xl font-serif font-light leading-tight">
-              <span
-                className={`block transform transition-all duration-1000 ease-out ${
-                  hiVisible ? "translate-x-0 " : "-translate-x-10 "
-                }`}
-              >
-                Hi, my
-              </span>
-              <span
-                className={`block transform transition-all duration-1000 ease-out ${
-                  nameVisible ? "translate-x-0" : "translate-x-10 "
-                }`}
-              >
-                name is <b className="text-8xl">Adam</b>
-                <span className="accent">.</span>
-              </span>
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
+              <div>
+                <div className="text-left mt-80 text-7xl font-serif font-light leading-tight">
+                  <span
+                    className={`block transform transition-all duration-1000 ease-out ${
+                      hiVisible ? "translate-x-0 " : "-translate-x-10 "
+                    }`}
+                  >
+                    Hi, my
+                  </span>
+                  <span
+                    className={`block transform transition-all duration-1000 ease-out ${
+                      nameVisible ? "translate-x-0" : "translate-x-10 "
+                    }`}
+                  >
+                    name is <b className="text-8xl">Adam</b>
+                    <span className="accent">.</span>
+                  </span>
+                </div>
 
-            <span className="absolute mt-5 -bottom-5 left-0 w-0 transition-all h-2 bg-green-700 group-hover:w-full dark:bg-blue-500"></span>
+                <span className="absolute mt-5 -bottom-5 left-0 w-0 transition-all h-2 bg-green-700 group-hover:w-full dark:bg-blue-500"></span>
+              </div>
+              <div>
+                <img
+                  src="/images/kid.jpg"
+                  alt="Adam"
+                  className="rounded-lg shadow-xl"
+                />
+              </div>
+            </div>
           </section>
 
           <section
