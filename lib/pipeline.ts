@@ -33,10 +33,10 @@ export class Pipeline extends cdk.Stack {
     const sourceAction = new codepipeline_actions.GitHubSourceAction({
       actionName: "GitHub_Source",
       owner: "adamsulemanji",
-      repo: "personal-website",
+      repo: "PersonalWebsite",
       oauthToken: cdk.SecretValue.secretsManager("github_token2"),
       output: sourceOutput,
-      branch: "master",
+      branch: "main",
       trigger: codepipeline_actions.GitHubTrigger.WEBHOOK,
     });
 
