@@ -1,0 +1,266 @@
+digraph "Diagram" {
+  splines = "ortho";
+  pad = "1.0";
+  nodesep = "0.60";
+  ranksep = "0.75";
+  fontname = "Sans-Serif";
+  fontsize = "15";
+  dpi = "200";
+  rankdir = "BT";
+  compound = "true";
+  fontcolor = "#222222";
+  edge [
+    color = "#D5871488",
+    penwidth = 2,
+    arrowhead = "dot",
+    arrowtail = "dot",
+  ];
+  node [
+    shape = "box",
+    style = "rounded",
+    fixedsize = true,
+    width = 1.7,
+    height = 1.7,
+    labelloc = "c",
+    imagescale = true,
+    fontname = "Sans-Serif",
+    fontsize = 8,
+    margin = 8,
+  ];
+  subgraph "PersonalWebsiteStack" {
+    subgraph "cluster-SubGraph.PersonalWebsiteStack" {
+      graph [
+        label = "PersonalWebsiteStack",
+        labelloc = "b",
+        labeljust = "l",
+        margin = "10",
+        fontsize = "16",
+        penwidth = "2",
+        pencolor = "#888888",
+        style = "filled,rounded",
+        fillcolor = "#e4e4e4",
+      ];
+      subgraph "cluster-SubGraph.PersonalWebsite" {
+        graph [
+          label = "PersonalWebsite",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#d6d6d6",
+        ];
+        "PersonalWebsiteStack/PersonalWebsite/ApexBucket" [
+          label = " ApexBucket",
+          fontsize = 12,
+          image = "/Users/adamsulemanji/.npm/_npx/b98735c91b702b55/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.266,
+        ];
+        "PersonalWebsiteStack/PersonalWebsite/ApexOAI" [
+          label = " ApexOAI",
+          fontsize = 12,
+          image = "/Users/adamsulemanji/.npm/_npx/b98735c91b702b55/node_modules/cdk-dia/icons/aws/Resource/Res_Security-Identity-and-Compliance/Res_48_Dark/Res_AWS-Identity-Access-Management_Permissions_48_Dark_gen.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.266,
+        ];
+        "PersonalWebsiteStack/PersonalWebsite/WwwRedirectBucket" [
+          label = " WwwRedirectBucket",
+          fontsize = 12,
+          image = "/Users/adamsulemanji/.npm/_npx/b98735c91b702b55/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.266,
+        ];
+        "PersonalWebsiteStack/PersonalWebsite/ApexCertificate" [
+          label = " ApexCertificate",
+          fontsize = 12,
+          image = "/Users/adamsulemanji/.npm/_npx/b98735c91b702b55/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Certificate-Manager_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 1.2,
+          height = 1.466,
+        ];
+        "PersonalWebsiteStack/PersonalWebsite/WwwCertificate" [
+          label = " WwwCertificate",
+          fontsize = 12,
+          image = "/Users/adamsulemanji/.npm/_npx/b98735c91b702b55/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Certificate-Manager_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 1.2,
+          height = 1.466,
+        ];
+        "PersonalWebsiteStack/PersonalWebsite/ApexDistribution" [
+          label = " ApexDistribution",
+          fontsize = 12,
+          image = "/Users/adamsulemanji/.npm/_npx/b98735c91b702b55/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.266,
+        ];
+        "PersonalWebsiteStack/PersonalWebsite/WwwDistribution" [
+          label = " WwwDistribution",
+          fontsize = 12,
+          image = "/Users/adamsulemanji/.npm/_npx/b98735c91b702b55/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-CloudFront_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.266,
+        ];
+        "PersonalWebsiteStack/PersonalWebsite/AliasRecordApex" [
+          label = " AliasRecordApex",
+          fontsize = 12,
+          image = "/Users/adamsulemanji/.npm/_npx/b98735c91b702b55/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-Route-53-Hosted-Zone_48_Dark_gen.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 1.2,
+          height = 1.466,
+        ];
+        "PersonalWebsiteStack/PersonalWebsite/AliasRecordWww" [
+          label = " AliasRecordWww",
+          fontsize = 12,
+          image = "/Users/adamsulemanji/.npm/_npx/b98735c91b702b55/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-Route-53-Hosted-Zone_48_Dark_gen.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 1.2,
+          height = 1.466,
+        ];
+      }
+      subgraph "cluster-SubGraph.PersonalWebsitePipeline" {
+        graph [
+          label = "PersonalWebsitePipeline",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#d6d6d6",
+        ];
+        "PersonalWebsiteStack/PersonalWebsitePipeline/SynthProject" [
+          label = " SynthProject",
+          fontsize = 12,
+          image = "/Users/adamsulemanji/.npm/_npx/b98735c91b702b55/node_modules/cdk-dia/icons/aws/Service/Arch_Developer- Tools/64/Arch_Amazon-CodeBuild_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 1.2,
+          height = 1.466,
+        ];
+        "PersonalWebsiteStack/PersonalWebsitePipeline/FrontendBuildProject" [
+          label = " FrontendBuildProject",
+          fontsize = 12,
+          image = "/Users/adamsulemanji/.npm/_npx/b98735c91b702b55/node_modules/cdk-dia/icons/aws/Service/Arch_Developer- Tools/64/Arch_Amazon-CodeBuild_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 1.2,
+          height = 1.466,
+        ];
+        "PersonalWebsiteStack/PersonalWebsitePipeline/PersonalWebsitePipeline" [
+          label = "\nPersonalWebsitePipeli",
+          fontsize = 12,
+          image = "/Users/adamsulemanji/.npm/_npx/b98735c91b702b55/node_modules/cdk-dia/icons/aws/Service/Arch_Developer- Tools/64/Arch_AWS-CodePipeline_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 1.2,
+          height = 1.682,
+        ];
+      }
+    }
+  }
+  "PersonalWebsiteStack/PersonalWebsite/ApexBucket" -> "PersonalWebsiteStack/PersonalWebsite/ApexOAI" [
+    dir = "both",
+  ];
+  "PersonalWebsiteStack/PersonalWebsite/ApexDistribution" -> "PersonalWebsiteStack/PersonalWebsite/ApexBucket" [
+    dir = "both",
+  ];
+  "PersonalWebsiteStack/PersonalWebsite/ApexDistribution" -> "PersonalWebsiteStack/PersonalWebsite/ApexOAI" [
+    dir = "both",
+  ];
+  "PersonalWebsiteStack/PersonalWebsite/ApexDistribution" -> "PersonalWebsiteStack/PersonalWebsite/ApexCertificate" [
+    dir = "both",
+  ];
+  "PersonalWebsiteStack/PersonalWebsite/WwwDistribution" -> "PersonalWebsiteStack/PersonalWebsite/WwwRedirectBucket" [
+    dir = "both",
+  ];
+  "PersonalWebsiteStack/PersonalWebsite/WwwDistribution" -> "PersonalWebsiteStack/PersonalWebsite/WwwCertificate" [
+    dir = "both",
+  ];
+  "PersonalWebsiteStack/PersonalWebsite/AliasRecordApex" -> "PersonalWebsiteStack/PersonalWebsite/ApexDistribution" [
+    dir = "both",
+  ];
+  "PersonalWebsiteStack/PersonalWebsite/AliasRecordWww" -> "PersonalWebsiteStack/PersonalWebsite/WwwDistribution" [
+    dir = "both",
+  ];
+  "PersonalWebsiteStack/PersonalWebsitePipeline/SynthProject" -> "PersonalWebsiteStack/PersonalWebsitePipeline/PersonalWebsitePipeline" [
+    dir = "both",
+  ];
+  "PersonalWebsiteStack/PersonalWebsitePipeline/FrontendBuildProject" -> "PersonalWebsiteStack/PersonalWebsitePipeline/PersonalWebsitePipeline" [
+    dir = "both",
+  ];
+  "PersonalWebsiteStack/PersonalWebsitePipeline/PersonalWebsitePipeline" -> "PersonalWebsiteStack/PersonalWebsite/ApexBucket" [
+    dir = "both",
+  ];
+  "PersonalWebsiteStack/PersonalWebsitePipeline/PersonalWebsitePipeline" -> "PersonalWebsiteStack/PersonalWebsitePipeline/SynthProject" [
+    dir = "both",
+  ];
+  "PersonalWebsiteStack/PersonalWebsitePipeline/PersonalWebsitePipeline" -> "PersonalWebsiteStack/PersonalWebsitePipeline/FrontendBuildProject" [
+    dir = "both",
+  ];
+}
