@@ -369,14 +369,15 @@ export default function Home() {
                   Interesting enough this website serves as a project itself.
                   From the design to implementation, I have built this website
                   from scratch. I have used Next.js as the framework and
-                  TailwindCSS as the styling library. (Not really from scratch
-                  but you get the idea)
+                  TailwindCSS as the styling library.
                 </p>
                 <p className="mt-4">
                   The website is completely served through AWS using S3 buckets,
-                  cloudfront and route 53. The website is also served through a
-                  custom domain that I own that my uncle bought for me 5 years
-                  ago as a joke.
+                  cloudfront and route 53. The website also contains a custom
+                  CI/CD pipeline that allows me to rebuild and deploy and cloud
+                  or bucket changes on events of github changes. The website is
+                  also served through a custom domain that I own that my uncle
+                  bought for me 5 years ago as a joke.
                 </p>
                 <button className="mt-4 px-6 py-2 border-4 border-green-700 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20 hover:bg-green-700 dark:hover:bg-blue-400 hover:text-white">
                   <a
