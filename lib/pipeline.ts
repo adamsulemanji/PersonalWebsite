@@ -105,7 +105,7 @@ export class Pipeline extends cdk.Stack {
           version: "0.2",
           phases: {
             install: {
-              commands: ["cd frontend", "npm ci"],
+              commands: ["cd frontend", "npm ci --force"],
             },
             build: {
               commands: ["npm run build"],
