@@ -473,6 +473,45 @@ export default function Home() {
                 </p>
               </div>
             </div>
+            <hr className="my-10 border-t border-gray-300" />
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
+              <div className="flex items-center justify-center">
+                <p>Image Placeholder</p>
+              </div>
+              <div className="text-xl leading-relaxed">
+                <h3 className="mb-5 text-3xl font-bold">
+                  CDK Template
+                  <span className="accent text-4xl font-serif">.</span>
+                </h3>
+                <p>
+                  During my summer internship I lacked the fundamental AWS
+                  skills and knowledge to hit the ground running at Amazon.
+                </p>
+                <p className="mt-4">
+                  With that I realized that there exists a lack of a CDK tool
+                  that allows for easy creation of CDK projects. The regular{" "}
+                  <code className="inline bg-slate-100 rounded-sm px-2 dark:bg-white dark:text-black">
+                    {" "}
+                    cdk init{" "}
+                  </code>{" "}
+                  command only provides the scaffolding. The premise of this
+                  project allows for users to get a fully functional
+                  CodePipeline for CI/CD, a frontend stack, a cloudfront
+                  distribution for custom domains, a few of the most common aws
+                  services fully integrated with examples and a few other
+                  things.
+                </p>
+                <button className="mt-4 px-6 py-2 border-4 border-green-700 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20 hover:bg-green-700 dark:hover:bg-blue-400 hover:text-white">
+                  <a
+                    href="https://github.com/adamsulemanji/test-aws-cdk-app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Go to Tool
+                  </a>
+                </button>
+              </div>
+            </div>
           </section>
           <hr className="my-10 border-t border-gray-300 w-full" />
         </main>
