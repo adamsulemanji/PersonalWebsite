@@ -112,7 +112,7 @@ export class Pipeline extends cdk.Stack {
             },
           },
           artifacts: {
-            "base-directory": "frontend/out",
+            "base-directory": "frontend/build",
             files: ["**/*"],
           },
         }),
