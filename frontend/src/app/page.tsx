@@ -82,7 +82,7 @@ export default function Home() {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div>
-                <div className="text-left mt-80 text-7xl font-serif font-light leading-tigh sm:mt-16">
+                <div className="text-left md:mt-80 text-7xl font-serif font-light leading-tight sm:mt-4">
                   <span
                     className={`block transform transition-all duration-1000 ease-out ${
                       hiVisible ? "translate-x-0 " : "-translate-x-10 "
