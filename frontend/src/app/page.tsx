@@ -171,7 +171,6 @@ export default function Home() {
             id="section-about"
           >
             <div className="w-full max-w-[1500px]">
-              <div className="flex flex-col gap-4 items-center"></div>
               <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
                 <div className="items-center justify-center text-xl leading-relaxed">
                   <p>
@@ -211,7 +210,11 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex items-center justify-center">
-                  <p>Image PlaceHolder</p>
+                  <img
+                    src="/images/class.jpeg"
+                    alt="Me in Class"
+                    className="rounded-lg shadow-xl"
+                  />
                 </div>
                 <div className="mt-36"></div>
                 <div></div>
@@ -229,7 +232,29 @@ export default function Home() {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="flex items-center justify-center">
-                <p>Image PlaceHolder</p>
+                <div className="grid grid-cols-2 grid-rows-2 gap-4">
+                  <div className="col-span-2 row-span-1">
+                    <img
+                      src="/images/football.jpeg"
+                      alt="Football Game"
+                      className="object-cover rounded-lg shadow-xl w-full h-full"
+                    />
+                  </div>
+                  {/* <div className="col-span-1 row-span-1">
+                    <img
+                      src="/images/soccer.jpg"
+                      alt="Soccer Game"
+                      className="object-cover rounded-lg shadow-xl w-full h-full"
+                    />
+                  </div>
+                  <div className="col-span-1 row-span-1">
+                    <img
+                      src="/images/basketball.jpg"
+                      alt="Basketball Game"
+                      className="object-cover rounded-lg shadow-xl w-full h-full"
+                    />
+                  </div> */}
+                </div>
               </div>
               <div className="text-xl leading-relaxed">
                 <p className="mb-5 text-5xl font-bold">
@@ -237,10 +262,10 @@ export default function Home() {
                   <span className="accent text-6xl font-serif">.</span>
                 </p>
                 <p>
-                  During my days of youth (technically Im still young, Im only
+                  During my days of youth (technically I'm still young, I'm only
                   22), I tried to play every sport. My dad signed me up for{" "}
                   <span className="font-bold accent">KYS</span> (Katy Youth
-                  Soccer) but I realized I wasnt very good. I later switched
+                  Soccer) but I realized I wasn't very good. I later switched
                   into <span className="font-bold accent">basketball</span>{" "}
                   through the local{" "}
                   <span className="font-bold accent">KYB</span> (Katy Youth
@@ -252,9 +277,9 @@ export default function Home() {
                   <span className="font-bold accent">baseball</span> as I
                   realized I could pitch pretty well. But throughout all of
                   this, I was playing{" "}
-                  <span className="font-bold accent">tennis</span> because thats
-                  the sport my dad played growing up. When I got to high school
-                  I decided to switch into{" "}
+                  <span className="font-bold accent">tennis</span> because
+                  that's the sport my dad played growing up. When I got to high
+                  school I decided to switch into{" "}
                   <span className="font-bold accent">tennis</span> full time
                   dropping both organized baseball and basketball.{" "}
                 </p>
@@ -262,12 +287,12 @@ export default function Home() {
                   These days I now spend my time playing{" "}
                   <span className="font-bold accent">tennis</span>{" "}
                   <span className="text-md">
-                    (pickleball isnt a real sport...sorry)
+                    (pickleball isn't a real sport...sorry)
                   </span>
                   , trying to fix my slice in{" "}
                   <span className="font-bold accent">golf</span> (thanks
                   baseball...), playing 3 v 3{" "}
-                  <span className="font-bold accent">basketball</span> (dont
+                  <span className="font-bold accent">basketball</span> (don't
                   like running), running half marathon races (I like the medals)
                   and trying to become a great{" "}
                   <span className="font-bold accent">Quarterback</span> in flag
@@ -307,7 +332,11 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex items-center justify-center">
-                <p>Image PlaceHolder</p>
+                <img
+                  src="/images/houston.jpg"
+                  alt="Houston"
+                  className="rounded-lg shadow-xl"
+                />
               </div>
             </div>
           </section>
@@ -358,7 +387,11 @@ export default function Home() {
               </div>
 
               <div className="flex items-center justify-center">
-                <p>Image Placeholder</p>
+                <img
+                  src="/images/systemdiagram.png"
+                  alt="Website"
+                  className="rounded-lg shadow-xl"
+                />
               </div>
               <div className="text-xl leading-relaxed">
                 <h3 className="mb-5 text-3xl font-bold">
@@ -393,7 +426,11 @@ export default function Home() {
             <hr className="my-10 border-t border-gray-300" />
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="flex items-center justify-center">
-                <p>Image Placeholder</p>
+                <img
+                  src="/images/coursemonitoring.png"
+                  alt="Course Monitoring"
+                  className="rounded-lg shadow-xl"
+                />
               </div>
               <div className="text-xl leading-relaxed">
                 <h3 className="mb-5 text-3xl font-bold">
@@ -426,7 +463,11 @@ export default function Home() {
             <hr className="my-10 border-t border-gray-300" />
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="flex items-center justify-center">
-                <p>Image Placeholder</p>
+                <img
+                  src="/images/mealtracker.png"
+                  alt="Meal Tracker"
+                  className="rounded-lg shadow-xl"
+                />
               </div>
               <div className="text-xl leading-relaxed">
                 <h3 className="mb-5 text-3xl font-bold">
@@ -444,7 +485,7 @@ export default function Home() {
                 {isAuthenticated ? (
                   <button className="mt-4 px-6 py-2 border-4 border-green-700 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20 hover:bg-green-700 dark:hover:bg-blue-400 hover:text-white">
                     <a
-                      href="https://courses.adamsulemanji.com"
+                      href="https://mealtracker.adamsulemanji.com"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -475,8 +516,16 @@ export default function Home() {
             </div>
             <hr className="my-10 border-t border-gray-300" />
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
-              <div className="flex items-center justify-center">
-                <p>Image Placeholder</p>
+              <div className="items-center justify-center">
+                <img
+                  src="/images/basketball.jpg"
+                  alt="CDK Template"
+                  className="rounded-lg shadow-xl w-full"
+                />
+                <p className="italic text-xs mt-4 text-center">
+                  **I don't have a picture of the CDK because it's a CLI, so
+                  here is a picture of my IM basketball team**
+                </p>
               </div>
               <div className="text-xl leading-relaxed">
                 <h3 className="mb-5 text-3xl font-bold">
