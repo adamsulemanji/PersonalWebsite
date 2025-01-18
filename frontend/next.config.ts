@@ -2,7 +2,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",
-  distDir: "build", // Changed to 'build' to match CRA structure
+  distDir: "build",
   images: {
     unoptimized: true,
   },
