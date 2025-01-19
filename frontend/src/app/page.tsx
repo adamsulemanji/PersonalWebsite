@@ -16,10 +16,6 @@ export default function Home() {
   const [descriptionVisible, setDescriptionVisible] = useState(false);
   const [scrollPromptVisible, setScrollPromptVisible] = useState(false);
 
-  const [aboutRef, aboutVisible] = useScrollAnimation();
-  const [sportsRef, sportsVisible] = useScrollAnimation();
-  const [randomRef, randomVisible] = useScrollAnimation();
-
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -163,12 +159,7 @@ export default function Home() {
           </section>
 
           <section
-            ref={aboutRef}
-            className={`sm:mt-8 transform transition-all duration-1000 ease-out ${
-              aboutVisible
-                ? "translate-x-0 opacity-100"
-                : "-translate-x-full opacity-0"
-            }`}
+            className="sm:mt-8 transform transition-all duration-1000 ease-out"
             id="section-about"
           >
             <div className="w-full max-w-[1500px]">
@@ -221,14 +212,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section
-            ref={sportsRef}
-            className={`w-full transform transition-all duration-1000 ease-out ${
-              sportsVisible
-                ? "translate-x-0 opacity-100"
-                : "translate-x-full opacity-0"
-            }`}
-          >
+          <section className="w-full transform transition-all duration-1000 ease-out">
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10 mt-24">
               <div className="flex items-center justify-center">
                 <img
@@ -283,14 +267,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section
-            ref={randomRef}
-            className={`w-full transform transition-all duration-1000 ease-out ${
-              randomVisible
-                ? "translate-x-0 opacity-100"
-                : "-translate-x-full opacity-0"
-            }`}
-          >
+          <section className="w-full transform transition-all duration-1000 ease-out">
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10 mt-24">
               <div className="leading-relaxed">
                 <p className="mb-5 text-5xl font-bold">

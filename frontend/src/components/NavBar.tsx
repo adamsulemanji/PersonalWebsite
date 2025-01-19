@@ -5,12 +5,9 @@ import { Menu, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -23,28 +20,15 @@ interface NavItem {
 const leftNavItems: NavItem[] = [
   { title: "About", id: "section-about" },
   { title: "Projects", id: "section-projects" },
-  { title: "Fun Things", id: "section-fun" },
+  { title: "Pictures", id: "section-fun" },
   { title: "Contact", id: "section-contact" },
 ];
 
-const rightNavItems = [
-  // { title: "Toggle Borders", action: "toggleBorders" },
-  // { title: "Resume", action: "resume" },
-  { title: "Dark Mode", action: "toggleDarkMode" },
-];
+const rightNavItems = [{ title: "Dark Mode", action: "toggleDarkMode" }];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [darkMode, setDarkMode] = React.useState(false);
-  const [showBorders, setShowBorders] = React.useState(false);
-
-  React.useEffect(() => {
-    if (showBorders) {
-      document.documentElement.classList.add("show-borders");
-    } else {
-      document.documentElement.classList.remove("show-borders");
-    }
-  }, [showBorders]);
 
   React.useEffect(() => {
     if (darkMode) {
@@ -57,17 +41,11 @@ export default function Navbar() {
   const handleScroll = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = 500 + window.innerHeight / 2 - element.clientHeight / 2;
-      window.scrollTo({
-        top: element.offsetTop - offset,
-        behavior: "smooth",
-      });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   const handleAction = (action: string) => {
-    if (action === "toggleBorders") setShowBorders(!showBorders);
-    if (action === "resume") window.open("/resume.pdf", "_blank");
     if (action === "toggleDarkMode") setDarkMode(!darkMode);
   };
 
@@ -83,8 +61,10 @@ export default function Navbar() {
               handleScroll("section-intro");
             }}
           >
-            <span className="hidden sm:inline-block font-extrabold font-sans">
-              Adam Sulemanji
+            <span className="hidden sm:inline-block font-extrabold font-sans text-left">
+              Adam
+              <br />
+              Sulemanji
             </span>
           </a>
           <NavigationMenu>
@@ -92,7 +72,7 @@ export default function Navbar() {
               {leftNavItems.map((item) => (
                 <NavigationMenuItem key={item.title}>
                   <NavigationMenuLink
-                    className={navigationMenuTriggerStyle()}
+                    className="px-4 py-2 m-2 rounded-md text-base bg-transparent backdrop-blur supports-[backdrop-filter]:bg-transparent hover:bg-grey-200 dark:hover:bg-gray-800"
                     onClick={() => handleScroll(item.id)}
                   >
                     {item.title}
@@ -104,16 +84,14 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center space-x-4 md:space-x-6">
-          {rightNavItems.map((item, index) => (
-            <Button
-              key={index}
-              variant="ghost"
-              className="px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0"
-              onClick={() => handleAction(item.action)}
-            >
-              {item.title}
-            </Button>
-          ))}
+          <Button
+            key={darkMode ? "dark" : "light"}
+            variant="ghost"
+            className="px-0 text-base bg-transparent backdrop-blur supports-[backdrop-filter]:bg-transparent p-5 m-5"
+            onClick={() => setDarkMode(!darkMode)}
+          >
+            {darkMode ? <Sun /> : <Moon />}
+          </Button>
         </div>
 
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
