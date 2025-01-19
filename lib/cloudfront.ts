@@ -10,6 +10,8 @@ import * as route53targets from "aws-cdk-lib/aws-route53-targets";
 import * as acm from "aws-cdk-lib/aws-certificatemanager";
 
 export class FrontendConstruct extends Construct {
+  public readonly apexBucket: s3.Bucket;
+
   constructor(app: Construct, id: string) {
     super(app, id);
 
@@ -24,7 +26,7 @@ export class FrontendConstruct extends Construct {
     });
 
     // ********** Apex Redirect Bucket **********
-    const apexBucket = new s3.Bucket(this, "myBucket-apex", {
+    this.apexBucket = new s3.Bucket(this, "myBucket-apex", {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       websiteRedirect: {
@@ -109,7 +111,7 @@ export class FrontendConstruct extends Construct {
     // ********** Apex CloudFront Distribution **********
     const apexDistribution = new cloudfront.Distribution(this, "myDist-apex", {
       defaultBehavior: {
-        origin: new origin.S3Origin(apexBucket),
+        origin: new origin.S3Origin(this.apexBucket),
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
       domainNames: [domainName],
