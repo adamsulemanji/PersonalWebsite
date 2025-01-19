@@ -83,7 +83,9 @@ export default function Navbar() {
               handleScroll("section-intro");
             }}
           >
-            <span className="hidden font-bold sm:inline-block">Adam</span>
+            <span className="hidden sm:inline-block font-extrabold font-sans">
+              Adam Sulemanji
+            </span>
           </a>
           <NavigationMenu>
             <NavigationMenuList>

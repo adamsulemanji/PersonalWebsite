@@ -37,7 +37,8 @@ export default function Home() {
   }, []);
 
   const handlePasswordSubmit = () => {
-    if (password === "nikki") {
+    const enteredPassword = prompt("Enter password");
+    if (enteredPassword === "nikki") {
       setIsAuthenticated(true);
       window.open("https://mealtracker.adamsulemanji.com", "_blank");
     } else {
@@ -71,7 +72,7 @@ export default function Home() {
     <div>
       <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen m-4 pb-20 gap-16 sm:p-20">
         <NavBar />
-        <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center w-full max-w-[1500px] px-4 sm:px-8">
+        <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center w-full max-w-[1200px] px-4 sm:px-8">
           <section
             className={`text-6xl text-center relative one group transform transition-all duration-1000 ease-out ${
               introVisible
@@ -127,7 +128,7 @@ export default function Home() {
                 : "translate-y-10 opacity-0"
             }`}
           >
-            I am an aspiring <b className="accent">Developer</b> and{" "}
+            I am a <b className="accent">Developer</b> and{" "}
             <b className="accent">Creator</b> looking to make a positive impact
             through technology. My interest lies in building creating solutions
             that help me and others in their lives.
@@ -163,7 +164,7 @@ export default function Home() {
 
           <section
             ref={aboutRef}
-            className={`mt-32 sm:mt-8 transform transition-all duration-1000 ease-out ${
+            className={`sm:mt-8 transform transition-all duration-1000 ease-out ${
               aboutVisible
                 ? "translate-x-0 opacity-100"
                 : "-translate-x-full opacity-0"
@@ -172,7 +173,7 @@ export default function Home() {
           >
             <div className="w-full max-w-[1500px]">
               <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
-                <div className="items-center justify-center text-xl leading-relaxed">
+                <div className="items-center justify-center leading-relaxed">
                   <p>
                     My first day of college I wasnt sure what I really wanted to
                     be. My parents and friends told me I should become a{" "}
@@ -203,7 +204,7 @@ export default function Home() {
                     accelerated masters program in Computer Science and which I
                     graduated in December 2024. Postgrad I plan on returning
                     back to{" "}
-                    <b className="text-2xl accent underline underline-offset-auto">
+                    <b className="text-xl accent  underline-offset-auto">
                       Amazon
                     </b>{" "}
                     in Seattle a part of the Crosslistings Crossborders team{" "}
@@ -216,47 +217,27 @@ export default function Home() {
                     className="rounded-lg shadow-xl"
                   />
                 </div>
-                <div className="mt-36"></div>
-                <div></div>
               </div>
             </div>
           </section>
 
           <section
             ref={sportsRef}
-            className={`w-full mt-32 transform transition-all duration-1000 ease-out ${
+            className={`w-full transform transition-all duration-1000 ease-out ${
               sportsVisible
                 ? "translate-x-0 opacity-100"
                 : "translate-x-full opacity-0"
             }`}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10 mt-24">
               <div className="flex items-center justify-center">
-                <div className="grid grid-cols-2 grid-rows-2 gap-4">
-                  <div className="col-span-2 row-span-1">
-                    <img
-                      src="/images/football.jpeg"
-                      alt="Football Game"
-                      className="object-cover rounded-lg shadow-xl w-full h-full"
-                    />
-                  </div>
-                  {/* <div className="col-span-1 row-span-1">
-                    <img
-                      src="/images/soccer.jpg"
-                      alt="Soccer Game"
-                      className="object-cover rounded-lg shadow-xl w-full h-full"
-                    />
-                  </div>
-                  <div className="col-span-1 row-span-1">
-                    <img
-                      src="/images/basketball.jpg"
-                      alt="Basketball Game"
-                      className="object-cover rounded-lg shadow-xl w-full h-full"
-                    />
-                  </div> */}
-                </div>
+                <img
+                  src="/images/football.jpeg"
+                  alt="Football Game"
+                  className="rounded-lg shadow-xl w-full object-scale-down"
+                />
               </div>
-              <div className="text-xl leading-relaxed">
+              <div className="leading-relaxed">
                 <p className="mb-5 text-5xl font-bold">
                   Sports all the time
                   <span className="accent text-6xl font-serif">.</span>
@@ -304,14 +285,14 @@ export default function Home() {
 
           <section
             ref={randomRef}
-            className={`w-full mt-32 transform transition-all duration-1000 ease-out ${
+            className={`w-full transform transition-all duration-1000 ease-out ${
               randomVisible
                 ? "translate-x-0 opacity-100"
                 : "-translate-x-full opacity-0"
             }`}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
-              <div className="text-xl leading-relaxed">
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10 mt-24">
+              <div className="leading-relaxed">
                 <p className="mb-5 text-5xl font-bold">
                   Houston and Media
                   <span className="accent text-6xl font-serif">.</span>
@@ -321,14 +302,13 @@ export default function Home() {
                   in Texas.
                 </p>
                 <p className="mt-4">
-                  Houston is notorisoulsy good for food and sports. As a
-                  lifelong fan of the Houston Astros, Rockets and Texans.
-                  Currently, my attention is on the Rockets as we have strong
-                  defensive young core under new coaching. Thesse factors have
-                  led use to be 3rd in the west, which itself is a extremely
-                  hard division. I am watching Naruto right. Honestly not a fan
-                  of anime in general, but I have made an exception for this one
-                  so far.{" "}
+                  Houston is notorisoulsy amazing for their food and sports
+                  scene. As a lifelong fan of the Houston Astros, Rockets and
+                  Texans. Currently, my attention is on the Rockets as we have
+                  strong defensive young core under new coaching. These factors
+                  have led use to be 2nd in the west, which itself is a
+                  extremely hard division. In terms of media, I am currently
+                  watching Naruto and just watched the The Handmaiden{" "}
                 </p>
               </div>
               <div className="flex items-center justify-center">
@@ -340,14 +320,14 @@ export default function Home() {
               </div>
             </div>
           </section>
-          <section className="mt-24 w-full max-w-[1500px]">
+          <section className="mt-16 w-full max-w-[1500px]">
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="mt-10">
                 <p className="mb-5 text-5xl font-bold">
                   Fotographs and Friends
                   <span className="accent text-6xl font-serif">.</span>
                 </p>
-                <p className="text-xl leading-relaxed">
+                <p className="leading-relaxed">
                   Here are a collection of photographs of that define me and my
                   life.
                 </p>
@@ -377,7 +357,7 @@ export default function Home() {
                   Projects
                   <span className="accent text-6xl font-serif">.</span>
                 </p>
-                <p className="text-xl leading-relaxed">
+                <p className="leading-relaxed">
                   Here are a collection of things I have been working on and/or
                   built recently.
                 </p>
@@ -387,13 +367,19 @@ export default function Home() {
               </div>
 
               <div className="flex items-center justify-center">
-                <img
-                  src="/images/systemdiagram.png"
-                  alt="Website"
-                  className="rounded-lg shadow-xl"
-                />
+                <a
+                  href="https://www.adamsulemanji.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="/images/systemdiagram.png"
+                    alt="Website"
+                    className="rounded-lg shadow-xl w-full hover:shadow-2xl hover:scale-105 transition-transform duration-300 hover:border-4 hover:border-green-700 hover:dark:border-blue-400"
+                  />
+                </a>
               </div>
-              <div className="text-xl leading-relaxed">
+              <div className="leading-relaxed">
                 <h3 className="mb-5 text-3xl font-bold">
                   This website
                   <span className="accent text-4xl font-serif">.</span>
@@ -412,27 +398,24 @@ export default function Home() {
                   also served through a custom domain that I own that my uncle
                   bought for me 5 years ago as a joke.
                 </p>
-                <button className="mt-4 px-6 py-2 border-4 border-green-700 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20 hover:bg-green-700 dark:hover:bg-blue-400 hover:text-white">
-                  <a
-                    href="https://www.adamsulemanji.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Go to Website
-                  </a>
-                </button>
               </div>
             </div>
             <hr className="my-10 border-t border-gray-300" />
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="flex items-center justify-center">
-                <img
-                  src="/images/coursemonitoring.png"
-                  alt="Course Monitoring"
-                  className="rounded-lg shadow-xl"
-                />
+                <a
+                  href="https://courses.adamsulemanji.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="/images/coursemonitoring.png"
+                    alt="Course Monitoring"
+                    className="rounded-lg shadow-xl w-full hover:shadow-2xl hover:scale-105 transition-transform duration-300 hover:border-4 hover:border-green-700 hover:dark:border-blue-400"
+                  />
+                </a>
               </div>
-              <div className="text-xl leading-relaxed">
+              <div className="leading-relaxed">
                 <h3 className="mb-5 text-3xl font-bold">
                   Course Monitoring
                   <span className="accent text-4xl font-serif">.</span>
@@ -449,27 +432,20 @@ export default function Home() {
                   transforming it into a full CDK application through AWS. It's
                   still a WIP.
                 </p>
-                <button className="mt-4 px-6 py-2 border-4 border-green-700 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20 hover:bg-green-700 dark:hover:bg-blue-400 hover:text-white">
-                  <a
-                    href="https://courses.adamsulemanji.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Go to Course Monitoring
-                  </a>
-                </button>
               </div>
             </div>
             <hr className="my-10 border-t border-gray-300" />
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="flex items-center justify-center">
-                <img
-                  src="/images/mealtracker.png"
-                  alt="Meal Tracker"
-                  className="rounded-lg shadow-xl"
-                />
+                <a onClick={handlePasswordSubmit}>
+                  <img
+                    src="/images/mealtracker.png"
+                    alt="Meal Tracker"
+                    className="rounded-lg shadow-xl w-full hover:shadow-2xl hover:scale-105 transition-transform duration-300 hover:border-4 hover:border-green-700 hover:dark:border-blue-400"
+                  />
+                </a>
               </div>
-              <div className="text-xl leading-relaxed">
+              <div className="leading-relaxed">
                 <h3 className="mb-5 text-3xl font-bold">
                   Meal Tracker for Nikki
                   <span className="accent text-4xl font-serif">.</span>
@@ -482,52 +458,29 @@ export default function Home() {
                   This simple website allows her to track her meals. The site
                   was built completely from my CDK template project I created.{" "}
                 </p>
-                {isAuthenticated ? (
-                  <button className="mt-4 px-6 py-2 border-4 border-green-700 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20 hover:bg-green-700 dark:hover:bg-blue-400 hover:text-white">
-                    <a
-                      href="https://mealtracker.adamsulemanji.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Go to Meal Tracker
-                    </a>
-                  </button>
-                ) : (
-                  <div>
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter password"
-                      className="mt-4 px-4 py-2 border-2 rounded-lg mr-5 focus:outline-none focus:ring-4 focus:ring-green-600 dark:focus:ring-blue-300 border-green-700 dark:border-blue-400 dark:text-white dark:bg-black"
-                    />
-                    <button
-                      onClick={handlePasswordSubmit}
-                      className="mt-4 px-6 py-2 border-4 border-green-700 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20 hover:bg-green-700 dark:hover:bg-blue-400 hover:text-white"
-                    >
-                      Go to Meal Tracker
-                    </button>
-                  </div>
-                )}
-                <p className="mt-4 italic text-xs">
-                  I put a password on this to protect the information. Sorry{" "}
-                </p>
               </div>
             </div>
             <hr className="my-10 border-t border-gray-300" />
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
               <div className="items-center justify-center">
-                <img
-                  src="/images/basketball.jpg"
-                  alt="CDK Template"
-                  className="rounded-lg shadow-xl w-full"
-                />
+                <a
+                  href="https://github.com/adamsulemanji/test-aws-cdk-app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="/images/basketball.jpg"
+                    alt="CDK Template"
+                    className="rounded-lg shadow-xl w-full hover:shadow-2xl hover:scale-105 transition-transform duration-300 hover:border-4 hover:border-green-700 hover:dark:border-blue-400"
+                  />
+                </a>
+
                 <p className="italic text-xs mt-4 text-center">
                   **I don't have a picture of the CDK because it's a CLI, so
                   here is a picture of my IM basketball team**
                 </p>
               </div>
-              <div className="text-xl leading-relaxed">
+              <div className="leading-relaxed">
                 <h3 className="mb-5 text-3xl font-bold">
                   CDK Template
                   <span className="accent text-4xl font-serif">.</span>
@@ -539,9 +492,9 @@ export default function Home() {
                 <p className="mt-4">
                   With that I realized that there exists a lack of a CDK tool
                   that allows for easy creation of CDK projects. The regular{" "}
-                  <code className="inline bg-slate-100 rounded-sm px-2 dark:bg-white dark:text-black">
+                  <code className="inline bg-slate-100  px-2 dark:bg-white dark:text-black font-mono">
                     {" "}
-                    cdk init{" "}
+                    cdk init
                   </code>{" "}
                   command only provides the scaffolding. The premise of this
                   project allows for users to get a fully functional
@@ -550,15 +503,6 @@ export default function Home() {
                   services fully integrated with examples and a few other
                   things.
                 </p>
-                <button className="mt-4 px-6 py-2 border-4 border-green-700 dark:border-blue-400 accent font-bold rounded-lg transition-colors duration-300 bg-[length:10px_10px] bg-gradient-to-r from-transparent via-green-600/20 to-transparent dark:via-blue-400/20 hover:bg-green-700 dark:hover:bg-blue-400 hover:text-white">
-                  <a
-                    href="https://github.com/adamsulemanji/test-aws-cdk-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Go to Tool
-                  </a>
-                </button>
               </div>
             </div>
           </section>
