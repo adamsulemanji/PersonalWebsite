@@ -1,95 +1,94 @@
 import { Construct } from "constructs";
 import * as cdk from "aws-cdk-lib";
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
-import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
+import * as origin from "aws-cdk-lib/aws-cloudfront-origins";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as s3 from "aws-cdk-lib/aws-s3";
+import * as bucket from "aws-cdk-lib/aws-s3-deployment";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import * as route53targets from "aws-cdk-lib/aws-route53-targets";
 import * as acm from "aws-cdk-lib/aws-certificatemanager";
 
 export class FrontendConstruct extends Construct {
-  public readonly apexBucket: s3.Bucket;
-  public readonly apexDistribution: cloudfront.Distribution;
-  public readonly wwwDistribution: cloudfront.Distribution;
+  constructor(app: Construct, id: string) {
+    super(app, id);
 
-  constructor(scope: Construct, id: string) {
-    super(scope, id);
-
-    // Primary domain is apex: adamsulemanji.com
     const domainName = "adamsulemanji.com";
-    // We'll define 'www' subdomain
     const subDomain = "www";
-    const wwwDomain = `${subDomain}.${domainName}`;
+    const fullDomain = `${subDomain}.${domainName}`;
 
-    // ***********************
-    // 1) APEX BUCKET (Real Site)
-    // ***********************
-    this.apexBucket = new s3.Bucket(this, "ApexBucket", {
+    // ********** WWW Frontend Bucket **********
+    const wwwBucket = new s3.Bucket(this, `myBucket-${subDomain}`, {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     });
 
-    const apexOAI = new cloudfront.OriginAccessIdentity(this, "ApexOAI");
-    this.apexBucket.addToResourcePolicy(
+    // ********** Apex Redirect Bucket **********
+    const apexBucket = new s3.Bucket(this, "myBucket-apex", {
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      autoDeleteObjects: true,
+      websiteRedirect: {
+        hostName: fullDomain,
+        protocol: s3.RedirectProtocol.HTTPS,
+      },
+    });
+
+    const cloudfrontOAI = new cloudfront.OriginAccessIdentity(
+      this,
+      `cloudfront-OAI-${subDomain}`
+    );
+
+    // ********** WWW Bucket Policy **********
+    wwwBucket.addToResourcePolicy(
       new iam.PolicyStatement({
         actions: ["s3:GetObject"],
-        resources: [this.apexBucket.arnForObjects("*")],
+        resources: [wwwBucket.arnForObjects("*")],
         principals: [
           new iam.CanonicalUserPrincipal(
-            apexOAI.cloudFrontOriginAccessIdentityS3CanonicalUserId
+            cloudfrontOAI.cloudFrontOriginAccessIdentityS3CanonicalUserId
           ),
         ],
       })
     );
 
-    // ***********************
-    // 2) WWW BUCKET (Redirect)
-    // ***********************
-    const wwwBucket = new s3.Bucket(this, "WwwRedirectBucket", {
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-      autoDeleteObjects: true,
-      websiteRedirect: {
-        hostName: domainName,
-        protocol: s3.RedirectProtocol.HTTPS,
-      },
-    });
-
-    // ***********************
-    // 3) HOSTED ZONE + CERTS
-    // ***********************
+    // ********** Route 53 **********
     const zone = route53.HostedZone.fromLookup(this, "HostedZone", {
       domainName: domainName,
     });
 
-    const apexCertificate = new acm.Certificate(this, "ApexCertificate", {
+    // ********** ACM Certificates **********
+    const wwwCertificate = new acm.Certificate(
+      this,
+      `Certificate-${subDomain}`,
+      {
+        domainName: fullDomain,
+        validation: acm.CertificateValidation.fromDns(zone),
+      }
+    );
+
+    const apexCertificate = new acm.Certificate(this, "Certificate-apex", {
       domainName: domainName,
       validation: acm.CertificateValidation.fromDns(zone),
     });
 
-    const wwwCertificate = new acm.Certificate(this, "WwwCertificate", {
-      domainName: wwwDomain,
-      validation: acm.CertificateValidation.fromDns(zone),
+    // ********** WWW CloudFront Distribution **********
+    const s3Origin = new origin.S3Origin(wwwBucket, {
+      originAccessIdentity: cloudfrontOAI,
     });
 
-    // ***********************
-    // 4) CLOUDFRONT DISTRIBUTIONS
-    // ***********************
-    this.apexDistribution = new cloudfront.Distribution(
+    const wwwDistribution = new cloudfront.Distribution(
       this,
-      "ApexDistribution",
+      `myDist-${subDomain}`,
       {
         defaultBehavior: {
-          origin: new origins.S3Origin(this.apexBucket, {
-            originAccessIdentity: apexOAI,
-          }),
+          origin: s3Origin,
           viewerProtocolPolicy:
             cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
         },
         defaultRootObject: "index.html",
-        domainNames: [domainName],
-        certificate: apexCertificate,
+        domainNames: [fullDomain],
+        certificate: wwwCertificate,
         errorResponses: [
           {
             httpStatus: 403,
@@ -107,54 +106,54 @@ export class FrontendConstruct extends Construct {
       }
     );
 
-    // WWW DISTRIBUTION: serves the redirect bucket
-    // which returns a 301 redirect to apex domain
-    this.wwwDistribution = new cloudfront.Distribution(
-      this,
-      "WwwDistribution",
-      {
-        defaultBehavior: {
-          origin: new origins.S3Origin(wwwBucket),
-          viewerProtocolPolicy:
-            cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-        },
-        domainNames: [wwwDomain],
-        certificate: wwwCertificate,
-      }
-    );
+    // ********** Apex CloudFront Distribution **********
+    const apexDistribution = new cloudfront.Distribution(this, "myDist-apex", {
+      defaultBehavior: {
+        origin: new origin.S3Origin(apexBucket),
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+      },
+      domainNames: [domainName],
+      certificate: apexCertificate,
+    });
 
-    // ***********************
-    // 5) ROUTE53 ALIAS RECORDS
-    // ***********************
-
-    new route53.ARecord(this, "AliasRecordApex", {
+    // ********** Route 53 Alias Records **********
+    new route53.ARecord(this, `AliasRecord-${subDomain}`, {
       zone,
-      recordName: domainName, // e.g., "adamsulemanji.com"
+      recordName: subDomain,
       target: route53.RecordTarget.fromAlias(
-        new route53targets.CloudFrontTarget(this.apexDistribution)
+        new route53targets.CloudFrontTarget(wwwDistribution)
       ),
     });
 
-    new route53.ARecord(this, "AliasRecordWww", {
+    new route53.ARecord(this, "AliasRecord-apex", {
       zone,
-      recordName: wwwDomain, // e.g., "www.adamsulemanji.com"
+      recordName: domainName,
       target: route53.RecordTarget.fromAlias(
-        new route53targets.CloudFrontTarget(this.wwwDistribution)
+        new route53targets.CloudFrontTarget(apexDistribution)
       ),
     });
 
-    // ***********************
-    // 7) OUTPUTS
-    // ***********************
-    new cdk.CfnOutput(this, "ApexDistributionDomainName", {
-      value: this.apexDistribution.distributionDomainName,
-      description: "Distribution Domain Name (apex)",
-      exportName: "ApexDistributionDomainName",
+    // ********** Bucket Deployment **********
+    new bucket.BucketDeployment(this, `DeployWithInvalidation-${subDomain}`, {
+      sources: [bucket.Source.asset("./frontend/build")],
+      destinationBucket: wwwBucket,
+      distribution: wwwDistribution,
+      memoryLimit: 1024,
+      ephemeralStorageSize: cdk.Size.mebibytes(1024),
+      distributionPaths: ["/*"],
     });
-    new cdk.CfnOutput(this, "WwwDistributionDomainName", {
-      value: this.wwwDistribution.distributionDomainName,
-      description: "Distribution Domain Name (www)",
-      exportName: "WwwDistributionDomainName",
+
+    // ********** Outputs **********
+    new cdk.CfnOutput(this, `DistributionDomainName-${subDomain}`, {
+      value: wwwDistribution.domainName,
+      description: `Distribution Domain Name for ${subDomain}`,
+      exportName: `DistributionDomainName-${subDomain}`,
+    });
+
+    new cdk.CfnOutput(this, "DistributionDomainName-apex", {
+      value: apexDistribution.domainName,
+      description: "Distribution Domain Name for apex",
+      exportName: "DistributionDomainName-apex",
     });
   }
 }
