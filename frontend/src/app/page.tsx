@@ -52,9 +52,9 @@ export default function Home() {
         { setter: setIntroVisible, delay: 100 },
         { setter: setHiVisible, delay: 600 },
         { setter: setNameVisible, delay: 1200 },
-        { setter: setConstructionVisible, delay: 1800 },
-        { setter: setDescriptionVisible, delay: 2400 },
-        { setter: setScrollPromptVisible, delay: 3000 },
+        { setter: setConstructionVisible, delay: 1500 },
+        { setter: setDescriptionVisible, delay: 1800 },
+        { setter: setScrollPromptVisible, delay: 2200 },
       ];
 
       animations.forEach(({ setter, delay }) => {

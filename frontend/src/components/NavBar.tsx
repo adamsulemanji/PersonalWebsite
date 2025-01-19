@@ -29,7 +29,7 @@ const leftNavItems: NavItem[] = [
 
 const rightNavItems = [
   // { title: "Toggle Borders", action: "toggleBorders" },
-  { title: "Resume", action: "resume" },
+  // { title: "Resume", action: "resume" },
   { title: "Dark Mode", action: "toggleDarkMode" },
 ];
 
