@@ -1,14 +1,71 @@
-# Welcome to your CDK TypeScript project
+# Personal Website
 
-This is a blank project for CDK development with TypeScript.
+A modern, responsive personal portfolio website built with Next.js and deployed on AWS using CDK infrastructure as code.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## 🚀 Features
 
-## Useful commands
+- Modern, responsive design with smooth animations
+- Server-side rendered React application using Next.js
+- Dark mode support
+- AWS CloudFront distribution for global content delivery
+- Continuous deployment pipeline using AWS CodePipeline
+- Infrastructure as Code using AWS CDK
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `npx cdk deploy`  deploy this stack to your default AWS account/region
-* `npx cdk diff`    compare deployed stack with current state
-* `npx cdk synth`   emits the synthesized CloudFormation template
+## 🛠️ Tech Stack
+
+- **Frontend:**
+
+  - Next.js 13+ (App Router)
+  - React
+  - TypeScript
+  - Tailwind CSS
+  - CSS Modules
+
+- **Infrastructure:**
+  - AWS CDK
+  - AWS CloudFront
+  - AWS S3
+  - AWS CodePipeline
+  - AWS CodeBuild
+
+## 🏗️ Project Structure
+
+```
+├── frontend/               # Next.js frontend application
+├── lib/                   # AWS CDK infrastructure code
+├── bin/                   # CDK app entry point
+└── test/                  # Infrastructure tests
+```
+
+## 🚦 Getting Started
+
+### Prerequisites
+
+- Node.js (version specified in .nvmrc)
+- AWS CLI configured
+- AWS CDK CLI
+
+### Local Development
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   cd frontend && npm install
+   ```
+
+2. Run the frontend locally:
+
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+
+3. Deploy infrastructure:
+   ```bash
+   npm run cdk deploy
+   ```
+
+## 📝 License
+
+This project is licensed under the terms specified in the LICENSE file.
