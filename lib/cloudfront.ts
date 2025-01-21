@@ -31,7 +31,7 @@ export class FrontendConstruct extends Construct {
     });
 
     const apexOAI = new cloudfront.OriginAccessIdentity(this, "ApexOAI");
-    this.apexBucket = new s3.Bucket(this, "ApexBucket", {
+    this.apexBucket = new s3.Bucket(this, "ApexBucketv2", {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       websiteIndexDocument: "index.html",
