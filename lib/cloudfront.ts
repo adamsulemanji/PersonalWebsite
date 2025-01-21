@@ -35,7 +35,13 @@ export class FrontendConstruct extends Construct {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       websiteIndexDocument: "index.html",
-      publicReadAccess: true, // <-- Must be public for website hosting
+      publicReadAccess: true,
+      blockPublicAccess: new s3.BlockPublicAccess({
+        blockPublicAcls: false,
+        ignorePublicAcls: false,
+        blockPublicPolicy: false,
+        restrictPublicBuckets: false,
+      }),
     });
 
     // ***********************
