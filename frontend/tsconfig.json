@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "next-env.d.ts",
     "build/types/**/*.ts",
-    "src/pages/404.js"
+    "src/pages/404.tsx"
   ],
   "exclude": ["node_modules"]
 }

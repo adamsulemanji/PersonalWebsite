@@ -6,11 +6,12 @@ export default function Footer() {
       id="section-contact"
       className="transition-opacity duration-500 mt-20 px-4 sm:px-8"
     >
-      <h6 className="text-xl font-bold text-center mt-10 mb-5">
+      <hr className="my-10 border-t border-gray-300 w-full" />
+      <h6 className="text-center mt-10 mb-5">
         Thanks for reading this far, feel free to reach out to grab something to
         eat and chat !
       </h6>
-      <h6 className="flex items-center justify-center mb-5 text-center">
+      <h6 className=" text-md flex items-center justify-center mb-5 text-center">
         Made with ❤️ by Adam Sulemanji
       </h6>
       <div className="flex flex-wrap justify-center gap-8 sm:gap-36 pb-10 m-10">

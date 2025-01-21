@@ -50,7 +50,6 @@ export default function Home() {
   return (
     <div>
       <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen m-4 pb-20 gap-16 sm:p-20">
-        <NavBar />
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center w-full max-w-[1200px] px-4 sm:px-8">
           <section
             className={`text-6xl text-center relative one group transform transition-all duration-1000 ease-out ${
@@ -435,11 +434,7 @@ export default function Home() {
               </div>
             </div>
           </section>
-          <hr className="my-10 border-t border-gray-300 w-full" />
         </main>
-        <section id="section-contact">
-          <Footer />
-        </section>
       </div>
     </div>
   );

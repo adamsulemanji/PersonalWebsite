@@ -2,11 +2,9 @@ import React from "react";
 import localFont from "next/font/local";
 import "../styles/globals.css";
 
-const geistSans = localFont({
-  src: "../fonts/GeistMonoVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
+import Navbar from "@/components/NavBar";
+import Footer from "@/components/Footer";
+
 const geistMono = localFont({
   src: "../fonts/GeistVF.woff",
   variable: "--font-geist-mono",
@@ -20,11 +18,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        // className={`${geistMono.variable} ${geistMono.variable} antialiased accent-bg accent-text bg-amber-100/50 dark:bg-black`}
-        className={`${geistMono.variable} ${geistMono.variable} antialiased accent-bg accent-text`}
-      >
-        {children}
+      <body>
+        <Navbar />
+        <main
+          className={`${geistMono.variable} ${geistMono.variable} antialiased accent-bg accent-text`}
+        >
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
