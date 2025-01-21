@@ -72,7 +72,7 @@ export default function Navbar() {
               {leftNavItems.map((item) => (
                 <NavigationMenuItem key={item.title}>
                   <NavigationMenuLink
-                    className="px-4 py-2 m-2 rounded-md text-base bg-transparent backdrop-blur supports-[backdrop-filter]:bg-transparent hover:bg-grey-200 dark:hover:bg-gray-800"
+                    className="px-4 py-2 m-2 rounded-md text-base bg-transparent backdrop-blur supports-[backdrop-filter]:bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800"
                     onClick={() => handleScroll(item.id)}
                   >
                     {item.title}

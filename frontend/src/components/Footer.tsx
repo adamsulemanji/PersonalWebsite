@@ -14,14 +14,14 @@ export default function Footer() {
       <h6 className=" text-md flex items-center justify-center mb-5 text-center">
         Made with ❤️ by Adam Sulemanji
       </h6>
-      <div className="flex flex-wrap justify-center gap-8 sm:gap-36 pb-10 m-10">
+      <div className="flex justify-center pb-10 gap-36">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="https://github.com/adamsulemanji"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <FaGithub className="h-4 w-4 hover:bg-gray-200 dark:hover:bg-gray-800" />
+          <FaGithub />
         </a>
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
@@ -29,7 +29,7 @@ export default function Footer() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <FaLinkedin className="h-4 w-4 hover:bg-gray-200 dark:hover:bg-gray-800" />
+          <FaLinkedin />
         </a>
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
@@ -37,13 +37,13 @@ export default function Footer() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <FaInstagram className="h-4 w-4 hover:bg-gray-200 dark:hover:bg-gray-800" />
+          <FaInstagram />
         </a>
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="mailto:adam.k.sulemanji@gmail.com"
         >
-          <FaEnvelope className="h-4 w-4 hover:bg-gray-200 dark:hover:bg-gray-800" />
+          <FaEnvelope />
         </a>
         <a href="/resume.pdf">
           <span className="flex items-center gap-2 hover:underline hover:underline-offset-4">

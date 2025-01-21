@@ -18,14 +18,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <Navbar />
-        <main
-          className={`${geistMono.variable} ${geistMono.variable} antialiased accent-bg accent-text`}
-        >
-          {children}
-        </main>
-        <Footer />
+      <body className="flex justify-center">
+        <div className="max-w-[1200px] w-full">
+          <Navbar />
+          <main
+            className={`${geistMono.variable} ${geistMono.variable} antialiased accent-bg accent-text `}
+          >
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
