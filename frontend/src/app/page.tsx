@@ -1,11 +1,9 @@
 "use client";
 
-import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
-import { useState, useEffect, useRef } from "react";
-import useScrollAnimation from "@/hooks/useScrollAnimation";
+import { useState, useEffect } from "react";
 import RenderImage from "@/components/RenderImages";
 import { imagesLeft, imagesRight } from "@/assets/images";
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa";
 
 export default function Home() {
   const [introShown, setIntroShown] = useState(false);
@@ -51,7 +49,7 @@ export default function Home() {
     <div className="flex justify-center">
       <div className="max-w-[1200px] w-full">
         <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen m-4 pb-20 gap-16 sm:p-20">
-          <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center w-full max-w-[1500px] px-4 sm:px-8">
+          <main className="flex flex-col gap-8 row-start-2 w-full max-w-[1500px] px-4 sm:px-8">
             <section
               className={`text-6xl text-center relative one group transform transition-all duration-1000 ease-out ${
                 introVisible
@@ -60,9 +58,9 @@ export default function Home() {
               }`}
               id="section-intro"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
+              <div>
                 <div>
-                  <div className="text-left md:mt-80 text-7xl font-serif font-light leading-tight sm:mt-4">
+                  <div className="text-left md:mt-12 text-7xl font-serif font-light leading-tight ">
                     <span
                       className={`block transform transition-all duration-1000 ease-out ${
                         hiVisible ? "translate-x-0 " : "-translate-x-10 "
@@ -80,14 +78,7 @@ export default function Home() {
                     </span>
                   </div>
 
-                  <span className="absolute mt-5 -bottom-5 left-0 w-0 transition-all h-2 bg-green-700 group-hover:w-full dark:bg-blue-500"></span>
-                </div>
-                <div>
-                  <img
-                    src="/images/kid.jpg"
-                    alt="Adam"
-                    className="rounded-lg shadow-xl"
-                  />
+                  <span className="absolute mt-5 -bottom-5 left-0 w-0 transition-all h-2 bg-green-700 group-hover:w-2/3 dark:bg-blue-500"></span>
                 </div>
               </div>
             </section>
@@ -101,16 +92,65 @@ export default function Home() {
             ></section>
 
             <div
-              className={`text-2xl mt-3 leading-loose line-wrapped transition-all duration-1000 ${
+              className={`mt-3 leading-tight line-wrapped transition-all duration-1000 ${
                 descriptionVisible
                   ? "translate-y-0 opacity-100"
                   : "translate-y-10 opacity-0"
               }`}
             >
-              I am a <b className="accent">Developer</b> and{" "}
-              <b className="accent">Creator</b> looking to make a positive
-              impact through technology. My interest lies in building creating
-              solutions that help me and others in their lives.
+              <div className="[&>p]:mt-4">
+                <p>
+                  Im a Software Engineer at Amazon in Seattle building systems
+                  to help connect customers to products from all over the world.
+                  My philosopy is creating and design is to build in order to
+                  learn and make the peoples lives around me easier and more
+                  fun.{" "}
+                </p>
+                <p>
+                  I've previously worked at Amazon, building crossborder
+                  software, Goldman Sachs, determining market risk and
+                  PricewaterhouseCooper, helping non-profits.
+                </p>
+              </div>
+            </div>
+            <div className="justify-start">
+              <div className="flex justify-start space-x-8 pb-10 text-xl">
+                <a
+                  className="hover:underline hover:underline-offset-4"
+                  href="https://github.com/adamsulemanji"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaGithub />
+                </a>
+                <a
+                  className="hover:underline hover:underline-offset-4"
+                  href="https://www.linkedin.com/in/adamsulemanji/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaLinkedin />
+                </a>
+                <a
+                  className="hover:underline hover:underline-offset-4"
+                  href="https://www.instagram.com/adam_sulemanji"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaInstagram />
+                </a>
+                <a
+                  className="hover:underline hover:underline-offset-4"
+                  href="mailto:adam.k.sulemanji@gmail.com"
+                >
+                  <FaEnvelope />
+                </a>
+                <a href="/resume.pdf">
+                  <p className="hover:underline hover:underline-offset-4 text-sm">
+                    Resume
+                  </p>
+                </a>
+              </div>
             </div>
 
             <section
