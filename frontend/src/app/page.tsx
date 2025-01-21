@@ -16,26 +16,9 @@ export default function Home() {
   const [descriptionVisible, setDescriptionVisible] = useState(false);
   const [scrollPromptVisible, setScrollPromptVisible] = useState(false);
 
-  const [password, setPassword] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.onbeforeunload = function () {
-        window.scrollTo(0, 0);
-      };
-    }
-    return () => {
-      if (typeof window !== "undefined") {
-        window.onbeforeunload = null;
-      }
-    };
-  }, []);
-
   const handlePasswordSubmit = () => {
     const enteredPassword = prompt("Enter password");
     if (enteredPassword === "nikki") {
-      setIsAuthenticated(true);
       window.open("https://mealtracker.adamsulemanji.com", "_blank");
     } else {
       alert("Incorrect password");
@@ -263,37 +246,6 @@ export default function Home() {
                   <span className="font-bold accent">Quarterback</span> in flag
                   football.
                 </p>
-              </div>
-            </div>
-          </section>
-
-          <section className="w-full transform transition-all duration-1000 ease-out">
-            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10 mt-24">
-              <div className="leading-relaxed">
-                <p className="mb-5 text-5xl font-bold">
-                  Houston and Media
-                  <span className="accent text-6xl font-serif">.</span>
-                </p>
-                <p>
-                  I was born and raised in Houston, technically Katy for anyone
-                  in Texas.
-                </p>
-                <p className="mt-4">
-                  Houston is notorisoulsy amazing for their food and sports
-                  scene. As a lifelong fan of the Houston Astros, Rockets and
-                  Texans. Currently, my attention is on the Rockets as we have
-                  strong defensive young core under new coaching. These factors
-                  have led use to be 2nd in the west, which itself is a
-                  extremely hard division. In terms of media, I am currently
-                  watching Naruto and just watched the The Handmaiden{" "}
-                </p>
-              </div>
-              <div className="flex items-center justify-center">
-                <img
-                  src="/images/houston.jpg"
-                  alt="Houston"
-                  className="rounded-lg shadow-xl"
-                />
               </div>
             </div>
           </section>

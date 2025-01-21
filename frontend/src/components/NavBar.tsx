@@ -61,7 +61,7 @@ export default function Navbar() {
               handleScroll("section-intro");
             }}
           >
-            <span className="hidden sm:inline-block font-extrabold font-sans text-left">
+            <span className="hidden sm:inline-block font-extrabold font-sans text-left text-xl">
               Adam
               <br />
               Sulemanji

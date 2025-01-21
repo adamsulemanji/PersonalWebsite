@@ -31,17 +31,12 @@ export class FrontendConstruct extends Construct {
     });
 
     const apexOAI = new cloudfront.OriginAccessIdentity(this, "ApexOAI");
-    this.apexBucket.addToResourcePolicy(
-      new iam.PolicyStatement({
-        actions: ["s3:GetObject"],
-        resources: [this.apexBucket.arnForObjects("*")],
-        principals: [
-          new iam.CanonicalUserPrincipal(
-            apexOAI.cloudFrontOriginAccessIdentityS3CanonicalUserId
-          ),
-        ],
-      })
-    );
+    this.apexBucket = new s3.Bucket(this, "ApexBucket", {
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      autoDeleteObjects: true,
+      websiteIndexDocument: "index.html",
+      publicReadAccess: true, // <-- Must be public for website hosting
+    });
 
     // ***********************
     // 2) WWW BUCKET (Redirect)
@@ -80,30 +75,15 @@ export class FrontendConstruct extends Construct {
       "ApexDistribution",
       {
         defaultBehavior: {
-          origin: new origins.S3Origin(this.apexBucket, {
-            originAccessIdentity: apexOAI,
-          }),
+          origin: new origins.HttpOrigin(
+            this.apexBucket.bucketWebsiteDomainName
+          ),
           viewerProtocolPolicy:
             cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-          allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
         },
         defaultRootObject: "index.html",
         domainNames: [domainName],
         certificate: apexCertificate,
-        errorResponses: [
-          {
-            httpStatus: 403,
-            responseHttpStatus: 200,
-            responsePagePath: "/index.html",
-            ttl: cdk.Duration.minutes(1),
-          },
-          {
-            httpStatus: 404,
-            responseHttpStatus: 200,
-            responsePagePath: "/index.html",
-            ttl: cdk.Duration.minutes(1),
-          },
-        ],
       }
     );
 
@@ -129,7 +109,7 @@ export class FrontendConstruct extends Construct {
 
     new route53.ARecord(this, "AliasRecordApex", {
       zone,
-      recordName: domainName, // e.g., "adamsulemanji.com"
+      recordName: domainName,
       target: route53.RecordTarget.fromAlias(
         new route53targets.CloudFrontTarget(this.apexDistribution)
       ),
