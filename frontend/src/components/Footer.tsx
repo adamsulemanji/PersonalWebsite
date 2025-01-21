@@ -45,11 +45,12 @@ export default function Footer() {
         >
           <FaEnvelope />
         </a>
-        <a href='/resume.pdf'>
-          <p className='flex items-center gap-2 text-sm hover:underline hover:underline-offset-4'>
-            Resume
-          </p>
-        </a>
+        <a href='/resume.pdf' className='group'>
+                    <p className='relative text-sm hover:underline hover:underline-offset-4'>
+                      Resume
+                      <span className='absolute bottom-0 left-0 h-[1px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+                    </p>
+                  </a>
       </div>
     </footer>
   );

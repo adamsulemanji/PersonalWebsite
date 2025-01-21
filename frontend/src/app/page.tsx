@@ -125,7 +125,7 @@ export default function Home() {
                   , helping non-profits.
                 </p>
               </div>
-              <div className='mt-4 justify-start'>
+              <div className='mt-8'>
                 <div className='flex justify-start space-x-8 pb-10 text-xl'>
                   <a
                     className='hover:underline hover:underline-offset-4'

@@ -13,15 +13,13 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 interface NavItem {
   title: string;
-  id: string;
-  subItems?: { title: string; id: string }[];
+  redirect: string;
 }
 
 const leftNavItems: NavItem[] = [
-  { title: 'About', id: 'section-about' },
-  { title: 'Projects', id: 'section-projects' },
-  { title: 'Pictures', id: 'section-fun' },
-  { title: 'Contact', id: 'section-contact' },
+  { title: 'About', redirect: '/page/about' },
+  { title: 'Projects', redirect: '/page/projects' },
+  { title: 'Pictures', redirect: '/page/pictures' },
 ];
 
 const rightNavItems = [{ title: 'Dark Mode', action: 'toggleDarkMode' }];
@@ -45,16 +43,6 @@ export default function Navbar() {
     }
   }, [darkMode]);
 
-  const handleScroll = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleAction = (action: string) => {
-    if (action === 'toggleDarkMode') setDarkMode(!darkMode);
-  };
 
   return (
     <header className='sticky top-0 z-50 w-full border-b bg-background/95 pt-24 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
@@ -76,7 +64,7 @@ export default function Navbar() {
                 <NavigationMenuItem key={item.title}>
                   <NavigationMenuLink
                     className='m-2 rounded-md bg-transparent px-4 py-2 text-base backdrop-blur hover:bg-gray-100 supports-[backdrop-filter]:bg-transparent dark:hover:bg-gray-800'
-                    onClick={() => handleScroll(item.id)}
+                    href={'redirect' in item ? item.redirect : '#'}
                   >
                     {item.title}
                   </NavigationMenuLink>
@@ -113,18 +101,7 @@ export default function Navbar() {
                 {[...leftNavItems, ...rightNavItems].map((item, index) => (
                   <MobileLink
                     key={index}
-                    href={
-                      item.hasOwnProperty('id')
-                        ? `#${(item as NavItem).id}`
-                        : '#'
-                    }
-                    onClick={() =>
-                      item.hasOwnProperty('id')
-                        ? handleScroll((item as NavItem).id)
-                        : 'action' in item
-                          ? handleAction(item.action)
-                          : null
-                    }
+                    href={'redirect' in item ? item.redirect : '#'}
                   >
                     {item.title}
                   </MobileLink>
