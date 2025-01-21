@@ -50,11 +50,10 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex h-20 items-center justify-between w-full px-4 md:px-8">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pt-24">
+      <div className="flex h-24 items-center justify-between w-full px-4 md:px-8">
         <div className="mr-4 hidden md:flex">
           <a
-            href="#section-intro"
             className="mr-6 flex items-center space-x-2"
             onClick={(e) => {
               e.preventDefault();
@@ -87,7 +86,7 @@ export default function Navbar() {
           <Button
             key={darkMode ? "dark" : "light"}
             variant="ghost"
-            className="px-0 text-base bg-transparent backdrop-blur supports-[backdrop-filter]:bg-transparent p-5 m-5"
+            className="text-base bg-transparent backdrop-blur supports-[backdrop-filter]:bg-transparent px-4 py-2 m-2"
             onClick={() => setDarkMode(!darkMode)}
           >
             {darkMode ? <Sun /> : <Moon />}

@@ -92,7 +92,7 @@ export default function Home() {
             ></section>
 
             <div
-              className={`mt-3 leading-tight line-wrapped transition-all duration-1000 ${
+              className={`mt-3 leading-tight line-wrapped  duration-1000 ${
                 descriptionVisible
                   ? "translate-y-0 opacity-100"
                   : "translate-y-10 opacity-0"
@@ -100,16 +100,29 @@ export default function Home() {
             >
               <div className="[&>p]:mt-4">
                 <p>
-                  Im a Software Engineer at Amazon in Seattle building systems
-                  to help connect customers to products from all over the world.
-                  My philosopy is creating and design is to build in order to
-                  learn and make the peoples lives around me easier and more
-                  fun.{" "}
+                  Im a Software Engineer at{" "}
+                  <span className="underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400">
+                    Amazon
+                  </span>{" "}
+                  in Seattle building systems to help connect customers to
+                  products from all over the world. My philosophy in creating
+                  and design is to build in order to learn and make the peoples
+                  lives around me easier and more fun.
                 </p>
                 <p>
-                  I've previously worked at Amazon, building crossborder
-                  software, Goldman Sachs, determining market risk and
-                  PricewaterhouseCooper, helping non-profits.
+                  I've previously worked at{" "}
+                  <span className="underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400">
+                    Amazon
+                  </span>
+                  , building crossborder software,{" "}
+                  <span className="underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400">
+                    Goldman Sachs
+                  </span>
+                  , determining market risk and{" "}
+                  <span className="underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400">
+                    PricewaterhouseCooper
+                  </span>
+                  , helping non-profits.
                 </p>
               </div>
             </div>
