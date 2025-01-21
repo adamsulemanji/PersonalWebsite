@@ -54,11 +54,8 @@ export default function Navbar() {
       <div className="flex h-24 items-center justify-between w-full px-4 md:px-8">
         <div className="mr-4 hidden md:flex">
           <a
-            className="mr-6 flex items-center space-x-2"
-            onClick={(e) => {
-              e.preventDefault();
-              handleScroll("section-intro");
-            }}
+            className="mr-6 flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-gray-800  px-4 py-2 m-2 rounded-md"
+            href="/"
           >
             <span className="hidden sm:inline-block font-extrabold font-sans text-left text-xl">
               Adam

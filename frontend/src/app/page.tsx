@@ -125,8 +125,7 @@ export default function Home() {
                   , helping non-profits.
                 </p>
               </div>
-            </div>
-            <div className="justify-start">
+              <div className="justify-start mt-4">
               <div className="flex justify-start space-x-8 pb-10 text-xl">
                 <a
                   className="hover:underline hover:underline-offset-4"
@@ -158,13 +157,16 @@ export default function Home() {
                 >
                   <FaEnvelope />
                 </a>
-                <a href="/resume.pdf">
-                  <p className="hover:underline hover:underline-offset-4 text-sm">
-                    Resume
+                <a href="/resume.pdf" className="group">
+                  <p className="hover:underline hover:underline-offset-4 text-sm relative">
+                  Resume
+                  <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-current transition-all duration-300 group-hover:w-full"></span>
                   </p>
                 </a>
               </div>
             </div>
+            </div>
+            
 
             <section
               className={`grid grid-cols-1 md:grid-cols-2 w-full mt-32 transition-all duration-1000 ${
