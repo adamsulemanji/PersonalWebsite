@@ -31,18 +31,17 @@ export class FrontendConstruct extends Construct {
     });
 
     const apexOAI = new cloudfront.OriginAccessIdentity(this, "ApexOAI");
-    this.apexBucket = new s3.Bucket(this, "ApexBucketv2", {
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-      autoDeleteObjects: true,
-      websiteIndexDocument: "index.html",
-      publicReadAccess: true,
-      blockPublicAccess: new s3.BlockPublicAccess({
-        blockPublicAcls: false,
-        ignorePublicAcls: false,
-        blockPublicPolicy: false,
-        restrictPublicBuckets: false,
-      }),
-    });
+    this.apexBucket.addToResourcePolicy(
+      new iam.PolicyStatement({
+        actions: ["s3:GetObject"],
+        resources: [this.apexBucket.arnForObjects("*")],
+        principals: [
+          new iam.CanonicalUserPrincipal(
+            apexOAI.cloudFrontOriginAccessIdentityS3CanonicalUserId
+          ),
+        ],
+      })
+    );
 
     // ***********************
     // 2) WWW BUCKET (Redirect)
@@ -73,6 +72,27 @@ export class FrontendConstruct extends Construct {
       validation: acm.CertificateValidation.fromDns(zone),
     });
 
+    const rewriteFunction = new cloudfront.Function(
+      this,
+      "DirectoryIndexRewrite",
+      {
+        code: cloudfront.FunctionCode.fromInline(`
+    function handler(event) {
+      var request = event.request;
+      // If path doesn't include a file extension and doesn't end with a slash, rewrite
+      if (!request.uri.includes('.') && !request.uri.endsWith('/')) {
+        request.uri = request.uri + "/index.html";
+      }
+      // If path ends with '/', rewrite to '/index.html'
+      else if (request.uri.endsWith('/')) {
+        request.uri = request.uri + "index.html";
+      }
+      return request;
+    }
+      `),
+      }
+    );
+
     // ***********************
     // 4) CLOUDFRONT DISTRIBUTIONS
     // ***********************
@@ -81,15 +101,35 @@ export class FrontendConstruct extends Construct {
       "ApexDistribution",
       {
         defaultBehavior: {
-          origin: new origins.HttpOrigin(
-            this.apexBucket.bucketWebsiteDomainName
-          ),
+          origin: new origins.S3Origin(this.apexBucket, {
+            originAccessIdentity: apexOAI,
+          }),
           viewerProtocolPolicy:
             cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
+          functionAssociations: [
+            {
+              eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
+              function: rewriteFunction,
+            },
+          ],
         },
-        defaultRootObject: "index.html",
         domainNames: [domainName],
         certificate: apexCertificate,
+        errorResponses: [
+          {
+            httpStatus: 404,
+            responseHttpStatus: 404,
+            responsePagePath: "/index.html",
+            ttl: cdk.Duration.minutes(1),
+          },
+          {
+            httpStatus: 403,
+            responseHttpStatus: 404,
+            responsePagePath: "/index.html",
+            ttl: cdk.Duration.minutes(1),
+          },
+        ],
       }
     );
 
@@ -115,7 +155,7 @@ export class FrontendConstruct extends Construct {
 
     new route53.ARecord(this, "AliasRecordApex", {
       zone,
-      recordName: domainName,
+      recordName: domainName, // e.g., "adamsulemanji.com"
       target: route53.RecordTarget.fromAlias(
         new route53targets.CloudFrontTarget(this.apexDistribution)
       ),
