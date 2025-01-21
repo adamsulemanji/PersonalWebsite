@@ -105,9 +105,9 @@ export default function Home() {
                     Amazon
                   </span>{' '}
                   in Seattle building systems to help connect customers to
-                  products from all over the world. My philosophy in creating
-                  and design is to build in order to learn and make the peoples
-                  lives around me easier and more fun.
+                  international products from all over the world. My philosophy
+                  in creating and design is to build in order to learn and make
+                  the peoples lives around me easier and more fun.
                 </p>
                 <p>
                   I've previously worked at{' '}
