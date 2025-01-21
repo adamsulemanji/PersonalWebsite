@@ -61,6 +61,6 @@ const config: Config = {
       "dot-pattern": "radial-gradient(currentColor 1px, transparent 1px)",
     },
   },
-  plugins: [require("tailwindcss-animate"), "prettier-plugin-tailwindcss"],
+  plugins: [require("tailwindcss-animate")],
 };
 export default config;
