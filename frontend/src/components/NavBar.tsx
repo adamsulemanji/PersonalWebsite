@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { Menu, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -27,10 +27,17 @@ const leftNavItems: NavItem[] = [
 const rightNavItems = [{ title: 'Dark Mode', action: 'toggleDarkMode' }];
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [darkMode, setDarkMode] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const date_time = new Date();
+    if (date_time.getHours() >= 18 || date_time.getHours() < 6) {
+      setDarkMode(true);
+    }
+  }, []);
+
+  useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark');
     } else {
@@ -50,14 +57,14 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pt-24">
-      <div className="flex h-24 items-center justify-between w-full px-4 md:px-8">
-        <div className="mr-4 hidden md:flex">
+    <header className='sticky top-0 z-50 w-full border-b bg-background/95 pt-24 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
+      <div className='flex h-24 w-full items-center justify-between px-4 md:px-8'>
+        <div className='mr-4 hidden md:flex'>
           <a
-            className="mr-6 flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-gray-800  px-4 py-2 m-2 rounded-md"
-            href="/"
+            className='m-2 mr-6 flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800'
+            href='/'
           >
-            <span className="hidden sm:inline-block font-extrabold font-sans text-left text-xl">
+            <span className='hidden text-left font-sans text-xl font-extrabold sm:inline-block'>
               Adam
               <br />
               Sulemanji
@@ -68,7 +75,7 @@ export default function Navbar() {
               {leftNavItems.map((item) => (
                 <NavigationMenuItem key={item.title}>
                   <NavigationMenuLink
-                    className="px-4 py-2 m-2 rounded-md text-base bg-transparent backdrop-blur supports-[backdrop-filter]:bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800"
+                    className='m-2 rounded-md bg-transparent px-4 py-2 text-base backdrop-blur hover:bg-gray-100 supports-[backdrop-filter]:bg-transparent dark:hover:bg-gray-800'
                     onClick={() => handleScroll(item.id)}
                   >
                     {item.title}
@@ -79,11 +86,11 @@ export default function Navbar() {
           </NavigationMenu>
         </div>
 
-        <div className="hidden md:flex items-center space-x-4 md:space-x-6">
+        <div className='hidden items-center space-x-4 md:flex md:space-x-6'>
           <Button
             key={darkMode ? 'dark' : 'light'}
-            variant="ghost"
-            className="text-base bg-transparent backdrop-blur supports-[backdrop-filter]:bg-transparent px-4 py-2 m-2"
+            variant='ghost'
+            className='m-2 bg-transparent px-4 py-2 text-base backdrop-blur supports-[backdrop-filter]:bg-transparent'
             onClick={() => setDarkMode(!darkMode)}
           >
             {darkMode ? <Sun /> : <Moon />}
@@ -93,16 +100,16 @@ export default function Navbar() {
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button
-              variant="ghost"
-              className="mr-2 px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 md:hidden"
+              variant='ghost'
+              className='mr-2 px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 md:hidden'
             >
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle Menu</span>
+              <Menu className='h-5 w-5' />
+              <span className='sr-only'>Toggle Menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="pr-0">
-            <div className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
-              <div className="flex flex-col space-y-3">
+          <SheetContent side='left' className='pr-0'>
+            <div className='my-4 h-[calc(100vh-8rem)] pb-10 pl-6'>
+              <div className='flex flex-col space-y-3'>
                 {[...leftNavItems, ...rightNavItems].map((item, index) => (
                   <MobileLink
                     key={index}
@@ -145,7 +152,7 @@ function MobileLink({ href, onClick, children }: MobileLinkProps) {
         e.preventDefault();
         onClick?.();
       }}
-      className="block py-2 text-lg font-medium"
+      className='block py-2 text-lg font-medium'
     >
       {children}
     </a>

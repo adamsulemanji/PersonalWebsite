@@ -17,12 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="flex justify-center">
-        <div className="max-w-[1200px] w-full">
+    <html lang='en'>
+      <body className='flex justify-center'>
+        <div className='w-full max-w-[1200px]'>
           <Navbar />
           <main
-            className={`${geistMono.variable} ${geistMono.variable} antialiased accent-bg accent-text `}
+            className={`${geistMono.variable} ${geistMono.variable} accent-bg accent-text antialiased`}
           >
             {children}
           </main>
