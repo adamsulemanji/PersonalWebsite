@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Menu, Sun, Moon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import * as React from 'react';
+import { Menu, Sun, Moon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+} from '@/components/ui/navigation-menu';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 interface NavItem {
   title: string;
@@ -18,13 +18,13 @@ interface NavItem {
 }
 
 const leftNavItems: NavItem[] = [
-  { title: "About", id: "section-about" },
-  { title: "Projects", id: "section-projects" },
-  { title: "Pictures", id: "section-fun" },
-  { title: "Contact", id: "section-contact" },
+  { title: 'About', id: 'section-about' },
+  { title: 'Projects', id: 'section-projects' },
+  { title: 'Pictures', id: 'section-fun' },
+  { title: 'Contact', id: 'section-contact' },
 ];
 
-const rightNavItems = [{ title: "Dark Mode", action: "toggleDarkMode" }];
+const rightNavItems = [{ title: 'Dark Mode', action: 'toggleDarkMode' }];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -32,21 +32,21 @@ export default function Navbar() {
 
   React.useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add("dark");
+      document.documentElement.classList.add('dark');
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove('dark');
     }
   }, [darkMode]);
 
   const handleScroll = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   const handleAction = (action: string) => {
-    if (action === "toggleDarkMode") setDarkMode(!darkMode);
+    if (action === 'toggleDarkMode') setDarkMode(!darkMode);
   };
 
   return (
@@ -54,11 +54,8 @@ export default function Navbar() {
       <div className="flex h-24 items-center justify-between w-full px-4 md:px-8">
         <div className="mr-4 hidden md:flex">
           <a
-            className="mr-6 flex items-center space-x-2"
-            onClick={(e) => {
-              e.preventDefault();
-              handleScroll("section-intro");
-            }}
+            className="mr-6 flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-gray-800  px-4 py-2 m-2 rounded-md"
+            href="/"
           >
             <span className="hidden sm:inline-block font-extrabold font-sans text-left text-xl">
               Adam
@@ -84,7 +81,7 @@ export default function Navbar() {
 
         <div className="hidden md:flex items-center space-x-4 md:space-x-6">
           <Button
-            key={darkMode ? "dark" : "light"}
+            key={darkMode ? 'dark' : 'light'}
             variant="ghost"
             className="text-base bg-transparent backdrop-blur supports-[backdrop-filter]:bg-transparent px-4 py-2 m-2"
             onClick={() => setDarkMode(!darkMode)}
@@ -110,16 +107,16 @@ export default function Navbar() {
                   <MobileLink
                     key={index}
                     href={
-                      item.hasOwnProperty("id")
+                      item.hasOwnProperty('id')
                         ? `#${(item as NavItem).id}`
-                        : "#"
+                        : '#'
                     }
                     onClick={() =>
-                      item.hasOwnProperty("id")
+                      item.hasOwnProperty('id')
                         ? handleScroll((item as NavItem).id)
-                        : "action" in item
-                        ? handleAction(item.action)
-                        : null
+                        : 'action' in item
+                          ? handleAction(item.action)
+                          : null
                     }
                   >
                     {item.title}

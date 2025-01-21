@@ -121,13 +121,13 @@ export class FrontendConstruct extends Construct {
             httpStatus: 404,
             responseHttpStatus: 404,
             responsePagePath: "/index.html",
-            ttl: cdk.Duration.minutes(1),
+            ttl: cdk.Duration.minutes(0),
           },
           {
             httpStatus: 403,
             responseHttpStatus: 404,
             responsePagePath: "/404/index.html",
-            ttl: cdk.Duration.minutes(1),
+            ttl: cdk.Duration.minutes(0),
           },
         ],
       }

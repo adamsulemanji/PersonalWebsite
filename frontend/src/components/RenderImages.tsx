@@ -1,4 +1,4 @@
-import { useInView } from "react-intersection-observer";
+import { useInView } from 'react-intersection-observer';
 
 const RenderImage = (src: string, alt: string) => {
   const { ref, inView } = useInView({
@@ -13,9 +13,9 @@ const RenderImage = (src: string, alt: string) => {
         src={src}
         alt={alt}
         loading="lazy"
-        onError={(e) => (e.currentTarget.src = "/fallback-image.jpg")}
+        onError={(e) => (e.currentTarget.src = '/fallback-image.jpg')}
         className={`rounded-sm transition-transform duration-1000 ease-in-out
-            ${inView ? "translate-y-0" : "translate-y-full"}`}
+            ${inView ? 'translate-y-0' : 'translate-y-full'}`}
       />
     </div>
   );
