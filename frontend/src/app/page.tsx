@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import RenderImage from "@/components/RenderImages";
-import { imagesLeft, imagesRight } from "@/assets/images";
-import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa";
+import { useState, useEffect } from 'react';
+import RenderImage from '@/components/RenderImages';
+import { imagesLeft, imagesRight } from '@/assets/images';
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 
 export default function Home() {
   const [introShown, setIntroShown] = useState(false);
@@ -15,11 +15,11 @@ export default function Home() {
   const [scrollPromptVisible, setScrollPromptVisible] = useState(false);
 
   const handlePasswordSubmit = () => {
-    const enteredPassword = prompt("Enter password");
-    if (enteredPassword === "nikki") {
-      window.open("https://mealtracker.adamsulemanji.com", "_blank");
+    const enteredPassword = prompt('Enter password');
+    if (enteredPassword === 'nikki') {
+      window.open('https://mealtracker.adamsulemanji.com', '_blank');
     } else {
-      alert("Incorrect password");
+      alert('Incorrect password');
     }
   };
 
@@ -53,8 +53,8 @@ export default function Home() {
             <section
               className={`text-6xl text-center relative one group transform transition-all duration-1000 ease-out ${
                 introVisible
-                  ? "translate-x-0 opacity-100"
-                  : "-translate-x-full opacity-0"
+                  ? 'translate-x-0 opacity-100'
+                  : '-translate-x-full opacity-0'
               }`}
               id="section-intro"
             >
@@ -63,14 +63,14 @@ export default function Home() {
                   <div className="text-left md:mt-12 text-7xl font-serif font-light leading-tight ">
                     <span
                       className={`block transform transition-all duration-1000 ease-out ${
-                        hiVisible ? "translate-x-0 " : "-translate-x-10 "
+                        hiVisible ? 'translate-x-0 ' : '-translate-x-10 '
                       }`}
                     >
                       Hi, my
                     </span>
                     <span
                       className={`block transform transition-all duration-1000 ease-out ${
-                        nameVisible ? "translate-x-0" : "translate-x-10 "
+                        nameVisible ? 'translate-x-0' : 'translate-x-10 '
                       }`}
                     >
                       name is <b className="text-8xl">Adam</b>
@@ -86,39 +86,39 @@ export default function Home() {
             <section
               className={`text-lg text-center transition-all duration-1000 ${
                 constructionVisible
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-10 opacity-0"
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-10 opacity-0'
               }`}
             ></section>
 
             <div
               className={`mt-3 leading-tight line-wrapped  duration-1000 ${
                 descriptionVisible
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-10 opacity-0"
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-10 opacity-0'
               }`}
             >
               <div className="[&>p]:mt-4">
                 <p>
-                  Im a Software Engineer at{" "}
+                  Im a Software Engineer at{' '}
                   <span className="underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400">
                     Amazon
-                  </span>{" "}
+                  </span>{' '}
                   in Seattle building systems to help connect customers to
                   products from all over the world. My philosophy in creating
                   and design is to build in order to learn and make the peoples
                   lives around me easier and more fun.
                 </p>
                 <p>
-                  I've previously worked at{" "}
+                  I've previously worked at{' '}
                   <span className="underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400">
                     Amazon
                   </span>
-                  , building crossborder software,{" "}
+                  , building crossborder software,{' '}
                   <span className="underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400">
                     Goldman Sachs
                   </span>
-                  , determining market risk and{" "}
+                  , determining market risk and{' '}
                   <span className="underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400">
                     PricewaterhouseCooper
                   </span>
@@ -126,53 +126,52 @@ export default function Home() {
                 </p>
               </div>
               <div className="justify-start mt-4">
-              <div className="flex justify-start space-x-8 pb-10 text-xl">
-                <a
-                  className="hover:underline hover:underline-offset-4"
-                  href="https://github.com/adamsulemanji"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaGithub />
-                </a>
-                <a
-                  className="hover:underline hover:underline-offset-4"
-                  href="https://www.linkedin.com/in/adamsulemanji/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaLinkedin />
-                </a>
-                <a
-                  className="hover:underline hover:underline-offset-4"
-                  href="https://www.instagram.com/adam_sulemanji"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaInstagram />
-                </a>
-                <a
-                  className="hover:underline hover:underline-offset-4"
-                  href="mailto:adam.k.sulemanji@gmail.com"
-                >
-                  <FaEnvelope />
-                </a>
-                <a href="/resume.pdf" className="group">
-                  <p className="hover:underline hover:underline-offset-4 text-sm relative">
-                  Resume
-                  <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-current transition-all duration-300 group-hover:w-full"></span>
-                  </p>
-                </a>
+                <div className="flex justify-start space-x-8 pb-10 text-xl">
+                  <a
+                    className="hover:underline hover:underline-offset-4"
+                    href="https://github.com/adamsulemanji"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaGithub />
+                  </a>
+                  <a
+                    className="hover:underline hover:underline-offset-4"
+                    href="https://www.linkedin.com/in/adamsulemanji/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaLinkedin />
+                  </a>
+                  <a
+                    className="hover:underline hover:underline-offset-4"
+                    href="https://www.instagram.com/adam_sulemanji"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaInstagram />
+                  </a>
+                  <a
+                    className="hover:underline hover:underline-offset-4"
+                    href="mailto:adam.k.sulemanji@gmail.com"
+                  >
+                    <FaEnvelope />
+                  </a>
+                  <a href="/resume.pdf" className="group">
+                    <p className="hover:underline hover:underline-offset-4 text-sm relative">
+                      Resume
+                      <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-current transition-all duration-300 group-hover:w-full"></span>
+                    </p>
+                  </a>
+                </div>
               </div>
             </div>
-            </div>
-            
 
             <section
               className={`grid grid-cols-1 md:grid-cols-2 w-full mt-32 transition-all duration-1000 ${
                 scrollPromptVisible
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-10 opacity-0"
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-10 opacity-0'
               }`}
             >
               <div className="flex flex-col gap-4 items-center">
@@ -188,7 +187,7 @@ export default function Home() {
                     stroke="black"
                     strokeWidth="1"
                     className={`transition-transform duration-[3s] ease-out dark:stroke-white ${
-                      scrollPromptVisible ? "grow-line" : ""
+                      scrollPromptVisible ? 'grow-line' : ''
                     }`}
                   />
                 </svg>
@@ -205,38 +204,38 @@ export default function Home() {
                   <div className="items-center justify-center leading-relaxed">
                     <p>
                       My first day of college I wasnt sure what I really wanted
-                      to be. My parents and friends told me I should become a{" "}
+                      to be. My parents and friends told me I should become a{' '}
                       <span className="font-bold accent">Doctor</span> so I
-                      tried and pursued{" "}
+                      tried and pursued{' '}
                       <span className="font-bold accent">
                         Biomedical Engineering
                       </span>
                       . Texas A&M requires all engineering students to take one
-                      coding class in{" "}
+                      coding class in{' '}
                       <span className="font-bold accent">Python</span> their
-                      first semester so I did. Since then, I loved the idea of{" "}
+                      first semester so I did. Since then, I loved the idea of{' '}
                       <span className="font-bold accent">programming</span> but
-                      even more so the idea of{" "}
+                      even more so the idea of{' '}
                       <span className="font-bold accent">building</span>.
                     </p>
                     <p className="mt-4">
-                      After my first year, I declared{" "}
-                      <span className="font-bold accent">Computer Science</span>{" "}
+                      After my first year, I declared{' '}
+                      <span className="font-bold accent">Computer Science</span>{' '}
                       as my major not really knowing the journey I was getting
                       myself into. The next 2.5 years were filled with endless
                       days of learning and building and everything in between.
                       After 3.5 long but actually short years, I graduated with
-                      a degree in Computer Science and a minor in{" "}
+                      a degree in Computer Science and a minor in{' '}
                       <span className="font-bold accent">Statistics</span>.
                       During sophomore year of college, I knew I wanted to
                       continue my education and get a masters degree. I decided
                       to do an accelerated masters program in Computer Science
                       and which I graduated in December 2024. Postgrad I plan on
-                      returning back to{" "}
+                      returning back to{' '}
                       <b className="text-xl accent  underline-offset-auto">
                         Amazon
-                      </b>{" "}
-                      in Seattle a part of the Crosslistings Crossborders team{" "}
+                      </b>{' '}
+                      in Seattle a part of the Crosslistings Crossborders team{' '}
                     </p>
                   </div>
                   <div className="flex items-center justify-center">
@@ -269,35 +268,35 @@ export default function Home() {
                     only 22), I tried to play every sport. My dad signed me up
                     for <span className="font-bold accent">KYS</span> (Katy
                     Youth Soccer) but I realized I wasn't very good. I later
-                    switched into{" "}
+                    switched into{' '}
                     <span className="font-bold accent">basketball</span> through
-                    the local <span className="font-bold accent">KYB</span>{" "}
+                    the local <span className="font-bold accent">KYB</span>{' '}
                     (Katy Youth Basketball) league and played for a few years
                     with of course my dad as the coach as well.
                   </p>
                   <p className="mt-4">
-                    During my middle school years, I transitioned into{" "}
+                    During my middle school years, I transitioned into{' '}
                     <span className="font-bold accent">baseball</span> as I
                     realized I could pitch pretty well. But throughout all of
-                    this, I was playing{" "}
+                    this, I was playing{' '}
                     <span className="font-bold accent">tennis</span> because
                     that's the sport my dad played growing up. When I got to
-                    high school I decided to switch into{" "}
+                    high school I decided to switch into{' '}
                     <span className="font-bold accent">tennis</span> full time
-                    dropping both organized baseball and basketball.{" "}
+                    dropping both organized baseball and basketball.{' '}
                   </p>
                   <p className="mt-4">
-                    These days I now spend my time playing{" "}
-                    <span className="font-bold accent">tennis</span>{" "}
+                    These days I now spend my time playing{' '}
+                    <span className="font-bold accent">tennis</span>{' '}
                     <span className="text-md">
                       (pickleball isn't a real sport...sorry)
                     </span>
-                    , trying to fix my slice in{" "}
+                    , trying to fix my slice in{' '}
                     <span className="font-bold accent">golf</span> (thanks
-                    baseball...), playing 3 v 3{" "}
+                    baseball...), playing 3 v 3{' '}
                     <span className="font-bold accent">basketball</span> (don't
                     like running), running half marathon races (I like the
-                    medals) and trying to become a great{" "}
+                    medals) and trying to become a great{' '}
                     <span className="font-bold accent">Quarterback</span> in
                     flag football.
                   </p>
@@ -440,7 +439,7 @@ export default function Home() {
                   </p>
                   <p className="mt-4">
                     This simple website allows her to track her meals. The site
-                    was built completely from my CDK template project I created.{" "}
+                    was built completely from my CDK template project I created.{' '}
                   </p>
                 </div>
               </div>
@@ -475,11 +474,11 @@ export default function Home() {
                   </p>
                   <p className="mt-4">
                     With that I realized that there exists a lack of a CDK tool
-                    that allows for easy creation of CDK projects. The regular{" "}
+                    that allows for easy creation of CDK projects. The regular{' '}
                     <code className="inline bg-slate-100  px-2 dark:bg-white dark:text-black font-mono">
-                      {" "}
+                      {' '}
                       cdk init
-                    </code>{" "}
+                    </code>{' '}
                     command only provides the scaffolding. The premise of this
                     project allows for users to get a fully functional
                     CodePipeline for CI/CD, a frontend stack, a cloudfront

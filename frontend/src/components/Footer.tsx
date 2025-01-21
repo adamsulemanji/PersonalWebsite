@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -11,7 +11,7 @@ export default function Footer() {
         Thanks for reading this far, feel free to reach out to grab something to
         eat and chat !
       </h6>
-      <h6 className=" text-md flex items-center justify-center mb-5 text-center">
+      <h6 className="text-center text-md flex items-center justify-center mb-5 ">
         Made with ❤️ by Adam Sulemanji
       </h6>
       <div className="flex justify-center pb-10 gap-36">

@@ -1,14 +1,14 @@
-import React from "react";
-import localFont from "next/font/local";
-import "../styles/globals.css";
+import React from 'react';
+import localFont from 'next/font/local';
+import '../styles/globals.css';
 
-import Navbar from "@/components/NavBar";
-import Footer from "@/components/Footer";
+import Navbar from '@/components/NavBar';
+import Footer from '@/components/Footer';
 
 const geistMono = localFont({
-  src: "../fonts/GeistVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+  src: '../fonts/GeistVF.woff',
+  variable: '--font-geist-mono',
+  weight: '100 900',
 });
 
 export default function RootLayout({
