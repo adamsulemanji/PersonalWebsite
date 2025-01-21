@@ -242,7 +242,7 @@ export default function Home() {
                     <img
                       src="/images/class.jpeg"
                       alt="Me in Class"
-                            className="rounded-lg shadow-xl"
+                      className="rounded-lg shadow-xl"
                     />
                   </div>
                 </div>
