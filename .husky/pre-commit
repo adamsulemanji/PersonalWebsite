@@ -1,4 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx lint-staged
+# Go into frontend folder and run npm run format
+cd frontend
+npm run format
+

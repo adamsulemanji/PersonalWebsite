@@ -249,62 +249,62 @@ export default function Home() {
               </div>
             </section>
 
-                                        <section className="w-full transform transition-all duration-1000 ease-out">
-                                          <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10 mt-24">
-                                            <div className="flex items-center justify-center">
-                                              <img
-                                                src="/images/football.jpeg"
-                                                alt="Football Game"
-                                                className="rounded-lg shadow-xl w-full object-scale-down"
-                                              />
-                                            </div>
-                                            <div className="leading-relaxed">
-                                              <p className="mb-5 text-5xl font-bold">
-                                                Sports all the time
-                                                <span className="accent text-6xl font-serif">.</span>
-                                              </p>
-                                              <p>
-                                                During my days of youth (technically I'm still young, I'm
-                                                only 22), I tried to play every sport. My dad signed me up
-                                                for <span className="font-bold accent">KYS</span> (Katy
-                                                Youth Soccer) but I realized I wasn't very good. I later
-                                                switched into{' '}
-                                                <span className="font-bold accent">basketball</span> through
-                                                the local <span className="font-bold accent">KYB</span>{' '}
-                                                (Katy Youth Basketball) league and played for a few years
-                                                with of course my dad as the coach as well.
-                                              </p>
-                                              <p className="mt-4">
-                                                During my middle school years, I transitioned into{' '}
-                                                <span className="font-bold accent">baseball</span> as I
-                                                realized I could pitch pretty well. But throughout all of
-                                                this, I was playing{' '}
-                                                <span className="font-bold accent">tennis</span> because
-                                                that's the sport my dad played growing up. When I got to
-                                                high school I decided to switch into{' '}
-                                                <span className="font-bold accent">tennis</span> full time
-                                                dropping both organized baseball and basketball.{' '}
-                                              </p>
-                                              <p className="mt-4">
-                                                These days I now spend my time playing{' '}
-                                                <span className="font-bold accent">tennis</span>{' '}
-                                                <span className="text-md">
-                                                  (pickleball isn't a real sport...sorry)
-                                                </span>
-                                                , trying to fix my slice in{' '}
-                                                <span className="font-bold accent">golf</span> (thanks
-                                                baseball...), playing 3 v 3{' '}
-                                                <span className="font-bold accent">basketball</span> (don't
-                                                like running), running half marathon races (I like the
-                                                medals) and trying to become a great{' '}
-                                                <span className="font-bold accent">Quarterback</span> in
-                                                flag football.
-                                              </p>
-                                            </div>
-                                          </div>
-                                        </section>
-                                        <section className="mt-16 w-full max-w-[1500px]">
-                                          <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
+            <section className="w-full transform transition-all duration-1000 ease-out">
+              <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10 mt-24">
+                <div className="flex items-center justify-center">
+                  <img
+                    src="/images/football.jpeg"
+                    alt="Football Game"
+                    className="rounded-lg shadow-xl w-full object-scale-down"
+                  />
+                </div>
+                <div className="leading-relaxed">
+                  <p className="mb-5 text-5xl font-bold">
+                    Sports all the time
+                    <span className="accent text-6xl font-serif">.</span>
+                  </p>
+                  <p>
+                    During my days of youth (technically I'm still young, I'm
+                    only 22), I tried to play every sport. My dad signed me up
+                    for <span className="font-bold accent">KYS</span> (Katy
+                    Youth Soccer) but I realized I wasn't very good. I later
+                    switched into{' '}
+                    <span className="font-bold accent">basketball</span> through
+                    the local <span className="font-bold accent">KYB</span>{' '}
+                    (Katy Youth Basketball) league and played for a few years
+                    with of course my dad as the coach as well.
+                  </p>
+                  <p className="mt-4">
+                    During my middle school years, I transitioned into{' '}
+                    <span className="font-bold accent">baseball</span> as I
+                    realized I could pitch pretty well. But throughout all of
+                    this, I was playing{' '}
+                    <span className="font-bold accent">tennis</span> because
+                    that's the sport my dad played growing up. When I got to
+                    high school I decided to switch into{' '}
+                    <span className="font-bold accent">tennis</span> full time
+                    dropping both organized baseball and basketball.{' '}
+                  </p>
+                  <p className="mt-4">
+                    These days I now spend my time playing{' '}
+                    <span className="font-bold accent">tennis</span>{' '}
+                    <span className="text-md">
+                      (pickleball isn't a real sport...sorry)
+                    </span>
+                    , trying to fix my slice in{' '}
+                    <span className="font-bold accent">golf</span> (thanks
+                    baseball...), playing 3 v 3{' '}
+                    <span className="font-bold accent">basketball</span> (don't
+                    like running), running half marathon races (I like the
+                    medals) and trying to become a great{' '}
+                    <span className="font-bold accent">Quarterback</span> in
+                    flag football.
+                  </p>
+                </div>
+              </div>
+            </section>
+            <section className="mt-16 w-full max-w-[1500px]">
+              <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-10">
                 <div className="mt-10">
                   <p className="mb-5 text-5xl font-bold">
                     Fotographs and Friends
