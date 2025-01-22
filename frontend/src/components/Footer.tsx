@@ -3,7 +3,6 @@ import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 export default function Footer() {
   return (
     <footer
-      id='section-contact'
       className='mt-20 px-4 transition-opacity duration-500 sm:px-8'
     >
       <hr className='my-10 w-full border-t border-gray-300' />
