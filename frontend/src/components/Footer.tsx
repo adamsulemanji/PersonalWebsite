@@ -2,9 +2,7 @@ import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 
 export default function Footer() {
   return (
-    <footer
-      className='mt-20 px-4 transition-opacity duration-500 sm:px-8'
-    >
+    <footer className='mt-20 px-4 transition-opacity duration-500 sm:px-8'>
       <hr className='my-10 w-full border-t border-gray-300' />
       <h6 className='mb-5 mt-10 text-center'>
         Thanks for reading this far, feel free to reach out to grab something to
@@ -45,11 +43,11 @@ export default function Footer() {
           <FaEnvelope />
         </a>
         <a href='/resume.pdf' className='group'>
-                    <p className='relative text-sm hover:underline hover:underline-offset-4'>
-                      Resume
-                      <span className='absolute bottom-0 left-0 h-[1px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
-                    </p>
-                  </a>
+          <p className='relative text-sm hover:underline hover:underline-offset-4'>
+            Resume
+            <span className='absolute bottom-0 left-0 h-[1px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+          </p>
+        </a>
       </div>
     </footer>
   );

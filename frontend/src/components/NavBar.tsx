@@ -10,6 +10,7 @@ import {
   NavigationMenuList,
 } from '@/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import LightDarkToggle from '@/components/LightDarkToggle';
 
 interface NavItem {
   title: string;
@@ -26,23 +27,6 @@ const rightNavItems = [{ title: 'Dark Mode', action: 'toggleDarkMode' }];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    const date_time = new Date();
-    if (date_time.getHours() >= 18 || date_time.getHours() < 6) {
-      setDarkMode(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [darkMode]);
-
 
   return (
     <header className='sticky top-0 z-50 w-full border-b bg-background/95 p-12 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
@@ -75,14 +59,7 @@ export default function Navbar() {
         </div>
 
         <div className='hidden items-center space-x-4 md:flex md:space-x-6'>
-          <Button
-            key={darkMode ? 'dark' : 'light'}
-            variant='ghost'
-            className='m-2 bg-transparent px-4 py-2 text-base backdrop-blur supports-[backdrop-filter]:bg-transparent'
-            onClick={() => setDarkMode(!darkMode)}
-          >
-            {darkMode ? <Sun /> : <Moon />}
-          </Button>
+          <LightDarkToggle />
         </div>
 
         <Sheet open={isOpen} onOpenChange={setIsOpen}>

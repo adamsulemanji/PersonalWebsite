@@ -193,7 +193,6 @@ export default function Home() {
               <div className='mt-8 md:mt-0'></div>
             </section>
 
-    
             <section
               className='mt-24 w-full max-w-[1500px]'
               id='section-projects'
