@@ -31,7 +31,7 @@ A modern, responsive personal portfolio website built with Next.js and deployed 
 ## 🏗️ Project Structure
 
 ```
-├── frontend/               # Next.js frontend application
+├── frontend/              # Next.js frontend application
 ├── lib/                   # AWS CDK infrastructure code
 ├── bin/                   # CDK app entry point
 └── test/                  # Infrastructure tests
