@@ -63,7 +63,7 @@ A modern, responsive personal portfolio website built with Next.js and deployed 
 
 3. Deploy infrastructure:
    ```bash
-   npm run cdk deploy
+   cdk deploy
    ```
 
 ## 📝 License
