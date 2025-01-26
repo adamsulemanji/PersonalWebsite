@@ -37,6 +37,11 @@ A modern, responsive personal portfolio website built with Next.js and deployed 
 └── test/                  # Infrastructure tests
 ```
 
+
+## System Architecture
+
+![System Architecture](./diagram.png)
+
 ## 🚦 Getting Started
 
 ### Prerequisites

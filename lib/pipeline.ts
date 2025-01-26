@@ -1,19 +1,13 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-
-// CodePipeline
 import * as codepipeline from "aws-cdk-lib/aws-codepipeline";
 import * as codepipeline_actions from "aws-cdk-lib/aws-codepipeline-actions";
-
-// CodeBuild
 import * as codebuild from "aws-cdk-lib/aws-codebuild";
 import * as iam from "aws-cdk-lib/aws-iam";
 
-// We’ll import the bucket from your FrontendConstruct via props
 import { FrontendConstruct } from "./cloudfront";
 
 export interface PipelineStackProps extends cdk.StackProps {
-  // Pass the S3 bucket and distribution from the FrontendConstruct
   frontendConstruct: FrontendConstruct;
 }
 
@@ -24,7 +18,6 @@ export class Pipeline extends cdk.Stack {
     // ********** ARTIFACTS **********
     const sourceOutput = new codepipeline.Artifact("SourceOutput");
     const synthOutput = new codepipeline.Artifact("SynthOutput");
-    // We'll store the compiled React build here:
     const frontendBuildOutput = new codepipeline.Artifact(
       "FrontendBuildOutput"
     );
@@ -138,7 +131,6 @@ export class Pipeline extends cdk.Stack {
       });
 
     // ********** DEPLOY FRONTEND ACTION (S3) **********
-    // This uploads the React build artifacts to the S3 bucket from FrontendConstruct
     const deployFrontendAction = new codepipeline_actions.S3DeployAction({
       actionName: "Deploy_Frontend_To_S3",
       bucket: props.frontendConstruct.apexBucket,
