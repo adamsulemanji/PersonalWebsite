@@ -13,7 +13,6 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import LightDarkToggle from '@/components/theme/LightDarkToggle';
 import { usePathname } from 'next/navigation';
 
-
 interface NavItem {
   title: string;
   redirect: string;
@@ -51,7 +50,9 @@ export default function Navbar() {
                 <NavigationMenuItem key={item.title}>
                   <NavigationMenuLink
                     className={`m-2 rounded-md bg-transparent px-4 py-2 text-base backdrop-blur hover:bg-gray-100 supports-[backdrop-filter]:bg-transparent dark:hover:bg-gray-800 ${
-                      pathname === item.redirect ? 'font-extrabold underline underline-offset-2' : ''
+                      pathname === item.redirect
+                        ? 'font-extrabold underline underline-offset-2'
+                        : ''
                     }`}
                     href={'redirect' in item ? item.redirect : '#'}
                   >

@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
-import { FaArrowRight } from 'react-icons/fa6';
 import Updates from '@/components/Update';
+import Projects from '@/components/Project';
 
 export default function Home() {
   const [introShown, setIntroShown] = useState(false);
@@ -185,18 +185,19 @@ export default function Home() {
               </div>
             </section>
             <div>
-              <p className='group relative mt-2 inline-block text-xl font-bold'>
+              <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
                 Projects{' '}
-                <span className='absolute bottom-0 left-0 mt-1 block h-[1px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+                <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
               </p>
               <p className='mt-2'>
                 Here is a collection of some projects that I have worked on
               </p>
+              <Projects />
             </div>
             <div>
-              <p className='group relative mt-2 inline-block text-xl font-bold'>
+              <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
                 Updates and Things{' '}
-                <span className='absolute bottom-0 left-0 mt-1 block h-[1px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+                <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
               </p>
               <p className='mt-2'>
                 Here is a collection of some life updates and things

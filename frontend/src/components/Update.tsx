@@ -24,9 +24,9 @@ export default function Updates({ category }: UpdatesProps) {
                 <p className='text-md font-light'>{update.description}</p>
               </div>
 
-              <div className='flex-grow mx-2 overflow-hidden'>
-                <span className='whitespace-nowrap text-md font-light text-gray-400'>
-                  {Array(100).fill('•').join('')} 
+              <div className='mx-2 flex-grow overflow-hidden'>
+                <span className='text-md whitespace-nowrap font-light text-gray-400'>
+                  {Array(100).fill('•').join('')}
                 </span>
               </div>
 
