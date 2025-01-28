@@ -3,6 +3,7 @@ interface Update {
   description: string;
   url?: string;
   date: string;
+  category?: string;
 }
 
 export const updates: Update[] = [
@@ -11,47 +12,27 @@ export const updates: Update[] = [
     description: 'First test element',
     url: 'https://www.adamsulemanji.com',
     date: 'Jan 2025',
+    category: 'all',
   },
   {
-    icon: '🚀',
-    description: 'Second test element',
+    icon: '⛷️',
+    description: 'Went skiing at Steamboat, CO and Parkcity, UT',
     url: 'https://www.adamsulemanji.com',
-    date: 'Jan 2025',
+    date: 'Dec 2024 - Jan 2025',
+    category: 'all',
   },
   {
-    icon: '🚀',
-    description: 'Second test element',
+    icon: '📚',
+    description: 'Graduated from TAMU with my Masters in Computer Science',
     url: 'https://www.adamsulemanji.com',
-    date: 'Jan 2025',
+    date: 'Dec 2024',
+    category: 'all',
   },
   {
-    icon: '🚀',
-    description: 'Second test element',
-    url: 'https://www.adamsulemanji.com',
-    date: 'Jan 2025',
-  },
-  {
-    icon: '🚀',
-    description: 'Second test element which is much longer than the others',
-    url: 'https://www.adamsulemanji.com',
-    date: 'Jan 2025',
-  },
-  {
-    icon: '🚀',
-    description: 'Second test element',
-    url: 'https://www.adamsulemanji.com',
-    date: 'Jan 2025',
-  },
-  {
-    icon: '🚀',
-    description: 'Second test element',
-    url: 'https://www.adamsulemanji.com',
-    date: 'Jan 2025',
-  },
-  {
-    icon: '🚀',
-    description: 'Second test element',
-    url: 'https://www.adamsulemanji.com',
-    date: 'Jan 2025',
+    icon: '👨🏽‍💻',
+    description: 'Finished my internship at Amazon',
+    url: 'https://www.amazon.com',
+    date: 'Aug 2024',
+    category: 'all',
   },
 ];

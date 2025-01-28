@@ -59,7 +59,7 @@ export default function Home() {
                       Hi, my
                     </span>
                     <span
-                      className={`block transform transition-all duration-1000 ease-out ${
+                      className={`duration-3000 block transform transition-all ease-out ${
                         nameVisible ? 'translate-x-0' : 'translate-x-10'
                       }`}
                     >
@@ -184,9 +184,16 @@ export default function Home() {
               </div>
             </section>
             <div>
-              <p className='mt-10 text-xl font-bold'> Updates</p>
+              <p className='group relative mt-2 inline-block text-xl font-bold'>
+                Updates and Things
+                <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+              </p>
+              <p className='mt-2'>
+                {' '}
+                Here is a collection of some life updates and things
+              </p>
             </div>
-            <Updates />
+            <Updates category='all' />
           </main>
         </div>
       </div>
