@@ -10,7 +10,7 @@ import {
   NavigationMenuList,
 } from '@/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import LightDarkToggle from '@/components/LightDarkToggle';
+import LightDarkToggle from '@/components/theme/LightDarkToggle';
 
 interface NavItem {
   title: string;

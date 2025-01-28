@@ -50,6 +50,7 @@ A modern, responsive personal portfolio website built with Next.js and deployed 
 - AWS CLI configured
 - AWS CDK CLI
 
+
 ### Local Development
 
 1. Install dependencies:
@@ -66,9 +67,20 @@ A modern, responsive personal portfolio website built with Next.js and deployed 
    npm run dev
    ```
 
-3. Deploy infrastructure:
+3. Deploy infrastructure (only required once):
    ```bash
    cdk deploy
+   ```
+
+4. Deploy and Update:
+
+   ```bash
+   git add .
+
+   git commit -m "<YOUR_COMMIT_MESSAGE>"
+
+   git push
+
    ```
 
 ## 📝 License

@@ -2,7 +2,7 @@
 
 import localFont from 'next/font/local';
 import '../styles/globals.css';
-import { ThemeProvider } from '@/components/theme-provider';
+import { ThemeProvider } from '@/components/theme/theme-provider';
 
 import Navbar from '@/components/NavBar';
 import Footer from '@/components/Footer';
