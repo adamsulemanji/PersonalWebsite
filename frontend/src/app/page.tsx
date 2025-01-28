@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import { FaArrowRight } from 'react-icons/fa6';
 import Updates from '@/components/Update';
 
 export default function Home() {
@@ -185,11 +186,19 @@ export default function Home() {
             </section>
             <div>
               <p className='group relative mt-2 inline-block text-xl font-bold'>
-                Updates and Things
-                <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+                Projects{' '}
+                <span className='absolute bottom-0 left-0 mt-1 block h-[1px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
               </p>
               <p className='mt-2'>
-                {' '}
+                Here is a collection of some projects that I have worked on
+              </p>
+            </div>
+            <div>
+              <p className='group relative mt-2 inline-block text-xl font-bold'>
+                Updates and Things{' '}
+                <span className='absolute bottom-0 left-0 mt-1 block h-[1px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+              </p>
+              <p className='mt-2'>
                 Here is a collection of some life updates and things
               </p>
             </div>

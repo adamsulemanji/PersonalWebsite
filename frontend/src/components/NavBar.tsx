@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import LightDarkToggle from '@/components/theme/LightDarkToggle';
+import { usePathname } from 'next/navigation';
+
 
 interface NavItem {
   title: string;
@@ -18,15 +20,16 @@ interface NavItem {
 }
 
 const leftNavItems: NavItem[] = [
-  { title: 'About', redirect: '/page/about' },
-  { title: 'Projects', redirect: '/page/projects' },
-  { title: 'Pictures', redirect: '/page/pictures' },
+  { title: 'About', redirect: '/page/about/' },
+  { title: 'Projects', redirect: '/page/projects/' },
+  { title: 'Pictures', redirect: '/page/pictures/' },
 ];
 
 const rightNavItems = [{ title: 'Dark Mode', action: 'toggleDarkMode' }];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className='sticky top-0 z-50 w-full border-b bg-background/95 p-8 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
@@ -47,7 +50,9 @@ export default function Navbar() {
               {leftNavItems.map((item) => (
                 <NavigationMenuItem key={item.title}>
                   <NavigationMenuLink
-                    className='m-2 rounded-md bg-transparent px-4 py-2 text-base backdrop-blur hover:bg-gray-100 supports-[backdrop-filter]:bg-transparent dark:hover:bg-gray-800'
+                    className={`m-2 rounded-md bg-transparent px-4 py-2 text-base backdrop-blur hover:bg-gray-100 supports-[backdrop-filter]:bg-transparent dark:hover:bg-gray-800 ${
+                      pathname === item.redirect ? 'font-extrabold underline underline-offset-2' : ''
+                    }`}
                     href={'redirect' in item ? item.redirect : '#'}
                   >
                     {item.title}
