@@ -24,7 +24,7 @@ export default function Updates({ category }: UpdatesProps) {
             rel='noopener noreferrer'
             key={index}
           >
-            <div className='flex items-center justify-between rounded-md border-gray-200 p-2 hover:bg-slate-500 dark:border-gray-700'>
+            <div className='flex items-center justify-between rounded-md border-gray-200 p-2 hover:bg-gray-100 dark:hover:bg-gray-800'>
               <div className='flex items-center space-x-2'>
                 <span className='text-2xl'>{update.icon}</span>
                 <p className='text-md font-light'>{update.description}</p>
