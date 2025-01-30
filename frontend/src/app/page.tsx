@@ -180,7 +180,7 @@ export default function Home() {
                     y2='5000'
                     stroke='black'
                     strokeWidth='1'
-                    className={`duration-[3s] transition-transform ease-out dark:stroke-white ${
+                    className={`duration-&lsqb;3s&rsqb transition-transform ease-out dark:stroke-white ${
                       scrollPromptVisible ? 'grow-line' : ''
                     }`}
                   />

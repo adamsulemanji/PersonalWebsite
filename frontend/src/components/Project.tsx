@@ -4,6 +4,7 @@ import React from 'react';
 import { projects } from '@/assets/projects';
 import { projectsInterface } from '@/assets/projects';
 import { FiArrowUpRight } from 'react-icons/fi';
+import Image from 'next/image';
 
 interface ProjectProps {
   category?: string;
@@ -32,10 +33,12 @@ export default function Project({ category = '' }: ProjectProps) {
             className={`group relative h-80 w-full overflow-hidden rounded-lg border border-gray-300 dark:border-gray-700 ${colorMap[project.color ?? 'blue'][0] || 'bg-gray-500'}`}
           >
             <div className='absolute inset-0 flex flex-col transition-transform duration-300 group-hover:-translate-y-2/3'>
-              <img
+              <Image
                 src={project.pictures?.[0] || ''}
                 alt={project.title}
-                className='h-2/3 w-full object-cover object-center p-4 rounded-3xl'
+                className='h-2/3 w-full rounded-3xl object-cover object-center p-4'
+                width={500}
+                height={500}
               />
               <div className='flex-1 p-4'>
                 <h3 className='text-lg font-bold text-white'>
@@ -54,7 +57,7 @@ export default function Project({ category = '' }: ProjectProps) {
               </div>
             </div>
 
-            <div className='bg-gradient-to-t absolute inset-0 flex translate-y-2/3 transform flex-col mt-4 justify-center from-black via-transparent to-transparent p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100'>
+            <div className='bg-gradient-to-t absolute inset-0 mt-4 flex translate-y-2/3 transform flex-col justify-center from-black via-transparent to-transparent p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100'>
               <p className='mb-1 text-sm text-white'>{project.description}</p>
               <p className='mb-2 text-xs text-white'>{project.date}</p>
               {project.url && (
