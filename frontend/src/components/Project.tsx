@@ -35,13 +35,13 @@ export default function Project({ category = '' }: ProjectProps) {
               <img
                 src={project.pictures?.[0] || ''}
                 alt={project.title}
-                className='h-2/3 w-full rounded-md object-cover object-center p-4'
+                className='h-2/3 w-full object-cover object-center p-4 rounded-3xl'
               />
               <div className='flex-1 p-4'>
                 <h3 className='text-lg font-bold text-white'>
                   {project.title}
                 </h3>
-                <div className='mt-1 flex flex-wrap gap-1'>
+                <div className='mt-2 flex flex-wrap gap-1'>
                   {project.categories?.map((category, index) => (
                     <span
                       key={index}
@@ -54,7 +54,7 @@ export default function Project({ category = '' }: ProjectProps) {
               </div>
             </div>
 
-            <div className='bg-gradient-to-t absolute inset-0 flex translate-y-2/3 transform flex-col justify-end from-black via-transparent to-transparent p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100'>
+            <div className='bg-gradient-to-t absolute inset-0 flex translate-y-2/3 transform flex-col mt-4 justify-center from-black via-transparent to-transparent p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100'>
               <p className='mb-1 text-sm text-white'>{project.description}</p>
               <p className='mb-2 text-xs text-white'>{project.date}</p>
               {project.url && (

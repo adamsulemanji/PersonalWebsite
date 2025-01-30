@@ -16,8 +16,8 @@ export const projects: projectsInterface[] = [
     url: 'https://adamsulemanji.com',
     date: 'Dec 2024 - Present',
     pictures: ['/images/me.JPG'],
-    categories: ['webdev'],
-    color: 'red',
+    categories: ['cdk', 'tailwind', 'aws', 'hosting'],
+    color: 'orange',
   },
   {
     title: 'Meal Tracker',
@@ -25,7 +25,7 @@ export const projects: projectsInterface[] = [
     url: 'https://mealtracker.adamsulemanji.com',
     date: 'Nov 2024 - Present',
     pictures: ['images/mealtracker.png'],
-    categories: ['webdev', 'ecomm'],
+    categories: ['crud', 'fastapi', 'docker'],
     color: 'blue',
   },
   {
@@ -35,7 +35,7 @@ export const projects: projectsInterface[] = [
     date: 'September 2024 - Present',
     url: 'https://github.com/adamsulemanji',
     pictures: ['/images/systemdiagram.png'],
-    categories: ['mobiledev'],
+    categories: ['cli', 'ci/cd', 'aws'],
     color: 'green',
   },
   {
@@ -44,6 +44,7 @@ export const projects: projectsInterface[] = [
     date: 'May 2022 - Present',
     url: 'https://courses.adamsulemanji.com/',
     pictures: ['/images/coursemonitoring.png'],
+    categories: ['eventbridge', 'lambda', 'dynamodb'],
     color: 'purple',
   },
 ];

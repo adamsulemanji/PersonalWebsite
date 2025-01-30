@@ -101,7 +101,7 @@ const ImagesCarousel: FC = () => {
         renderButtonGroupOutside
         customButtonGroup={<CustomButtonGroup />}
         containerClass='relative'
-        itemClass='px-4'
+        itemClass='pr-8'
       >
         {images.map((src, index) => (
           <div key={index}>
