@@ -5,6 +5,7 @@ export interface projectsInterface {
   date: string;
   pictures?: string[];
   categories?: string[];
+  color?: string;
 }
 
 export const projects: projectsInterface[] = [
@@ -16,6 +17,7 @@ export const projects: projectsInterface[] = [
     date: 'Dec 2024 - Present',
     pictures: ['/images/me.JPG'],
     categories: ['webdev'],
+    color: 'red',
   },
   {
     title: 'Meal Tracker',
@@ -24,6 +26,7 @@ export const projects: projectsInterface[] = [
     date: 'Nov 2024 - Present',
     pictures: ['images/mealtracker.png'],
     categories: ['webdev', 'ecomm'],
+    color: 'blue',
   },
   {
     title: 'Create ACS app',
@@ -33,6 +36,7 @@ export const projects: projectsInterface[] = [
     url: 'https://github.com/adamsulemanji',
     pictures: ['/images/systemdiagram.png'],
     categories: ['mobiledev'],
+    color: 'green',
   },
   {
     title: 'Course Monitoring',
@@ -40,5 +44,6 @@ export const projects: projectsInterface[] = [
     date: 'May 2022 - Present',
     url: 'https://courses.adamsulemanji.com/',
     pictures: ['/images/coursemonitoring.png'],
+    color: 'purple',
   },
 ];

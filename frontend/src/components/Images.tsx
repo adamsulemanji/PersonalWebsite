@@ -23,15 +23,15 @@ const CustomButtonGroup: FC<CustomButtonGroupProps> = ({
     <div className='justify-right mt-8 flex justify-end text-center'>
       <button
         onClick={previous}
-        className='mr-2 rounded-full bg-gray-200 p-2 text-white transition-colors duration-300 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-500'
+        className='mr-2 rounded-full bg-gray-500 p-2 text-white transition-colors duration-300 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-500'
       >
-        <FaArrowLeftLong className='text-gray-700 dark:text-white hover:text-white' />
+        <FaArrowLeftLong className='text-white' />
       </button>
       <button
         onClick={next}
-        className='rounded-full bg-gray-200 p-2 text-white transition-colors duration-300 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-500'
+        className='rounded-full bg-gray-500 p-2 text-white transition-colors duration-300 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-500'
       >
-        <FaArrowRightLong className='text-gray-700 dark:text-white hover:text-white' />
+        <FaArrowRightLong className='text-white' />
       </button>
     </div>
   );
@@ -39,33 +39,33 @@ const CustomButtonGroup: FC<CustomButtonGroupProps> = ({
 
 const images = [
   '/images/basketball.jpg',
-  '/images/ringday.jpg',
+  //   '/images/ringday.jpg',
   '/images/skiing.jpg',
-  '/images/street.jpeg',
+  //   '/images/street.jpeg',
   '/images/basketball.jpg',
-  '/images/ringday.jpg',
+  //   '/images/ringday.jpg',
   '/images/skiing.jpg',
-  '/images/street.jpeg',
+  //   '/images/street.jpeg',
   '/images/basketball.jpg',
-  '/images/ringday.jpg',
+  //   '/images/ringday.jpg',
   '/images/skiing.jpg',
-  '/images/street.jpeg',
+  //   '/images/street.jpeg',
   '/images/basketball.jpg',
-  '/images/ringday.jpg',
+  //   '/images/ringday.jpg',
   '/images/skiing.jpg',
-  '/images/street.jpeg',
+  //   '/images/street.jpeg',
   '/images/basketball.jpg',
-  '/images/ringday.jpg',
+  //   '/images/ringday.jpg',
   '/images/skiing.jpg',
-  '/images/street.jpeg',
+  //   '/images/street.jpeg',
   '/images/basketball.jpg',
-  '/images/ringday.jpg',
+  //   '/images/ringday.jpg',
   '/images/skiing.jpg',
-  '/images/street.jpeg',
+  //   '/images/street.jpeg',
   '/images/basketball.jpg',
-  '/images/ringday.jpg',
+  //   '/images/ringday.jpg',
   '/images/skiing.jpg',
-  '/images/street.jpeg',
+  //   '/images/street.jpeg',
 ];
 
 const responsive = {
