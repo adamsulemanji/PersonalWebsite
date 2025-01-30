@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
+
+import Books from '@/components/Books';
 import Updates from '@/components/Update';
 import Projects from '@/components/Project';
 
@@ -205,6 +207,17 @@ export default function Home() {
             </div>
             <div>
               <Updates category='all' />
+            </div>
+            <div>
+              <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
+                Books{' '}
+                <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+              </p>
+              <p className='mb-4 mt-2'>
+                Here are a few books I have read recently, in progress or will
+                read
+              </p>
+              <Books />
             </div>
           </main>
         </div>
