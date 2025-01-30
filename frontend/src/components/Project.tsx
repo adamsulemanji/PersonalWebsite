@@ -2,30 +2,23 @@
 
 import React from 'react';
 import { projects } from '@/assets/projects';
+import { projectsInterface } from '@/assets/projects';
 
 interface ProjectProps {
   category?: string;
 }
 
-interface Project {
-  title: string;
-  description: string;
-  url?: string;
-  date: string;
-  pictures?: string[];
-  categories?: string[];
-}
 
 export default function Project({ category = '' }: ProjectProps) {
   return (
     <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
       {projects
         .filter(
-          (project: Project) =>
+          (project: projectsInterface) =>
             !category ||
             (project.categories && project.categories.includes(category))
         )
-        .map((project: Project, index) => (
+        .map((project: projectsInterface, index) => (
           <div
             key={index}
             className='group relative h-80 w-full overflow-hidden rounded-lg border border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-800'

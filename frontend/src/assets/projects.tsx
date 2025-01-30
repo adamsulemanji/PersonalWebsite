@@ -1,4 +1,4 @@
-interface projects {
+export interface projectsInterface {
   title: string;
   description: string;
   url?: string;
@@ -7,7 +7,7 @@ interface projects {
   categories?: string[];
 }
 
-export const projects: projects[] = [
+export const projects: projectsInterface[] = [
   {
     title: 'Personal Website',
     description:
