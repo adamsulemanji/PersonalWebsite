@@ -189,7 +189,7 @@ export default function Home() {
                 Projects{' '}
                 <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
               </p>
-              <p className='mt-2'>
+              <p className='mb-4 mt-2'>
                 Here is a collection of some projects that I have worked on
               </p>
               <Projects />
@@ -203,7 +203,9 @@ export default function Home() {
                 Here is a collection of some life updates and things
               </p>
             </div>
-            <Updates category='all' />
+            <div>
+              <Updates category='all' />
+            </div>
           </main>
         </div>
       </div>
