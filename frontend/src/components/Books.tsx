@@ -18,7 +18,7 @@ const books: Book[] = [
     book_thickness: 12,
   },
   {
-    title: 'A tree grows in Brooklyn',
+    title: 'A Tree Grows in Brooklyn',
     author: 'Betty Smith',
     img_url:
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1327883484i/14891.jpg',
