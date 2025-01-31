@@ -17,6 +17,8 @@ export default function Project({ category = '' }: ProjectProps) {
     green: ['bg-teal-500', 'bg-teal-400'],
     purple: ['bg-violet-500', 'bg-violet-400'],
     orange: ['bg-orange-500', 'bg-orange-400'],
+    yellow: ['bg-yellow-500', 'bg-yellow-400'],
+    sky: ['bg-sky-500', 'bg-sky-400'],
   };
 
   return (

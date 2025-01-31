@@ -47,4 +47,22 @@ export const projects: projectsInterface[] = [
     categories: ['eventbridge', 'lambda', 'dynamodb'],
     color: 'purple',
   },
+  {
+    title: 'Place Holder',
+    description: 'A Placeholder for now',
+    date: 'May 2022 - Present',
+    url: 'https://courses.adamsulemanji.com/',
+    pictures: ['/images/nikki.jpg'],
+    categories: ['eventbridge', 'lambda', 'dynamodb'],
+    color: 'red',
+  },
+  {
+    title: 'Place Holder',
+    description: 'A Placeholder for now',
+    date: 'May 2022 - Present',
+    url: 'https://courses.adamsulemanji.com/',
+    pictures: ['/images/river.jpg'],
+    categories: ['eventbridge', 'lambda', 'dynamodb'],
+    color: 'sky',
+  },
 ];
