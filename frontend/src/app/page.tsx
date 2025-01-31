@@ -7,6 +7,7 @@ import Books from '@/components/Books';
 import Updates from '@/components/Update';
 import Projects from '@/components/Project';
 import Images from '@/components/Images';
+import AlbumList from '@/components/album/AlbumList';
 
 export default function Home() {
   const [introShown, setIntroShown] = useState(false);
@@ -229,6 +230,16 @@ export default function Home() {
                 Here are a few images that I want to highlight that define me
               </p>
               <Images />
+            </div>
+            <div>
+              <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
+                Movies{' '}
+                <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+              </p>
+              <p className='mb-4 mt-2'>
+                Here are a few movies that I have seen and liked recently
+              </p>
+              <AlbumList />
             </div>
           </main>
         </div>

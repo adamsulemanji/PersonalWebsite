@@ -77,19 +77,17 @@ export class FrontendConstruct extends Construct {
       "DirectoryIndexRewrite",
       {
         code: cloudfront.FunctionCode.fromInline(`
-    function handler(event) {
-      var request = event.request;
-      // If path doesn't include a file extension and doesn't end with a slash, rewrite
-      if (!request.uri.includes('.') && !request.uri.endsWith('/')) {
-        request.uri = request.uri + "/index.html";
-      }
-      // If path ends with '/', rewrite to '/index.html'
-      else if (request.uri.endsWith('/')) {
-        request.uri = request.uri + "index.html";
-      }
-      return request;
-    }
-      `),
+          function handler(event) {
+            var request = event.request;
+            if (!request.uri.includes('.') && !request.uri.endsWith('/')) {
+              request.uri = request.uri + "/index.html";
+            }
+
+            else if (request.uri.endsWith('/')) {
+              request.uri = request.uri + "index.html";
+            }
+            return request;
+          }`),
       }
     );
 

@@ -1,0 +1,197 @@
+:root {
+    --album-width: 144px;
+    --album-height: calc(var(--album-width) * 1.5);
+    --disk-size: 130px;
+}
+
+.album-container {
+    width: 100%;
+    height: 150%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.album-wrap {
+    position: relative;
+    width: var(--album-width, 100px);
+    height: var(--album-height, 150px);
+}
+
+.music-item:hover .album {
+    margin-left: -24px;
+    background: rgba(tomato, 0.8);
+    box-shadow:
+        10px 24px 24px -10px #00000030,
+        inset 4px 1px 3px #ffffff60,
+        inset 0 -1px 2px #00000080;
+}
+
+.music-item:hover .disk {
+    margin-left: 48px;
+    animation-play-state: running;
+    box-shadow: 0px 0px 24px -10px #00000030;
+}
+
+.album {
+    position: absolute;
+    z-index: 1;
+    border-radius: 1px;
+    width: var(--album-width, 100px);
+    height: var(--album-height, 150px);
+    background-size: cover;
+    transition: all ease-in-out 0.35s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow:
+        10px 40px 40px -10px #00000030,
+        inset 2px 1px 3px #ffffff60,
+        inset 0 -1px 2px #00000080;
+}
+
+/* Common base .disk styles (keeps everything else the same) */
+.disk {
+    position: absolute;
+    width: var(--disk-size, 80px);
+    height: var(--disk-size, 80px);
+    border-radius: 50%;
+    left: 10px;
+    top: 40px;
+    transition: margin cubic-bezier(0.6, -0.28, 0.735, 0.045) 0.4s;
+    animation: rotating 2.5s linear paused infinite;
+    overflow: hidden;
+  }
+  
+  /* Add the new classes for different disk "finishes" */
+  
+  /* 1) A "CD" style with a rainbow conic gradient */
+  .disk-cd {
+    background: conic-gradient(
+      from 0deg,
+      #ffffff 0deg,
+      #ffe6e6 15deg,
+      #e6f2ff 30deg,
+      #e6ffe6 45deg,
+      #ffffff 60deg,
+      #fffbe6 75deg,
+      #ffe6ff 90deg,
+      #e6ffff 120deg,
+      #ffffff 150deg,
+      #e6e6ff 180deg,
+      #fff0e6 210deg,
+      #ffffff 240deg,
+      #ffe6e6 270deg,
+      #e6ffe6 300deg,
+      #ffffff 330deg,
+      #fffbe6 360deg
+    );
+  }
+  
+  /* 2) A "Blu-ray" style with a more bluish conic gradient */
+  .disk-bluray {
+    background: conic-gradient(
+      from 0deg,
+      #e8f1fa 0deg,
+      #ccddf5 20deg,
+      #99bbeb 40deg,
+      #ccddf5 60deg,
+      #e8f1fa 80deg,
+      #c7dff2 100deg,
+      #8eb1da 120deg,
+      #c7dff2 140deg,
+      #e8f1fa 160deg,
+      #c7dff2 180deg,
+      #8eb1da 200deg,
+      #c7dff2 220deg,
+      #e8f1fa 240deg,
+      #c7dff2 260deg,
+      #8eb1da 280deg,
+      #c7dff2 300deg,
+      #e8f1fa 320deg,
+      #ccddf5 340deg,
+      #99bbeb 360deg
+    );
+  }
+  
+  /* 
+    Everything else (disk:after, disk:before, .disc-color-0, etc.)
+    remains the same as your original code.
+  */
+  
+  
+  
+
+.disk:after {
+    box-sizing: border-box;
+    content: '';
+    width: calc(var(--disk-size) / 3);
+    height: calc(var(--disk-size) / 3);
+    border: 19px solid #eaaa57;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    margin-top: calc(var(--disk-size) / 6 * -1);
+    margin-left: calc(var(--disk-size) / 6 * -1);
+}
+
+.disc-color-0::after {
+    border-color: #ff8477;
+}
+.disc-color-1::after {
+    border-color: #6ad09d;
+}
+.disc-color-2::after {
+    border-color: #b3cdfb;
+}
+.disc-color-3::after {
+    border-color: #ffc700;
+}
+.disc-color-4::after {
+    border-color: #c6b9ff;
+}
+.disc-color-5::after {
+    border-color: #635c7f;
+}
+.disc-color-6::after {
+    border-color: #ffc1bb;
+}
+
+.disk:before {
+    box-sizing: border-box;
+    content: '';
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: calc(var(--disk-size) - 10px);
+    height: calc(var(--disk-size) - 10px);
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    margin-top: -60px;
+    margin-left: -60px;
+}
+
+.disk__inside {
+    width: calc(var(--disk-size, 80px) / 2);
+    height: calc(var(--disk-size, 80px) / 2);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    filter: blur(2px);
+}
+
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(180deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
