@@ -7,7 +7,7 @@ import Books from '@/components/Books';
 import Updates from '@/components/Update';
 import Projects from '@/components/Project';
 import Images from '@/components/Images';
-import AlbumList from '@/components/album/AlbumList';
+import AlbumList from '@/components/album/MovieList';
 
 export default function Home() {
   const [introShown, setIntroShown] = useState(false);
