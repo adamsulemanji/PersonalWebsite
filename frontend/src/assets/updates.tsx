@@ -8,9 +8,9 @@ interface Update {
 
 export const updates: Update[] = [
   {
-    icon: '🚀',
-    description: 'First test element',
-    url: 'https://www.adamsulemanji.com',
+    icon: '💿',
+    description: 'Started working at company labeling LLM data for Mercor',
+    url: 'https://www.google.com',
     date: 'Jan 2025',
     category: 'all',
   },

@@ -1,4 +1,4 @@
-import './album-item.css';
+import './movie-item.css';
 
 interface AlbumItemProps {
     cover: string;
@@ -19,36 +19,15 @@ const album_list: AlbumItemProps[] = [
         artist: "Christopher Nolan",
     },
     {
-        cover: "https://a.ltrbxd.com/resized/sm/upload/4g/qd/0m/h2/80MP1QuE4D8TQ0EBygGbWiWadrd-0-1000-0-1500-crop.jpg?v=bf11b45f90",
-        title: "Madagascar",
-        artist: "Dreamworks",
+        cover: "https://a.ltrbxd.com/resized/sm/upload/qq/wx/vh/dy/tPnw9oqIvIMoYjVozkDkxm3xR8r-0-150-0-225-crop.jpg?v=28856a9f35",
+        title: "22 Jump Street",
+        artist: "Phil Lord, Christopher Miller",
     },
     {
-        cover: "https://a.ltrbxd.com/resized/film-poster/1/1/7/6/2/1/117621-interstellar-0-460-0-690-crop.jpg?v=7ad89e6666",
-        title: "Interstellar",
-        artist: "Christopher Nolan",
+        cover: "https://a.ltrbxd.com/resized/sm/upload/pc/n6/pz/mi/wvzfK5QR6dGLwND8MCzWjsQWG4Q-0-150-0-225-crop.jpg?v=bcfcc8f8f6",
+        title: "The Handmaiden",
+        artist: "Park Chan-wook",
     },
-    {
-        cover: "https://a.ltrbxd.com/resized/sm/upload/4g/qd/0m/h2/80MP1QuE4D8TQ0EBygGbWiWadrd-0-1000-0-1500-crop.jpg?v=bf11b45f90",
-        title: "Madagascar",
-        artist: "Dreamworks",
-    },
-    {
-        cover: "https://a.ltrbxd.com/resized/film-poster/1/1/7/6/2/1/117621-interstellar-0-460-0-690-crop.jpg?v=7ad89e6666",
-        title: "Interstellar",
-        artist: "Christopher Nolan",
-    },
-    {
-        cover: "https://a.ltrbxd.com/resized/sm/upload/4g/qd/0m/h2/80MP1QuE4D8TQ0EBygGbWiWadrd-0-1000-0-1500-crop.jpg?v=bf11b45f90",
-        title: "Madagascar",
-        artist: "Dreamworks",
-    },
-    {
-        cover: "https://a.ltrbxd.com/resized/film-poster/1/1/7/6/2/1/117621-interstellar-0-460-0-690-crop.jpg?v=7ad89e6666",
-        title: "Interstellar",
-        artist: "Christopher Nolan",
-    },
-
 ];
 
 function AlbumItem({ cover, title, artist, link }: AlbumItemProps) {

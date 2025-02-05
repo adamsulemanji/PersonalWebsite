@@ -25,6 +25,13 @@ const books: Book[] = [
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1327883484i/14891.jpg',
     book_thickness: 20,
   },
+  {
+    title: 'The Design of Everyday Things',
+    author: 'Don Norman',
+    img_url:
+      'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1442460745i/840.jpg',
+    book_thickness: 23,
+  },
 ];
 
 export default function Books() {
