@@ -30,7 +30,7 @@ const books: Book[] = [
     author: 'Don Norman',
     img_url:
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1442460745i/840.jpg',
-    book_thickness: 23,
+    book_thickness: 12,
   },
 ];
 
@@ -40,11 +40,11 @@ export default function Books() {
       {books.map((book, index) => (
         <a
           href='/'
-          className='transition-background duration-&lsqb;0.5s&rsqb bookPerspectiveContainer block w-full cursor-pointer rounded-xl border border-gray-200 bg-gray-100 p-14 hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-800'
+          className='transition-background duration-[0.7s] bookPerspectiveContainer block w-full cursor-pointer rounded-xl border border-gray-200 bg-gray-100 p-14 hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-800'
           key={index}
         >
           <div className='bookPerspective !my-0 flex h-full items-center justify-center gap-[0]'>
-            <div className='bookMetaText absolute left-[-24px] right-[-24px] top-[-24px] !my-0 -translate-y-4 text-left opacity-0 transition-all duration-500 ease-in-out'>
+            <div className='bookMetaText absolute left-[-24px] right-[-24px] top-[-24px] !my-0 -translate-y-4 text-left opacity-0 transition-all duration-700 ease-in-out'>
               <h3 className='!my-0 !text-lg font-bold leading-[1.2] dark:text-gray-200'>
                 {book.title}
               </h3>
@@ -53,18 +53,18 @@ export default function Books() {
               </p>
             </div>
             <div
-              className='duration-&lsqb;0.5s&rsqb before-top-0 bookThreeD relative order-1 !my-0 w-full max-w-[120px] shrink-0 transition-transform ease-in-out before:absolute before:-right-[0] before:block before:h-[calc(100%+0.5px)] before:border-x-[3px] before:border-t-[3px] before:border-x-gray-800 before:border-t-gray-200 before:bg-white before:content-[""] after:absolute after:left-0 after:block after:w-[calc(100%+0.5px)] after:rounded-l-md after:border-y-[3px] after:border-l-[4px] after:border-gray-800 after:bg-gray-100 after:content-[""] lg:w-1/2'
+              className='duration-[0.7s] before-top-0 bookThreeD relative order-1 !my-0 w-full max-w-[120px] shrink-0 transition-transform ease-in-out before:absolute before:-right-[0] before:block before:h-[calc(100%+0.5px)] before:border-x-[3px] before:border-t-[3px] before:border-x-gray-800 before:border-t-gray-200 before:bg-white before:content-[""] after:absolute after:left-0 after:block after:w-[calc(100%+0.5px)] after:rounded-l-md after:border-y-[3px] after:border-l-[4px] after:border-gray-800 after:bg-gray-100 after:content-[""] lg:w-1/2'
               style={{ '--book-height': `${book.book_thickness}px` } as any}
             >
               <Image
                 src={book.img_url}
                 alt={book.title}
-                className='transition-radius rounded-[3px] duration-300 ease-in-out group-hover:rounded-l-lg group-hover:rounded-r-none'
+                className='transition-radius rounded-[3px] duration-500 ease-in-out group-hover:rounded-l-lg group-hover:rounded-r-none'
                 width={120}
                 height={180}
               />
             </div>
-            <div className='bookMetaText absolute bottom-[-24px] left-[-24px] right-[-24px] !my-0 block translate-y-4 text-sm font-bold !text-blue-600 opacity-0 transition-[opacity,transform] duration-500 ease-in-out'>
+            <div className='bookMetaText absolute bottom-[-24px] left-[-24px] right-[-24px] !my-0 block translate-y-4 text-sm font-bold !text-blue-600 opacity-0 transition-[opacity,transform] duration-700 ease-in-out'>
               <span className='relative mr-1 inline-flex cursor-pointer items-center underline decoration-blue-600 decoration-dotted decoration-2 underline-offset-[6px]'>
                 View on Goodreads
                 <svg

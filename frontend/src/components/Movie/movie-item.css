@@ -23,14 +23,12 @@
     background: rgba(tomato, 0.8);
     box-shadow:
         10px 24px 24px -10px #00000030,
-        inset 4px 1px 3px #ffffff60,
         inset 0 -1px 2px #00000080;
 }
 
 .music-item:hover .disk {
     margin-left: 48px;
     animation-play-state: running;
-    box-shadow: 0px 0px 24px -10px #00000030;
 }
 
 .album {
@@ -46,7 +44,6 @@
     align-items: center;
     box-shadow:
         10px 40px 40px -10px #00000030,
-        inset 2px 1px 3px #ffffff60,
         inset 0 -1px 2px #00000080;
 }
 
@@ -62,8 +59,6 @@
     animation: rotating 2.5s linear paused infinite;
     overflow: hidden;
   }
-  
-  /* Add the new classes for different disk "finishes" */
   
   /* 1) A "CD" style with a rainbow conic gradient */
   .disk-cd {
