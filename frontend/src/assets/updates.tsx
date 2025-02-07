@@ -10,7 +10,7 @@ export const updates: Update[] = [
   {
     icon: '💿',
     description: 'Started working at company labeling LLM data for Mercor',
-    url: 'https://www.google.com',
+    url: 'https://deepmind.google/',
     date: 'Jan 2025',
     category: 'all',
   },
