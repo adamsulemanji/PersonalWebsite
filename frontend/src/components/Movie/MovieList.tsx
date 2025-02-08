@@ -11,7 +11,6 @@ interface AlbumItemProps {
 }
 
 function AlbumItem({ title, letterboxd_url, poster_url }: AlbumItemProps) {
-  // Use template literals for string interpolation
   const discColorClass = `disc-color-${Math.floor(Math.random() * 7)}`;
 
   const diskStyles = ['disk-cd', 'disk-bluray'];
@@ -53,7 +52,6 @@ export default function AlbumList() {
         username: 'adamsulemanji',
       })
       .then((response) => {
-        // Since the API returns an array directly, use response.data
         setAlbumList(response.data);
         setLoading(false);
       })
