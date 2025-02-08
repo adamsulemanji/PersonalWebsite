@@ -237,7 +237,7 @@ export default function Home() {
                 <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
               </p>
               <p className='mb-4 mt-2'>
-                Here are a few movies that I have seen and liked recently
+                Here are four of the most recent movies I have watched.
               </p>
               <AlbumList />
             </div>
