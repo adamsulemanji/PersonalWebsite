@@ -7,7 +7,7 @@ import Books from '@/components/Books';
 import Updates from '@/components/Update';
 import Projects from '@/components/Project';
 import Images from '@/components/Images';
-import AlbumList from '@/components/Movie/MovieList';
+import MovieList from '@/components/Movie/MovieList';
 
 export default function Home() {
   const [introShown, setIntroShown] = useState(false);
@@ -239,7 +239,7 @@ export default function Home() {
               <p className='mb-4 mt-2'>
                 Here are four of the most recent movies I have watched.
               </p>
-              <AlbumList />
+              <MovieList />
             </div>
           </main>
         </div>

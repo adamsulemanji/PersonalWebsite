@@ -10,7 +10,7 @@ interface AlbumItemProps {
   poster_url: string;
 }
 
-function AlbumItem({ title, letterboxd_url, poster_url }: AlbumItemProps) {
+function MovieItem({ title, letterboxd_url, poster_url }: AlbumItemProps) {
   const discColorClass = `disc-color-${Math.floor(Math.random() * 7)}`;
 
   const diskStyles = ['disk-cd', 'disk-bluray'];
@@ -42,7 +42,7 @@ function AlbumItem({ title, letterboxd_url, poster_url }: AlbumItemProps) {
   );
 }
 
-export default function AlbumList() {
+export default function MovieList() {
   const [album_list, setAlbumList] = useState<AlbumItemProps[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -68,7 +68,7 @@ export default function AlbumList() {
   return (
     <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
       {album_list.map((album, index) => (
-        <AlbumItem
+        <MovieItem
           key={index}
           title={album.title}
           letterboxd_url={album.letterboxd_url}
