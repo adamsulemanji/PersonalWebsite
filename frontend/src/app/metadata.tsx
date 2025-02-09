@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
+  title: 'Adamsulemanji',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
