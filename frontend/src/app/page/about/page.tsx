@@ -5,20 +5,25 @@ export default function Page() {
     <div>
       <p className='mt-4 text-3xl font-bold'>About</p>
       <p className='mt-4'>
-        {' '}
         Software Engineer looking to make cool things to make the internet and
-        the world just a little bit more fun.{' '}
+        the world just a little bit more fun.
       </p>
       <div className='mt-10 grid grid-cols-2'>
-        <div className=''>
-          <Image
-            src='/images/kid.jpg'
-            alt='Picture of little me'
-            width={500}
-            height={500}
-            className='rounded-xl'
-          />
+        <div className='flex justify-center'>
+          <div className='w-fit text-center'>
+            <Image
+              src='/images/kid.jpg'
+              alt='Picture of little me'
+              width={500}
+              height={500}
+              className='rounded-xl'
+            />
+            <p className='text-xs mt-2'>
+              *** This is me a few years ago (15), I look a little older now ***
+            </p>
+          </div>
         </div>
+
         <div className='flex flex-col items-center justify-center'>
           <p className='mt-2'>
             I'm a software engineer working at Amazon in Seattle, building
