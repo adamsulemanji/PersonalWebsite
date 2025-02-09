@@ -8,9 +8,11 @@ interface AlbumItemProps {
   title: string;
   letterboxd_url: string;
   poster_url: string;
+  rating?: string,
+  director?: string[],
 }
 
-function MovieItem({ title, letterboxd_url, poster_url }: AlbumItemProps) {
+function MovieItem({ title, letterboxd_url, poster_url, rating, director }: AlbumItemProps) {
   const discColorClass = `disc-color-${Math.floor(Math.random() * 7)}`;
 
   const diskStyles = ['disk-cd', 'disk-bluray'];
@@ -37,6 +39,10 @@ function MovieItem({ title, letterboxd_url, poster_url }: AlbumItemProps) {
       </div>
       <div className='mt-4 text-xs'>
         <p className='text-black-700 font-bold'>{title}</p>
+        {rating && <p className='text-gray-700 dark:text-gray-200'>Rating: {rating}</p>}
+        {director && director.length > 0 && (
+          <p className='text-gray-700 dark:text-gray-200'>Directors: {director.join(', ')}</p>
+        )}
       </div>
     </a>
   );
@@ -44,6 +50,8 @@ function MovieItem({ title, letterboxd_url, poster_url }: AlbumItemProps) {
 
 export default function MovieList() {
   const [album_list, setAlbumList] = useState<AlbumItemProps[]>([]);
+
+  console.log(album_list);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -73,6 +81,8 @@ export default function MovieList() {
           title={album.title}
           letterboxd_url={album.letterboxd_url}
           poster_url={album.poster_url}
+          rating={album.rating}
+          director={album.director}
         />
       ))}
     </div>
