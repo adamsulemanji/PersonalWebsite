@@ -48,12 +48,12 @@ export const projects: projectsInterface[] = [
     color: 'purple',
   },
   {
-    title: 'Place Holder',
-    description: 'A Placeholder for now',
-    date: 'May 2022 - Present',
-    url: 'https://courses.adamsulemanji.com/',
-    pictures: ['/images/nikki.jpg'],
-    categories: ['eventbridge', 'lambda', 'dynamodb'],
+    title: 'Letterboxd Movie Scraper',
+    description: 'A movie scraper for most recent movies on letterboxd and of course its overengineered',
+    date: 'January 2025 - Present',
+    url: 'https://api.fast.adamsulemanji.com/',
+    pictures: ['/images/letterboxd.png'],
+    categories: ['webscrapping', 'dynamodb', 'fastapi'],
     color: 'red',
   },
   {
