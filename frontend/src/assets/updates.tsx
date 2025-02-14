@@ -8,6 +8,13 @@ interface Update {
 
 export const updates: Update[] = [
   {
+    icon: '🏎️',
+    description: 'Got my car towed for the first time and hit on the SNKRS app for KOBE 6s',
+    url: 'https://rapidrecoverytx.com/',
+    date: 'Feb 13 2025',
+    category: 'all',
+  },
+  {
     icon: '💿',
     description: 'Started working at company labeling LLM data for Mercor',
     url: 'https://deepmind.google/',
