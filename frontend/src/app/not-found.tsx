@@ -3,7 +3,7 @@ export default function NotFound() {
     <div className='mt-16 flex flex-col items-center justify-center'>
       <h1 className='text-4xl font-bold'>404 - Page Not Found</h1>
       <p className='mt-4 text-lg text-gray-700 dark:text-white'>
-        The page you are looking for does not exist.
+        The page you are looking for does not exist. Does this work
       </p>
       <p className='mt-4 text-lg text-gray-700 dark:text-white'>
         Please go home !
