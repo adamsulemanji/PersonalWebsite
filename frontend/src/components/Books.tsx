@@ -8,6 +8,7 @@ interface Book {
   author: string;
   img_url: string;
   book_thickness: number;
+  goodreads_url: string;
 }
 
 const books: Book[] = [
@@ -17,6 +18,7 @@ const books: Book[] = [
     img_url:
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1555590930i/43999120.jpg',
     book_thickness: 12,
+    goodreads_url:"https://www.goodreads.com/book/show/43999120-ai-rebooting",
   },
   {
     title: 'A Tree Grows in Brooklyn',
@@ -24,13 +26,15 @@ const books: Book[] = [
     img_url:
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1327883484i/14891.jpg',
     book_thickness: 20,
+    goodreads_url:"https://www.goodreads.com/book/show/14891.A_Tree_Grows_in_Brooklyn",
   },
   {
-    title: 'The Design of Everyday Things',
-    author: 'Don Norman',
+    title: '1984',
+    author: 'George Orwell',
     img_url:
-      'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1442460745i/840.jpg',
-    book_thickness: 12,
+      'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1532714506i/40961427.jpg',
+    book_thickness: 24,
+    goodreads_url:"https://www.goodreads.com/book/show/40961427-1984",
   },
 ];
 
@@ -39,7 +43,9 @@ export default function Books() {
     <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
       {books.map((book, index) => (
         <a
-          href='/'
+          href={book.goodreads_url}
+          target='_blank'
+          rel='noopener noreferrer'
           className='transition-background duration-[0.7s] bookPerspectiveContainer block w-full cursor-pointer rounded-xl border border-gray-200 bg-gray-100 p-14 hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-800'
           key={index}
         >

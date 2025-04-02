@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 import Books from '@/components/Books';
 import Updates from '@/components/Update';
@@ -10,88 +11,57 @@ import Images from '@/components/Images';
 import MovieList from '@/components/Movie/MovieList';
 
 export default function Home() {
-  const [introShown, setIntroShown] = useState(false);
-  const [introVisible, setIntroVisible] = useState(false);
-  const [hiVisible, setHiVisible] = useState(false);
-  const [nameVisible, setNameVisible] = useState(false);
-  const [constructionVisible, setConstructionVisible] = useState(false);
-  const [descriptionVisible, setDescriptionVisible] = useState(false);
-  const [scrollPromptVisible, setScrollPromptVisible] = useState(false);
-
-  useEffect(() => {
-    if (!introShown) {
-      const animations = [
-        { setter: setIntroVisible, delay: 100 },
-        { setter: setHiVisible, delay: 400 },
-        { setter: setNameVisible, delay: 600 },
-        { setter: setConstructionVisible, delay: 800 },
-        { setter: setDescriptionVisible, delay: 1200 },
-        { setter: setScrollPromptVisible, delay: 1500 },
-      ];
-
-      animations.forEach(({ setter, delay }) => {
-        const timer = setTimeout(() => {
-          setter(true);
-        }, delay);
-        return () => clearTimeout(timer);
-      });
-
-      setIntroShown(true);
-    }
-  }, [introShown]);
-
   return (
     <div className='flex justify-center'>
       <div className='w-full max-w-[1200px]'>
         <div className='m-4 grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 pb-20 sm:p-20'>
           <main className='row-start-2 flex w-full max-w-[1500px] flex-col gap-8 px-4 sm:px-8'>
-            <section
-              className={`one group relative transform text-center text-6xl transition-all duration-1000 ease-out ${
-                introVisible
-                  ? 'translate-x-0 opacity-100'
-                  : '-translate-x-full opacity-0'
-              }`}
+            <motion.section 
+              className='one group relative text-center text-6xl'
               id='section-intro'
+              initial={{ x: -100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 1 }}
             >
               <div>
                 <div>
                   <div className='text-left font-serif text-7xl font-light leading-tight md:mt-12'>
-                    <span
-                      className={`block transform transition-all duration-1000 ease-out ${
-                        hiVisible ? 'translate-x-0' : '-translate-x-10'
-                      }`}
+                    <motion.span
+                      className='block'
+                      initial={{ x: -10, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: 0.3, duration: 1 }}
                     >
                       Hi, my
-                    </span>
-                    <span
-                      className={`duration-3000 block transform transition-all ease-out ${
-                        nameVisible ? 'translate-x-0' : 'translate-x-10'
-                      }`}
+                    </motion.span>
+                    <motion.span
+                      className='block'
+                      initial={{ x: 10, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: 0.5, duration: 1 }}
                     >
                       name is <b className='text-8xl'>Adam</b>
                       <span className='accent'>.</span>
-                    </span>
+                    </motion.span>
                   </div>
 
                   <span className='absolute -bottom-5 left-0 mt-5 h-2 w-0 bg-green-700 transition-all group-hover:w-2/3 dark:bg-blue-500'></span>
                 </div>
               </div>
-            </section>
+            </motion.section>
 
-            <section
-              className={`text-center text-lg transition-all duration-1000 ${
-                constructionVisible
-                  ? 'translate-y-0 opacity-100'
-                  : 'translate-y-10 opacity-0'
-              }`}
-            ></section>
+            <motion.section
+              className='text-center text-lg'
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.7, duration: 1 }}
+            ></motion.section>
 
-            <div
-              className={`line-wrapped mt-3 leading-tight duration-1000 ${
-                descriptionVisible
-                  ? 'translate-y-0 opacity-100'
-                  : 'translate-y-10 opacity-0'
-              }`}
+            <motion.div
+              className='line-wrapped mt-3 leading-tight'
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 1, duration: 1 }}
             >
               <div className='[&>p]:mt-4'>
                 <p>
@@ -160,35 +130,45 @@ export default function Home() {
                   </a>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <section
-              className={`mt-32 grid w-full grid-cols-1 transition-all duration-1000 md:grid-cols-2 ${
-                scrollPromptVisible
-                  ? 'translate-y-0 opacity-100'
-                  : 'translate-y-10 opacity-0'
-              }`}
+            <motion.section
+              className='mt-32 grid w-full grid-cols-1 md:grid-cols-2'
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 1.3, duration: 1 }}
             >
               <div className='flex flex-col items-center gap-4'>
-                <p className='text-m mb-2 animate-bounce tracking-widest'>
+                <motion.p 
+                  className='text-m mb-2 tracking-widest'
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                >
                   Scroll !
-                </p>
+                </motion.p>
                 <svg height='750' width='1' className='hidden md:block'>
-                  <line
+                  <motion.line
                     x1='1'
                     y1='0'
                     x2='1'
                     y2='5000'
                     stroke='black'
                     strokeWidth='1'
-                    className={`duration-&lsqb;3s&rsqb transition-transform ease-out dark:stroke-white ${
-                      scrollPromptVisible ? 'grow-line' : ''
-                    }`}
+                    className='dark:stroke-white'
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 3, ease: "easeOut" }}
                   />
                 </svg>
               </div>
-            </section>
-            <div>
+            </motion.section>
+            
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
               <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
                 Projects{' '}
                 <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
@@ -197,8 +177,14 @@ export default function Home() {
                 Here is a collection of some projects that I have worked on
               </p>
               <Projects />
-            </div>
-            <div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
               <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
                 Updates and Things{' '}
                 <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
@@ -206,11 +192,23 @@ export default function Home() {
               <p className='mt-2'>
                 Here is a collection of some life updates and things
               </p>
-            </div>
-            <div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
               <Updates category='all' />
-            </div>
-            <div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
               <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
                 Books{' '}
                 <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
@@ -220,8 +218,14 @@ export default function Home() {
                 read
               </p>
               <Books />
-            </div>
-            <div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
               <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
                 Images{' '}
                 <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
@@ -230,8 +234,14 @@ export default function Home() {
                 Here are a few images that I want to highlight that define me
               </p>
               <Images />
-            </div>
-            <div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
               <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
                 Movies{' '}
                 <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
@@ -240,7 +250,7 @@ export default function Home() {
                 Here are four of the most recent movies I have watched.
               </p>
               <MovieList />
-            </div>
+            </motion.div>
           </main>
         </div>
       </div>
