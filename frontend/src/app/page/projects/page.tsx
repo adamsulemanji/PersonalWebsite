@@ -1,6 +1,11 @@
 'use client';
 
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+
 export default function Page() {
+  const [hovered, setHovered] = useState<number | null>(null);
+
   const handlePasswordSubmit = () => {
     const enteredPassword = prompt('Enter password');
     if (enteredPassword === 'nikki') {
@@ -10,159 +15,188 @@ export default function Page() {
     }
   };
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  const projectItems = [
+    {
+      id: 1,
+      title: 'This website',
+      description: 'From design to implementation, I have built this website from scratch using Next.js and TailwindCSS.',
+      details: 'The website is served through AWS using S3 buckets, CloudFront and Route 53. It includes a custom CI/CD pipeline that rebuilds and deploys on GitHub changes. The site is hosted on a custom domain that my uncle bought for me 5 years ago as a joke.',
+      image: '/images/systemdiagram.png',
+      alt: 'Website',
+      link: 'https://www.adamsulemanji.com',
+    },
+    {
+      id: 2,
+      title: 'Course Monitoring',
+      description: 'During my sophomore year, I was unable to register for ANY classes, so I created a web scraping SMS project to monitor class availability.',
+      details: 'Over the years, I have improved it from a simple script to a full web app using a MERN stack, and more recently transformed it into a full CDK application through AWS. It\'s still a work in progress.',
+      image: '/images/coursemonitoring.png',
+      alt: 'Course Monitoring',
+      link: 'https://courses.adamsulemanji.com',
+    },
+    {
+      id: 3,
+      title: 'Meal Tracker for Nikki',
+      description: 'Nikki used to track her meals on a spreadsheet, which I couldn\'t allow as a developer.',
+      details: 'This simple website allows her to track her meals. The site was built completely using my CDK template project.',
+      image: '/images/mealtracker.png',
+      alt: 'Meal Tracker',
+      onClick: handlePasswordSubmit,
+    },
+    {
+      id: 4,
+      title: 'CDK Template',
+      description: 'During my summer internship, I lacked the fundamental AWS skills to hit the ground running at Amazon.',
+      details: 'I created a CDK tool that allows for easy creation of CDK projects. Unlike the basic `cdk init` command that only provides scaffolding, this project gives users a fully functional CodePipeline for CI/CD, a frontend stack, CloudFront distribution for custom domains, and common AWS services with examples.',
+      image: '/images/basketball.jpg',
+      alt: 'CDK Template',
+      link: 'https://github.com/adamsulemanji/test-aws-cdk-app',
+    },
+  ];
+
   return (
-    <section className='mt-24 w-full max-w-[1500px]' id='section-projects'>
-      <div className='grid w-full grid-cols-1 gap-10 md:grid-cols-2'>
-        <div className='mt-10'>
+    <motion.section 
+      className='mt-24 w-full max-w-[1500px] px-4 sm:px-8' 
+      id='section-projects'
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div 
+        className='grid w-full grid-cols-1 gap-10 md:grid-cols-2'
+        variants={container}
+        initial="hidden"
+        animate="show"
+      >
+        <motion.div className='mt-10' variants={item}>
           <p className='mb-5 text-5xl font-bold'>
             Projects
             <span className='accent font-serif text-6xl'>.</span>
           </p>
           <p className='leading-relaxed'>
-            Here are a collection of things I have been working on and/or built
+            Here is a collection of things I have been working on and/or built
             recently.
           </p>
-        </div>
-        <div>
+        </motion.div>
+        <motion.div variants={item}>
           <div className='staggered-dots h-[150px] w-full rounded-lg bg-[length:10px_10px]'></div>
-        </div>
+        </motion.div>
+      </motion.div>
 
-        <div className='flex items-center justify-center'>
-          <a
-            href='https://www.adamsulemanji.com'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <img
-              src='/images/systemdiagram.png'
-              alt='Website'
-              className='w-full rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 hover:border-4 hover:border-green-700 hover:shadow-2xl hover:dark:border-blue-400'
-            />
-          </a>
-        </div>
-        <div className='leading-relaxed'>
-          <h3 className='mb-5 text-3xl font-bold'>
-            This website
-            <span className='accent font-serif text-4xl'>.</span>
-          </h3>
-          <p>
-            Interesting enough this website serves as a project itself. From the
-            design to implementation, I have built this website from scratch. I
-            have used Next.js as the framework and TailwindCSS as the styling
-            library.
-          </p>
-          <p className='mt-4'>
-            The website is completely served through AWS using S3 buckets,
-            cloudfront and route 53. The website also contains a custom CI/CD
-            pipeline that allows me to rebuild and deploy and cloud or bucket
-            changes on events of github changes. The website is also served
-            through a custom domain that I own that my uncle bought for me 5
-            years ago as a joke.
-          </p>
-        </div>
-      </div>
-      <hr className='my-10 border-t border-gray-300' />
-      <div className='grid w-full grid-cols-1 gap-10 md:grid-cols-2'>
-        <div className='flex items-center justify-center'>
-          <a
-            href='https://courses.adamsulemanji.com'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <img
-              src='/images/coursemonitoring.png'
-              alt='Course Monitoring'
-              className='w-full rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 hover:border-4 hover:border-green-700 hover:shadow-2xl hover:dark:border-blue-400'
-            />
-          </a>
-        </div>
-        <div className='leading-relaxed'>
-          <h3 className='mb-5 text-3xl font-bold'>
-            Course Monitoring
-            <span className='accent font-serif text-4xl'>.</span>
-          </h3>
-          <p>
-            During my sophomore year, I tried to register for classes but was
-            unable to get into ANY classes. I started a simple web scraping SMS
-            project to monitor the classes I wanted to get into.
-          </p>
-          <p className='mt-4'>
-            Over the years, I have slowly improved into first turning it into a
-            web app using a MERN stack then more recently transforming it into a
-            full CDK application through AWS. It's still a WIP.
-          </p>
-        </div>
-      </div>
-      <hr className='my-10 border-t border-gray-300' />
-      <div className='grid w-full grid-cols-1 gap-10 md:grid-cols-2'>
-        <div className='flex items-center justify-center'>
-          <a onClick={handlePasswordSubmit}>
-            <img
-              src='/images/mealtracker.png'
-              alt='Meal Tracker'
-              className='w-full rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 hover:border-4 hover:border-green-700 hover:shadow-2xl hover:dark:border-blue-400'
-            />
-          </a>
-        </div>
-        <div className='leading-relaxed'>
-          <h3 className='mb-5 text-3xl font-bold'>
-            Meal Tracker for Nikki
-            <span className='accent font-serif text-4xl'>.</span>
-          </h3>
-          <p>
-            Nikki used to track her meals on a spreadsheet, I could not allow
-            that as a developer
-          </p>
-          <p className='mt-4'>
-            This simple website allows her to track her meals. The site was
-            built completely from my CDK template project I created.{' '}
-          </p>
-        </div>
-      </div>
-      <hr className='my-10 border-t border-gray-300' />
-      <div className='grid w-full grid-cols-1 gap-10 md:grid-cols-2'>
-        <div className='items-center justify-center'>
-          <a
-            href='https://github.com/adamsulemanji/test-aws-cdk-app'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <img
-              src='/images/basketball.jpg'
-              alt='CDK Template'
-              className='w-full rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 hover:border-4 hover:border-green-700 hover:shadow-2xl hover:dark:border-blue-400'
-            />
-          </a>
-
-          <p className='mt-4 text-center text-xs italic'>
-            **I don't have a picture of the CDK because it's a CLI, so here is a
-            picture of my IM basketball team**
-          </p>
-        </div>
-        <div className='leading-relaxed'>
-          <h3 className='mb-5 text-3xl font-bold'>
-            CDK Template
-            <span className='accent font-serif text-4xl'>.</span>
-          </h3>
-          <p>
-            During my summer internship I lacked the fundamental AWS skills and
-            knowledge to hit the ground running at Amazon.
-          </p>
-          <p className='mt-4'>
-            With that I realized that there exists a lack of a CDK tool that
-            allows for easy creation of CDK projects. The regular{' '}
-            <code className='inline bg-slate-100 px-2 font-mono dark:bg-white dark:text-black'>
-              {' '}
-              cdk init
-            </code>{' '}
-            command only provides the scaffolding. The premise of this project
-            allows for users to get a fully functional CodePipeline for CI/CD, a
-            frontend stack, a cloudfront distribution for custom domains, a few
-            of the most common aws services fully integrated with examples and a
-            few other things.
-          </p>
-        </div>
-      </div>
-    </section>
+      {projectItems.map((project, index) => (
+        <motion.div 
+          key={project.id}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className={`${index > 0 ? 'mt-16' : 'mt-10'}`}
+        >
+          <hr className={`${index > 0 ? 'mb-10 border-t border-gray-300' : 'hidden'}`} />
+          <div className='grid w-full grid-cols-1 gap-10 md:grid-cols-2'>
+            <div className='flex items-center justify-center'>
+              {project.onClick ? (
+                <div 
+                  onClick={project.onClick}
+                  className='relative overflow-hidden rounded-lg cursor-pointer group'
+                  onMouseEnter={() => setHovered(project.id)}
+                  onMouseLeave={() => setHovered(null)}
+                >
+                  <motion.img
+                    src={project.image}
+                    alt={project.alt}
+                    className='w-full rounded-lg shadow-xl transition-all duration-500'
+                    whileHover={{ scale: 1.05 }}
+                    animate={{
+                      borderWidth: hovered === project.id ? 4 : 0,
+                      borderColor: hovered === project.id ? 'var(--main)' : 'transparent',
+                      boxShadow: hovered === project.id ? '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' : '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                    }}
+                  />
+                  <motion.div 
+                    className='absolute inset-0 bg-black bg-opacity-0 flex items-center justify-center transition-all duration-300'
+                    whileHover={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
+                  >
+                    <motion.span 
+                      className='text-white opacity-0 transform translate-y-4 font-medium text-lg'
+                      whileHover={{ opacity: 1, translateY: 0 }}
+                    >
+                      Password required
+                    </motion.span>
+                  </motion.div>
+                </div>
+              ) : (
+                <a
+                  href={project.link}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='relative overflow-hidden rounded-lg cursor-pointer group'
+                  onMouseEnter={() => setHovered(project.id)}
+                  onMouseLeave={() => setHovered(null)}
+                >
+                  <motion.img
+                    src={project.image}
+                    alt={project.alt}
+                    className='w-full rounded-lg shadow-xl transition-all duration-500'
+                    whileHover={{ scale: 1.05 }}
+                    animate={{
+                      borderWidth: hovered === project.id ? 4 : 0,
+                      borderColor: hovered === project.id ? 'var(--main)' : 'transparent',
+                      boxShadow: hovered === project.id ? '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' : '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                    }}
+                  />
+                  <motion.div 
+                    className='absolute inset-0 bg-black bg-opacity-0 flex items-center justify-center transition-all duration-300'
+                    whileHover={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
+                  >
+                    <motion.span 
+                      className='text-white opacity-0 transform translate-y-4 font-medium text-lg'
+                      whileHover={{ opacity: 1, translateY: 0 }}
+                    >
+                      Visit project
+                    </motion.span>
+                  </motion.div>
+                </a>
+              )}
+            </div>
+            <motion.div 
+              className='leading-relaxed'
+              whileInView={{ 
+                opacity: [0, 1],
+                x: [10, 0] 
+              }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <h3 className='mb-5 text-3xl font-bold group flex items-center'>
+                {project.title}
+                <span className='accent font-serif text-4xl'>.</span>
+                <motion.span 
+                  className='ml-2 h-1 w-0 bg-current block mt-1'
+                  whileInView={{ width: '3rem' }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                />
+              </h3>
+              <p>{project.description}</p>
+              <p className='mt-4'>{project.details}</p>
+            </motion.div>
+          </div>
+        </motion.div>
+      ))}
+    </motion.section>
   );
 }

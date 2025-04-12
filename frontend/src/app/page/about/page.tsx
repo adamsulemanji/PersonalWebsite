@@ -19,7 +19,7 @@ export default function Page() {
               className='rounded-xl'
             />
             <p className='text-xs mt-2'>
-              *** This is me a few years ago (15), I look a little older now ***
+              *** This is me a few years ago (age 7), I look a little older now ***
             </p>
           </div>
         </div>
