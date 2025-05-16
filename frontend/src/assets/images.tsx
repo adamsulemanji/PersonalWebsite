@@ -1,5 +1,5 @@
 export const imagesLeft = [
-  { src: '/images/nikki.jpg', alt: 'My friend Nikki and I at an event' },
+  { src: '/images/nikki.jpg', alt: 'Nikki and I at an event' },
   { src: '/images/aggiefootball.jpg', alt: 'Texas A&M Aggie Football game day' },
   { src: '/images/mountain.jpg', alt: 'Hiking adventure in the mountains' },
   { src: '/images/ringday.jpg', alt: 'Receiving my Aggie Ring on Ring Day' },

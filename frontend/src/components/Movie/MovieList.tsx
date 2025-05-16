@@ -56,7 +56,7 @@ export default function MovieList() {
 
   useEffect(() => {
     axios
-      .post('https://api.fast.adamsulemanji.com/movies/search', {
+      .post('https://api.fast.adamsulemanji.com/movies/search?limit=10', {
         username: 'adamsulemanji',
       })
       .then((response) => {

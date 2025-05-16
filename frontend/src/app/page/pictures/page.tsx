@@ -34,7 +34,6 @@ export default function Page() {
     const loadImages = async () => {
       const getImageAspectRatio = (src: string): Promise<number> => {
         return new Promise((resolve) => {
-          // Use HTMLImageElement instead of the Image constructor to avoid conflicts
           const imgElement = document.createElement('img');
           imgElement.onload = () => {
             resolve(imgElement.width / imgElement.height);
