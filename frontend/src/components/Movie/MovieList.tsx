@@ -10,9 +10,10 @@ interface AlbumItemProps {
   poster_url: string;
   rating?: string,
   director?: string[],
+  review?: string,
 }
 
-function MovieItem({ title, letterboxd_url, poster_url, rating, director }: AlbumItemProps) {
+function MovieItem({ title, letterboxd_url, poster_url, rating, director, review }: AlbumItemProps) {
   const discColorClass = `disc-color-${Math.floor(Math.random() * 7)}`;
 
   const diskStyles = ['disk-cd', 'disk-bluray'];
@@ -30,7 +31,13 @@ function MovieItem({ title, letterboxd_url, poster_url, rating, director }: Albu
             <div
               className='album'
               style={{ backgroundImage: `url(${poster_url})` }}
-            ></div>
+            >
+              {review && (
+                <div className='review-overlay opacity-0 group-hover:opacity-100 bg-black bg-opacity-75 flex items-center justify-center w-full h-full'>
+                  <p className='italic text-center text-white text-xs p-2 overflow-y-auto max-h-full'>"{review}"</p>
+                </div>
+              )}
+            </div>
             <div className={`disk ${discColorClass} ${randomDiskStyle}`}>
               <div className='disk__inside'></div>
             </div>
@@ -81,6 +88,7 @@ export default function MovieList() {
           poster_url={album.poster_url}
           rating={album.rating}
           director={album.director}
+          review={album.review}
         />
       ))}
     </div>

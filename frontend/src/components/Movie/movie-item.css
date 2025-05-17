@@ -47,6 +47,21 @@
     inset 0 -1px 2px #00000080;
 }
 
+/* Review overlay styles */
+.review-overlay {
+  position: absolute;
+  z-index: 2;
+  width: var(--album-width, 100px);
+  height: var(--album-height, 150px);
+  transition: opacity 0.3s ease;
+  padding: 8px;
+  pointer-events: none;
+}
+
+.music-item:hover .review-overlay {
+  opacity: 1 !important;
+}
+
 /* Common base .disk styles (keeps everything else the same) */
 .disk {
   position: absolute;
