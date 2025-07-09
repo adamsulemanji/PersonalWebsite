@@ -8,6 +8,16 @@ export interface projectsInterface {
   color?: string;
 }
 
+export const colorMap: Record<string, string[]> = {
+    red:    ['bg-red-500', 'bg-red-400'],
+    blue:   ['bg-blue-500', 'bg-blue-400'],
+    green:  ['bg-teal-500', 'bg-teal-400'],
+    purple: ['bg-violet-500', 'bg-violet-400'],
+    orange: ['bg-orange-500', 'bg-orange-400'],
+    banana: ['bg-yellow-500', 'bg-yellow-400'],
+    sky:    ['bg-sky-500', 'bg-sky-400'],
+  };
+
 export const projects: projectsInterface[] = [
   {
     title: 'Personal Website',
@@ -40,7 +50,7 @@ export const projects: projectsInterface[] = [
   },
   {
     title: 'Course Monitoring',
-    description: 'A  course monitoring tool for students about TAMU classes',
+    description: 'A course monitoring tool for students about TAMU classes (unfortunately not available anymore)',
     date: 'May 2022 - Present',
     url: 'https://courses.adamsulemanji.com/',
     pictures: ['/images/coursemonitoring.png'],
@@ -57,12 +67,12 @@ export const projects: projectsInterface[] = [
     color: 'red',
   },
   {
-    title: 'Place Holder',
-    description: 'A Placeholder for now',
-    date: 'May 2022 - Present',
-    url: 'https://courses.adamsulemanji.com/',
+    title: 'BANANAS',
+    description: 'Banagrams for online multiplayer for my friends and I',
+    date: 'April 2025 - Present',
+    url: 'https://bananas.adamsulemanji.com/',
     pictures: ['/images/river.jpg'],
-    categories: ['eventbridge', 'lambda', 'dynamodb'],
-    color: 'sky',
+    categories: ['websockets', 'cursor', 'react-dnd'],
+    color: 'banana',
   },
 ];

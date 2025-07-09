@@ -13,10 +13,11 @@ interface AlbumItemProps {
   review?: string,
 }
 
-function MovieItem({ title, letterboxd_url, poster_url, rating, director, review }: AlbumItemProps) {
-  const discColorClass = `disc-color-${Math.floor(Math.random() * 7)}`;
+const API_URL = 'https://api.fast.adamsulemanji.com/movies/search?username=adamsulemanji&limit=10';
+const discColorClass = `disc-color-${Math.floor(Math.random() * 7)}`;
+const diskStyles = ['disk-cd', 'disk-bluray'];
 
-  const diskStyles = ['disk-cd', 'disk-bluray'];
+function MovieItem({ title, letterboxd_url, poster_url, rating, director, review }: AlbumItemProps) {
   const randomDiskStyle =
     diskStyles[Math.floor(Math.random() * diskStyles.length)];
 
@@ -57,8 +58,6 @@ function MovieItem({ title, letterboxd_url, poster_url, rating, director, review
 
 export default function MovieList() {
   const [album_list, setAlbumList] = useState<AlbumItemProps[]>([]);
-
-  console.log(album_list);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

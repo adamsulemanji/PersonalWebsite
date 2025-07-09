@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
@@ -67,27 +66,26 @@ export default function Home() {
                 <p>
                   I'm a Software Engineer at{' '}
                   <span className='underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400'>
-                    Amazon
+                    Amazon Web Services
                   </span>{' '}
-                  in Seattle building systems to help connect customers to
-                  international products from all over the world. My philosophy
+                  in Seattle, WA building systems to help connect clients leverage Generative AI in Marketing within the SageMaker Ground Truth org. My philosophy
                   in creating and design is to build in order to learn and make
                   the peoples lives around me easier and more fun.
                 </p>
                 <p>
                   I've previously worked at{' '}
                   <span className='underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400'>
-                    Amazon
+                    Amazon.com
                   </span>
-                  , building crossborder software,{' '}
+                   {' '}building crossborder software, {' '}
                   <span className='underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400'>
                     Goldman Sachs
                   </span>
-                  , determining market risk and{' '}
+                   {' '} determining market risk and{' '}
                   <span className='underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400'>
-                    PricewaterhouseCooper
+                    PricewaterhouseCoopers
                   </span>
-                  , helping non-profits.
+                    {' '}helping non-profits.
                 </p>
               </div>
               <div className='mt-8'>

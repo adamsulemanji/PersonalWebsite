@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { projects } from '@/assets/projects';
+import { projects, colorMap } from '@/assets/projects';
 import { projectsInterface } from '@/assets/projects';
 import { FiArrowUpRight } from 'react-icons/fi';
 import Image from 'next/image';
@@ -11,16 +11,6 @@ interface ProjectProps {
 }
 
 export default function Project({ category = '' }: ProjectProps) {
-  const colorMap: Record<string, string[]> = {
-    red: ['bg-red-500', 'bg-red-400'],
-    blue: ['bg-blue-500', 'bg-blue-400'],
-    green: ['bg-teal-500', 'bg-teal-400'],
-    purple: ['bg-violet-500', 'bg-violet-400'],
-    orange: ['bg-orange-500', 'bg-orange-400'],
-    yellow: ['bg-yellow-500', 'bg-yellow-400'],
-    sky: ['bg-sky-500', 'bg-sky-400'],
-  };
-
   return (
     <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
       {projects
