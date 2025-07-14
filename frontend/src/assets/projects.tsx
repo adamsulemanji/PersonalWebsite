@@ -9,13 +9,13 @@ export interface projectsInterface {
 }
 
 export const colorMap: Record<string, string[]> = {
-    red:    ['bg-red-500', 'bg-red-400'],
-    blue:   ['bg-blue-500', 'bg-blue-400'],
-    green:  ['bg-teal-500', 'bg-teal-400'],
-    purple: ['bg-violet-500', 'bg-violet-400'],
-    orange: ['bg-orange-500', 'bg-orange-400'],
-    banana: ['bg-yellow-500', 'bg-yellow-400'],
-    sky:    ['bg-sky-500', 'bg-sky-400'],
+    red:    ['#ef4444', '#f87171'],
+    blue:   ['#3b82f6', '#60a5fa'],
+    green:  ['#14b8a6', '#2dd4bf'],
+    purple: ['#8b5cf6', '#a78bfa'],
+    orange: ['#f97316', '#fb923c'],
+    banana: ['#eab308', '#facc15'],
+    sky:    ['#0ea5e9', '#38bdf8'],
   };
 
 export const projects: projectsInterface[] = [

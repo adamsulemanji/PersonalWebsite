@@ -84,17 +84,41 @@ export default function Page() {
         animate="show"
       >
         <motion.div className='mt-10' variants={item}>
-          <p className='mb-5 text-5xl font-bold'>
-            Projects
-            <span className='accent font-serif text-6xl'>.</span>
-          </p>
-          <p className='leading-relaxed'>
+          <div className='relative'>
+            <motion.div 
+              className='absolute -top-2 -left-2 w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full opacity-20 blur-xl'
+              animate={{ rotate: 360 }}
+              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            />
+            <p className='mb-5 text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent'>
+              Projects
+              <span className='accent font-serif text-6xl text-blue-600'>.</span>
+            </p>
+          </div>
+          <p className='leading-relaxed text-gray-600 dark:text-gray-300'>
             Here is a collection of things I have been working on and/or built
-            recently.
+            recently. Each project showcases different technologies and problem-solving approaches.
           </p>
+          <motion.div 
+            className='mt-6 flex space-x-4'
+            variants={item}
+          >
+            <div className='flex items-center space-x-2 text-sm text-gray-500'>
+              <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+              <span>Recently updated</span>
+            </div>
+            <div className='flex items-center space-x-2 text-sm text-gray-500'>
+              <div className='w-2 h-2 bg-blue-500 rounded-full'></div>
+              <span>Open source</span>
+            </div>
+          </motion.div>
         </motion.div>
         <motion.div variants={item}>
-          <div className='staggered-dots h-[150px] w-full rounded-lg bg-[length:10px_10px]'></div>
+          <div className='relative h-[150px] w-full rounded-lg overflow-hidden bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20'>
+            <div className='absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.1),transparent_50%)]'></div>
+            <div className='absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(147,51,234,0.1),transparent_50%)]'></div>
+            <div className='staggered-dots h-full w-full bg-[length:10px_10px] opacity-30'></div>
+          </div>
         </motion.div>
       </motion.div>
 
@@ -107,9 +131,20 @@ export default function Page() {
           viewport={{ once: true, margin: "-100px" }}
           className={`${index > 0 ? 'mt-16' : 'mt-10'}`}
         >
-          <hr className={`${index > 0 ? 'mb-10 border-t border-gray-300' : 'hidden'}`} />
-          <div className='grid w-full grid-cols-1 gap-10 md:grid-cols-2'>
-            <div className='flex items-center justify-center'>
+          <motion.hr 
+            className={`${index > 0 ? 'mb-10 border-t border-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-600' : 'hidden'}`}
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            transition={{ duration: 0.8 }}
+          />
+          <div className='grid w-full grid-cols-1 gap-10 md:grid-cols-2 items-center'>
+            <div className='flex items-center justify-center relative'>
+              <motion.div 
+                className='absolute -inset-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl blur-sm'
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+              />
               {project.onClick ? (
                 <div 
                   onClick={project.onClick}
@@ -175,24 +210,43 @@ export default function Page() {
               )}
             </div>
             <motion.div 
-              className='leading-relaxed'
+              className='leading-relaxed relative'
               whileInView={{ 
                 opacity: [0, 1],
                 x: [10, 0] 
               }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <h3 className='mb-5 text-3xl font-bold group flex items-center'>
-                {project.title}
-                <span className='accent font-serif text-4xl'>.</span>
-                <motion.span 
-                  className='ml-2 h-1 w-0 bg-current block mt-1'
-                  whileInView={{ width: '3rem' }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
+              <div className='relative'>
+                <motion.div 
+                  className='absolute -top-1 -left-1 w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-10 blur-md'
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 3, repeat: Infinity }}
                 />
-              </h3>
-              <p>{project.description}</p>
-              <p className='mt-4'>{project.details}</p>
+                <h3 className='mb-5 text-3xl font-bold group flex items-center'>
+                  <span className='bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent'>
+                    {project.title}
+                  </span>
+                  <span className='accent font-serif text-4xl text-blue-600'>.</span>
+                  <motion.span 
+                    className='ml-2 h-1 w-0 bg-gradient-to-r from-blue-500 to-purple-600 block mt-1 rounded-full'
+                    whileInView={{ width: '3rem' }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                  />
+                </h3>
+              </div>
+              <div className='space-y-4'>
+                <p className='text-gray-700 dark:text-gray-200 leading-relaxed'>{project.description}</p>
+                <p className='text-gray-600 dark:text-gray-300 leading-relaxed border-l-2 border-blue-500 pl-4'>{project.details}</p>
+                <motion.div 
+                  className='flex items-center space-x-2 text-sm text-blue-600 dark:text-blue-400 mt-4'
+                  whileInView={{ opacity: [0, 1], y: [10, 0] }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                >
+                  <div className='w-2 h-2 bg-blue-500 rounded-full animate-pulse'></div>
+                  <span>Click to explore</span>
+                </motion.div>
+              </div>
             </motion.div>
           </div>
         </motion.div>
