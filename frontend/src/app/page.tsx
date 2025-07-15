@@ -68,7 +68,7 @@ export default function Home() {
                   <span className='underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400'>
                     Amazon Web Services
                   </span>{' '}
-                  in Seattle, WA building systems to help connect clients leverage Generative AI in Marketing within the SageMaker Ground Truth org. My philosophy
+                  in Seattle, WA building systems to help people label their human data in the SageMaker Ground Truth org. My philosophy
                   in creating and design is to build in order to learn and make
                   the peoples lives around me easier and more fun.
                 </p>
