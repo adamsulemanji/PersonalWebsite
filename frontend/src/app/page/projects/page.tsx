@@ -1,11 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 
 export default function Page() {
-  const [hovered, setHovered] = useState<number | null>(null);
-
   const handlePasswordSubmit = () => {
     const enteredPassword = prompt('Enter password');
     if (enteredPassword === 'nikki') {
@@ -26,7 +23,7 @@ export default function Page() {
   };
 
   const item = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 24 },
     show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
@@ -70,187 +67,156 @@ export default function Page() {
   ];
 
   return (
-    <motion.section 
-      className='mt-24 w-full max-w-[1500px] px-4 sm:px-8' 
+    <motion.section
+      className='relative mx-auto mt-24 w-full max-w-6xl px-4 pb-24 sm:px-8'
       id='section-projects'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <motion.div 
-        className='grid w-full grid-cols-1 gap-10 md:grid-cols-2'
-        variants={container}
-        initial="hidden"
-        animate="show"
+      <motion.div
+        className='relative overflow-hidden rounded-3xl border border-gray-200/70 bg-white/70 p-8 shadow-sm backdrop-blur-sm dark:border-gray-800/80 dark:bg-black/40 sm:p-12'
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
       >
-        <motion.div className='mt-10' variants={item}>
-          <div className='relative'>
-            <motion.div 
-              className='absolute -top-2 -left-2 w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full opacity-20 blur-xl'
-              animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-            />
-            <p className='mb-5 text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent'>
-              Projects
-              <span className='accent font-serif text-6xl text-blue-600'>.</span>
-            </p>
-          </div>
-          <p className='leading-relaxed text-gray-600 dark:text-gray-300'>
-            Here is a collection of things I have been working on and/or built
-            recently. Each project showcases different technologies and problem-solving approaches.
+        <div className='pointer-events-none absolute inset-0'>
+          <div className='absolute -right-20 -top-20 h-56 w-56 rounded-full bg-emerald-500/10 blur-3xl dark:bg-blue-500/20' />
+          <div className='absolute -bottom-20 left-10 h-40 w-40 rounded-full bg-amber-400/10 blur-3xl dark:bg-amber-400/10' />
+          <div className='absolute inset-0 staggered-dots opacity-10' />
+        </div>
+        <div className='relative'>
+          <p className='text-xs uppercase tracking-[0.35em] text-gray-500 dark:text-gray-400'>
+            Selected work
           </p>
-          <motion.div 
-            className='mt-6 flex space-x-4'
-            variants={item}
-          >
-            <div className='flex items-center space-x-2 text-sm text-gray-500'>
-              <div className='w-2 h-2 bg-green-500 rounded-full'></div>
-              <span>Recently updated</span>
-            </div>
-            <div className='flex items-center space-x-2 text-sm text-gray-500'>
-              <div className='w-2 h-2 bg-blue-500 rounded-full'></div>
-              <span>Open source</span>
-            </div>
-          </motion.div>
-        </motion.div>
-        <motion.div variants={item}>
-          <div className='relative h-[150px] w-full rounded-lg overflow-hidden bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20'>
-            <div className='absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.1),transparent_50%)]'></div>
-            <div className='absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(147,51,234,0.1),transparent_50%)]'></div>
-            <div className='staggered-dots h-full w-full bg-[length:10px_10px] opacity-30'></div>
+          <h1 className='mt-4 text-4xl font-serif font-semibold text-gray-900 dark:text-gray-100 md:text-6xl'>
+            Projects<span className='accent'>.</span>
+          </h1>
+          <p className='mt-4 max-w-2xl text-base leading-relaxed text-gray-600 dark:text-gray-300'>
+            Here is a collection of things I have been building recently. Each project is a mix of
+            experimentation, problem-solving, and polishing the details.
+          </p>
+          <div className='mt-6 flex flex-wrap gap-3 text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400'>
+            <span className='rounded-full border border-gray-200/70 bg-white/80 px-3 py-1 dark:border-gray-700 dark:bg-black/30'>
+              Live builds
+            </span>
+            <span className='rounded-full border border-gray-200/70 bg-white/80 px-3 py-1 dark:border-gray-700 dark:bg-black/30'>
+              Open source
+            </span>
+            <span className='rounded-full border border-gray-200/70 bg-white/80 px-3 py-1 dark:border-gray-700 dark:bg-black/30'>
+              Private demos
+            </span>
           </div>
-        </motion.div>
+        </div>
       </motion.div>
 
-      {projectItems.map((project, index) => (
-        <motion.div 
-          key={project.id}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className={`${index > 0 ? 'mt-16' : 'mt-10'}`}
-        >
-          <motion.hr 
-            className={`${index > 0 ? 'mb-10 border-t border-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-600' : 'hidden'}`}
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.8 }}
-          />
-          <div className='grid w-full grid-cols-1 gap-10 md:grid-cols-2 items-center'>
-            <div className='flex items-center justify-center relative'>
-              <motion.div 
-                className='absolute -inset-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl blur-sm'
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
+      <motion.div
+        className='mt-16 space-y-16'
+        variants={container}
+        initial='hidden'
+        whileInView='show'
+        viewport={{ once: true, margin: '-100px' }}
+      >
+        {projectItems.map((project, index) => {
+          const isPrivate = Boolean(project.onClick);
+          const isRepo = project.link?.includes('github.com');
+          const metaLabel = isPrivate ? 'Private demo' : isRepo ? 'Open source' : 'Live site';
+          const ctaLabel = isPrivate ? 'Request access' : isRepo ? 'View repository' : 'Visit site';
+          const imageOrder = index % 2 === 0 ? 'lg:order-1' : 'lg:order-2';
+          const textOrder = index % 2 === 0 ? 'lg:order-2' : 'lg:order-1';
+
+          const imageCard = (
+            <div className='relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white/80 p-2 shadow-xl dark:border-gray-800/80 dark:bg-black/40'>
+              <img
+                src={project.image}
+                alt={project.alt}
+                className='h-full w-full rounded-xl object-cover transition-transform duration-500 group-hover:scale-[1.03]'
               />
-              {project.onClick ? (
-                <div 
-                  onClick={project.onClick}
-                  className='relative overflow-hidden rounded-lg cursor-pointer group'
-                  onMouseEnter={() => setHovered(project.id)}
-                  onMouseLeave={() => setHovered(null)}
-                >
-                  <motion.img
-                    src={project.image}
-                    alt={project.alt}
-                    className='w-full rounded-lg shadow-xl transition-all duration-500'
-                    whileHover={{ scale: 1.05 }}
-                    animate={{
-                      borderWidth: hovered === project.id ? 4 : 0,
-                      borderColor: hovered === project.id ? 'var(--main)' : 'transparent',
-                      boxShadow: hovered === project.id ? '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' : '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
-                    }}
-                  />
-                  <motion.div 
-                    className='absolute inset-0 bg-black bg-opacity-0 flex items-center justify-center transition-all duration-300'
-                    whileHover={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
-                  >
-                    <motion.span 
-                      className='text-white opacity-0 transform translate-y-4 font-medium text-lg'
-                      whileHover={{ opacity: 1, translateY: 0 }}
-                    >
-                      Password required
-                    </motion.span>
-                  </motion.div>
-                </div>
-              ) : (
-                <a
-                  href={project.link}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='relative overflow-hidden rounded-lg cursor-pointer group'
-                  onMouseEnter={() => setHovered(project.id)}
-                  onMouseLeave={() => setHovered(null)}
-                >
-                  <motion.img
-                    src={project.image}
-                    alt={project.alt}
-                    className='w-full rounded-lg shadow-xl transition-all duration-500'
-                    whileHover={{ scale: 1.05 }}
-                    animate={{
-                      borderWidth: hovered === project.id ? 4 : 0,
-                      borderColor: hovered === project.id ? 'var(--main)' : 'transparent',
-                      boxShadow: hovered === project.id ? '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' : '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
-                    }}
-                  />
-                  <motion.div 
-                    className='absolute inset-0 bg-black bg-opacity-0 flex items-center justify-center transition-all duration-300'
-                    whileHover={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
-                  >
-                    <motion.span 
-                      className='text-white opacity-0 transform translate-y-4 font-medium text-lg'
-                      whileHover={{ opacity: 1, translateY: 0 }}
-                    >
-                      Visit project
-                    </motion.span>
-                  </motion.div>
-                </a>
-              )}
+              <div className='pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
+              <div className='pointer-events-none absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs uppercase tracking-[0.25em] text-white/90 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+                <span>{metaLabel}</span>
+                <span>{`0${index + 1}`}</span>
+              </div>
             </div>
-            <motion.div 
-              className='leading-relaxed relative'
-              whileInView={{ 
-                opacity: [0, 1],
-                x: [10, 0] 
-              }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className='relative'>
-                <motion.div 
-                  className='absolute -top-1 -left-1 w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-10 blur-md'
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-                <h3 className='mb-5 text-3xl font-bold group flex items-center'>
-                  <span className='bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent'>
-                    {project.title}
-                  </span>
-                  <span className='accent font-serif text-4xl text-blue-600'>.</span>
-                  <motion.span 
-                    className='ml-2 h-1 w-0 bg-gradient-to-r from-blue-500 to-purple-600 block mt-1 rounded-full'
-                    whileInView={{ width: '3rem' }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                  />
-                </h3>
-              </div>
-              <div className='space-y-4'>
-                <p className='text-gray-700 dark:text-gray-200 leading-relaxed'>{project.description}</p>
-                <p className='text-gray-600 dark:text-gray-300 leading-relaxed border-l-2 border-blue-500 pl-4'>{project.details}</p>
-                <motion.div 
-                  className='flex items-center space-x-2 text-sm text-blue-600 dark:text-blue-400 mt-4'
-                  whileInView={{ opacity: [0, 1], y: [10, 0] }}
-                  transition={{ duration: 0.5, delay: 0.6 }}
+          );
+
+          return (
+            <motion.article key={project.id} className='relative' variants={item}>
+              <div className='grid items-center gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]'>
+                <motion.div
+                  className={`relative ${imageOrder}`}
+                  whileHover={{ y: -6 }}
+                  transition={{ type: 'spring', stiffness: 200, damping: 18 }}
                 >
-                  <div className='w-2 h-2 bg-blue-500 rounded-full animate-pulse'></div>
-                  <span>Click to explore</span>
+                  <div className='absolute -inset-4 rounded-3xl bg-gradient-to-br from-emerald-500/10 via-transparent to-amber-400/10 blur-2xl dark:from-blue-500/15 dark:to-amber-400/10' />
+                  {isPrivate ? (
+                    <button
+                      type='button'
+                      onClick={project.onClick}
+                      aria-label={`Open ${project.title}`}
+                      className='group relative block w-full text-left'
+                    >
+                      {imageCard}
+                    </button>
+                  ) : (
+                    <a
+                      href={project.link}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      aria-label={`Open ${project.title}`}
+                      className='group relative block'
+                    >
+                      {imageCard}
+                    </a>
+                  )}
                 </motion.div>
+
+                <div className={`relative ${textOrder}`}>
+                  <div className='flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500'>
+                    <span className='text-sm font-semibold text-gray-600 dark:text-gray-300'>
+                      {`0${index + 1}`}
+                    </span>
+                    <span className='h-px flex-1 bg-gray-200 dark:bg-gray-700' />
+                  </div>
+                  <h3 className='mt-4 text-3xl font-semibold text-gray-900 dark:text-gray-100'>
+                    {project.title}
+                    <span className='accent'>.</span>
+                  </h3>
+                  <p className='mt-3 leading-relaxed text-gray-600 dark:text-gray-300'>
+                    {project.description}
+                  </p>
+                  <p className='mt-4 border-l-2 border-[color:var(--main)]/60 pl-4 text-sm leading-relaxed text-gray-600 dark:text-gray-300'>
+                    {project.details}
+                  </p>
+                  <div className='mt-6 flex flex-wrap items-center gap-4'>
+                    <span className='rounded-full border border-gray-200/70 bg-gray-50 px-3 py-1 text-xs uppercase tracking-[0.2em] text-gray-500 dark:border-gray-700 dark:bg-black/30 dark:text-gray-400'>
+                      {metaLabel}
+                    </span>
+                    {isPrivate ? (
+                      <button
+                        type='button'
+                        onClick={project.onClick}
+                        className='inline-flex items-center gap-2 rounded-full border border-gray-900/10 bg-gray-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-gray-800 dark:border-white/20 dark:bg-white/10 dark:text-gray-100 dark:hover:bg-white/20'
+                      >
+                        {ctaLabel}
+                      </button>
+                    ) : (
+                      <a
+                        href={project.link}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='inline-flex items-center gap-2 rounded-full border border-gray-900/10 bg-gray-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-gray-800 dark:border-white/20 dark:bg-white/10 dark:text-gray-100 dark:hover:bg-white/20'
+                      >
+                        {ctaLabel}
+                      </a>
+                    )}
+                  </div>
+                </div>
               </div>
-            </motion.div>
-          </div>
-        </motion.div>
-      ))}
+            </motion.article>
+          );
+        })}
+      </motion.div>
     </motion.section>
   );
 }
