@@ -137,6 +137,37 @@ export class Pipeline extends cdk.Stack {
       input: frontendBuildOutput,
     });
 
+    const invalidateCacheProject = new codebuild.PipelineProject(
+      this,
+      "InvalidateCacheProject",
+      {
+        environment: {
+          buildImage: codebuild.LinuxBuildImage.STANDARD_7_0,
+        },
+        buildSpec: codebuild.BuildSpec.fromObjectToYaml({
+          version: "0.2",
+          phases: {
+            build: {
+              commands: [
+                `aws cloudfront create-invalidation --distribution-id ${props.frontendConstruct.apexDistribution.distributionId} --paths "/*"`,
+              ],
+            },
+          },
+        }),
+      }
+    );
+
+    props.frontendConstruct.apexDistribution.grantCreateInvalidation(
+      invalidateCacheProject
+    );
+
+    const invalidateCacheAction = new codepipeline_actions.CodeBuildAction({
+      actionName: "Invalidate_CloudFront_Cache",
+      input: sourceOutput,
+      project: invalidateCacheProject,
+      runOrder: 2,
+    });
+
     // ********** PIPELINE DEFINITION **********
     new codepipeline.Pipeline(this, "PersonalWebsitePipeline", {
       pipelineName: "PersonalWebsitePipeline",
@@ -159,7 +190,7 @@ export class Pipeline extends cdk.Stack {
         },
         {
           stageName: "DeployFrontend",
-          actions: [deployFrontendAction],
+          actions: [deployFrontendAction, invalidateCacheAction],
         },
       ],
     });
