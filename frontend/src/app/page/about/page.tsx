@@ -8,7 +8,7 @@ export default function Page() {
         Software Engineer looking to make cool things to make the internet and
         the world just a little bit more fun.
       </p>
-      <div className='mt-10 grid grid-cols-2'>
+      <div className='mt-10 grid grid-cols-1 gap-8 md:grid-cols-2'>
         <div className='flex justify-center'>
           <div className='w-fit text-center'>
             <Image

@@ -16,6 +16,8 @@ export const colorMap: Record<string, string[]> = {
     orange: ['#f97316', '#fb923c'],
     banana: ['#eab308', '#facc15'],
     sky:    ['#0ea5e9', '#38bdf8'],
+    pink:   ['#d63384', '#f56565'],
+
   };
 
 export const projects: projectsInterface[] = [
@@ -74,5 +76,15 @@ export const projects: projectsInterface[] = [
     pictures: ['/images/river.jpg'],
     categories: ['websockets', 'cursor', 'react-dnd'],
     color: 'banana',
+  },
+  {
+    title: 'Model Customization through AI Agents',
+    description:
+      'Democratizing model customization through AI agents and evaluation ',
+    url: 'https://aws.amazon.com/sagemaker/ai/model-customization/',
+    date: 'October 2025 - Jan 2026',
+    pictures: ['/images/sagemaker.JPG'],
+    categories: [],
+    color: 'pink',
   },
 ];

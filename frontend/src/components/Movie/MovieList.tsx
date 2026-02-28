@@ -26,7 +26,7 @@ function MovieItem({ title, letterboxd_url, poster_url, rating, director, review
       href={letterboxd_url}
       className='mb-6 h-full w-full cursor-pointer rounded-xl'
     >
-      <div className='music-item group relative flex w-full items-center rounded-lg border border-gray-200 bg-neutral-100 px-16 py-24 dark:border-gray-700 dark:bg-gray-800'>
+      <div className='music-item group relative flex w-full items-center rounded-lg border border-gray-200 bg-neutral-100 px-6 py-10 dark:border-gray-700 dark:bg-gray-800 sm:px-10 sm:py-16 lg:px-16 lg:py-24'>
         <div className='album-container'>
           <div className='album-wrap'>
             <div

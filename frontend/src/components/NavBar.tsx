@@ -31,7 +31,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className='sticky top-0 z-50 w-full border-b bg-background/95 p-8 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
+    <header className='sticky top-0 z-50 w-full border-b bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:p-8'>
       <div className='flex h-8 w-full items-center justify-between px-4 md:px-8'>
         <div className='mr-4 hidden md:flex'>
           <a
@@ -85,6 +85,7 @@ export default function Navbar() {
                   <MobileLink
                     key={index}
                     href={'redirect' in item ? item.redirect : '#'}
+                    onClick={() => setIsOpen(false)}
                   >
                     {item.title}
                   </MobileLink>
@@ -108,10 +109,7 @@ function MobileLink({ href, onClick, children }: MobileLinkProps) {
   return (
     <a
       href={href}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick?.();
-      }}
+      onClick={onClick}
       className='block py-2 text-lg font-medium'
     >
       {children}

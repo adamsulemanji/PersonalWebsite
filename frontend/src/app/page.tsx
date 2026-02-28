@@ -16,7 +16,7 @@ export default function Home() {
         <div className='m-4 grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 pb-20 sm:p-20'>
           <main className='row-start-2 flex w-full max-w-[1500px] flex-col gap-8 px-4 sm:px-8'>
             <motion.section 
-              className='one group relative text-center text-6xl'
+              className='one group relative text-center text-4xl sm:text-5xl md:text-6xl'
               id='section-intro'
               initial={{ x: -100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -24,7 +24,7 @@ export default function Home() {
             >
               <div>
                 <div>
-                  <div className='text-left font-serif text-7xl font-light leading-tight md:mt-12'>
+                  <div className='text-left font-serif text-4xl font-light leading-tight sm:text-5xl md:mt-12 md:text-7xl'>
                     <motion.span
                       className='block'
                       initial={{ x: -10, opacity: 0 }}
@@ -39,7 +39,7 @@ export default function Home() {
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 0.5, duration: 1 }}
                     >
-                      name is <b className='text-8xl'>Adam</b>
+                      name is <b className='text-5xl sm:text-6xl md:text-8xl'>Adam</b>
                       <span className='accent'>.</span>
                     </motion.span>
                   </div>
@@ -89,7 +89,7 @@ export default function Home() {
                 </p>
               </div>
               <div className='mt-8'>
-                <div className='flex justify-start space-x-8 pb-10 text-xl'>
+                <div className='flex flex-wrap justify-start gap-4 pb-10 text-xl sm:gap-8'>
                   <a
                     className='hover:underline hover:underline-offset-4'
                     href='https://github.com/adamsulemanji'

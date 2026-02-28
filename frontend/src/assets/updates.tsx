@@ -8,6 +8,41 @@ interface Update {
 
 export const updates: Update[] = [
   {
+    icon: '🎿',
+    description: 'Went Skiing with Mustafa and Ryan @ Breckenridge, CO',
+    date: 'Janurary 2026',
+    category: 'all',
+  },
+  {
+    icon: '🏖️',
+    description: 'Went to Florida againnnnnnnn. Beach time',
+    date: 'December 2025',
+    category: 'all',
+  },
+  {
+    icon: '📠',
+    description: 'Completed my first re:invent project working to democratize model customization through AI Agents. Check it out by clicking this update',
+    date: 'Winter 2025',
+    category: 'all',
+    url: 'https://www.youtube.com/watch?v=BspjnO1Vjao&pp=ygUtc2FnZW1ha2VyIG1vZGVsIGN1c3RvbWl6YXRpb24gdXNpbmcgYWkgYWdlbnRz'
+  },{
+    icon: '🏈',
+    description: 'Watched Texans vs Seahawks @ Lumen Field',
+    date: 'October 2025',
+    category: 'all',
+  },{
+    icon: '🤵‍♂️',
+    description: 'Added Zoher and Zahra Darugers wedding in Chicago',
+    date: 'September 2025',
+    category: 'all',
+  },
+  {
+    icon: '🏀',
+    description: 'Flew to detroit, drove to Toronto, went to Niagra Falls and competed in BBA. Went undefeated till the finals',
+    date: 'August 2025',
+    category: 'all',
+  },
+  {
     icon: '🎰',
     description: 'Got assigned to an AWS team doing GenAI for marketing in the SageMaker Ground Truth team. Also signed for an apartment',
     url: 'https://aws.amazon.com/sagemaker/ground-truth/',

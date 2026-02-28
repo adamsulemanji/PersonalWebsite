@@ -11,7 +11,7 @@ export default function Footer() {
       <h6 className='text-md mb-5 flex items-center justify-center text-center'>
         Made with ❤️ by Adam Sulemanji
       </h6>
-      <div className='flex justify-center gap-36 pb-10'>
+      <div className='flex flex-wrap justify-center gap-6 pb-10 sm:gap-12'>
         <a
           className='flex items-center gap-2 hover:underline hover:underline-offset-4'
           href='https://github.com/adamsulemanji'

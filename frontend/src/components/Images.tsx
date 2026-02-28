@@ -79,15 +79,15 @@ const ImagesCarousel: FC = () => {
         responsive={responsive}
         ssr
         infinite={false}
-        swipeable={false}
-        draggable={false}
+        swipeable
+        draggable
         keyBoardControl
         transitionDuration={500}
         arrows={false}
         renderButtonGroupOutside
         customButtonGroup={<CustomButtonGroup />}
         containerClass='relative'
-        itemClass='pr-8'
+        itemClass='pr-4 sm:pr-8'
       >
         {images.map((src, index) => (
           <div key={index}>
