@@ -66,11 +66,11 @@ export default function Home() {
                 <p>
                   I'm a Software Engineer at{' '}
                   <span className='underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400'>
-                    Amazon Web Services
+                    Amazon
                   </span>{' '}
-                  in Seattle, WA building systems to help people label their human data in the SageMaker Ground Truth org. My philosophy
-                  in creating and design is to build in order to learn and make
-                  the peoples lives around me easier and more fun.
+                  in Seattle, WA building systems to aid the payments processing flow. Before this, I was working in Amazon Web Services working on Model Customization w/ AI Agents, Human in the Loop and Mechanical Turk
+                  My philosophy in creating and design is to build in order to learn and make
+                  the peoples lives around me easier.
                 </p>
                 <p>
                   I've previously worked at{' '}
