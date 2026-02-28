@@ -37,7 +37,6 @@ A modern, responsive personal portfolio website built with Next.js and deployed 
 └── test/                  # Infrastructure tests
 ```
 
-
 ## System Architecture
 
 ![System Architecture](./diagram.png)
@@ -49,7 +48,6 @@ A modern, responsive personal portfolio website built with Next.js and deployed 
 - Node.js (version specified in .nvmrc)
 - AWS CLI configured
 - AWS CDK CLI
-
 
 ### Local Development
 
@@ -68,6 +66,7 @@ A modern, responsive personal portfolio website built with Next.js and deployed 
    ```
 
 3. Deploy infrastructure (only required once):
+
    ```bash
    cdk deploy
    ```

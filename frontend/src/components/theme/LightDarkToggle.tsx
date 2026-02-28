@@ -22,7 +22,7 @@ export default function LightDarkToggle() {
   return (
     <div className='bottom-0 right-0 p-4'>
       <Button
-        className='m-2 rounded-md bg-transparent px-4 py-2 text-black hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700'
+        className='bg-transparent text-black hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700 m-2 rounded-md px-4 py-2'
         onClick={toggleDarkMode}
       >
         {theme === 'dark' ? <Moon /> : <Sun />}

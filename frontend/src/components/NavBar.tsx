@@ -35,7 +35,7 @@ export default function Navbar() {
       <div className='flex h-8 w-full items-center justify-between px-4 md:px-8'>
         <div className='mr-4 hidden md:flex'>
           <a
-            className='m-2 mr-6 flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800'
+            className='hover:bg-gray-100 dark:hover:bg-gray-800 m-2 mr-6 flex items-center space-x-2 rounded-md px-4 py-2'
             href='/'
           >
             <span className='hidden text-left font-sans text-xl font-extrabold sm:inline-block'>
@@ -49,7 +49,7 @@ export default function Navbar() {
               {leftNavItems.map((item) => (
                 <NavigationMenuItem key={item.title}>
                   <NavigationMenuLink
-                    className={`m-2 rounded-md bg-transparent px-4 py-2 text-base backdrop-blur hover:bg-gray-100 supports-[backdrop-filter]:bg-transparent dark:hover:bg-gray-800 ${
+                    className={`bg-transparent hover:bg-gray-100 supports-[backdrop-filter]:bg-transparent dark:hover:bg-gray-800 m-2 rounded-md px-4 py-2 text-base backdrop-blur ${
                       pathname === item.redirect
                         ? 'font-extrabold underline underline-offset-2'
                         : ''
@@ -72,7 +72,7 @@ export default function Navbar() {
           <SheetTrigger asChild>
             <Button
               variant='ghost'
-              className='mr-2 px-0 text-base hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 md:hidden'
+              className='hover:bg-transparent mr-2 px-0 text-base focus:outline-none focus:ring-0 focus:ring-offset-0 md:hidden'
             >
               <Menu className='h-5 w-5' />
               <span className='sr-only'>Toggle Menu</span>
@@ -107,11 +107,7 @@ interface MobileLinkProps {
 
 function MobileLink({ href, onClick, children }: MobileLinkProps) {
   return (
-    <a
-      href={href}
-      onClick={onClick}
-      className='block py-2 text-lg font-medium'
-    >
+    <a href={href} onClick={onClick} className='block py-2 text-lg font-medium'>
       {children}
     </a>
   );

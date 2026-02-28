@@ -23,13 +23,13 @@ const CustomButtonGroup: FC<CustomButtonGroupProps> = ({
     <div className='justify-right mt-8 flex justify-end text-center'>
       <button
         onClick={previous}
-        className='mr-2 rounded-full bg-gray-500 p-2 text-white transition-colors duration-300 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-500'
+        className='bg-gray-500 text-white hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-500 mr-2 rounded-full p-2 transition-colors duration-300'
       >
         <FaArrowLeftLong className='text-white' />
       </button>
       <button
         onClick={next}
-        className='rounded-full bg-gray-500 p-2 text-white transition-colors duration-300 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-500'
+        className='bg-gray-500 text-white hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-500 rounded-full p-2 transition-colors duration-300'
       >
         <FaArrowRightLong className='text-white' />
       </button>

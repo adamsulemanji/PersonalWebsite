@@ -15,7 +15,7 @@ export default function Home() {
       <div className='w-full max-w-[1200px]'>
         <div className='m-4 grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 pb-20 sm:p-20'>
           <main className='row-start-2 flex w-full max-w-[1500px] flex-col gap-8 px-4 sm:px-8'>
-            <motion.section 
+            <motion.section
               className='one group relative text-center text-4xl sm:text-5xl md:text-6xl'
               id='section-intro'
               initial={{ x: -100, opacity: 0 }}
@@ -39,12 +39,13 @@ export default function Home() {
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 0.5, duration: 1 }}
                     >
-                      name is <b className='text-5xl sm:text-6xl md:text-8xl'>Adam</b>
+                      name is{' '}
+                      <b className='text-5xl sm:text-6xl md:text-8xl'>Adam</b>
                       <span className='accent'>.</span>
                     </motion.span>
                   </div>
 
-                  <span className='absolute -bottom-5 left-0 mt-5 h-2 w-0 bg-green-700 transition-all group-hover:w-2/3 dark:bg-blue-500'></span>
+                  <span className='bg-green-700 dark:bg-blue-500 absolute -bottom-5 left-0 mt-5 h-2 w-0 transition-all group-hover:w-2/3'></span>
                 </div>
               </div>
             </motion.section>
@@ -65,27 +66,30 @@ export default function Home() {
               <div className='[&>p]:mt-4'>
                 <p>
                   I'm a Software Engineer at{' '}
-                  <span className='underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400'>
+                  <span className='hover:decoration-green-700 hover:dark:decoration-blue-400 underline underline-offset-4'>
                     Amazon
                   </span>{' '}
-                  in Seattle, WA building systems to aid the payments processing flow. Before this, I was working in Amazon Web Services working on Model Customization w/ AI Agents, Human in the Loop and Mechanical Turk
-                  My philosophy in creating and design is to build in order to learn and make
-                  the peoples lives around me easier.
+                  in Seattle, WA building systems to aid the payments processing
+                  flow. Before this, I was working in Amazon Web Services
+                  working on Model Customization w/ AI Agents, Human in the Loop
+                  and Mechanical Turk My philosophy in creating and design is to
+                  build in order to learn and make the peoples lives around me
+                  easier.
                 </p>
                 <p>
                   I've previously worked at{' '}
-                  <span className='underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400'>
+                  <span className='hover:decoration-green-700 hover:dark:decoration-blue-400 underline underline-offset-4'>
                     Amazon.com
-                  </span>
-                   {' '}building crossborder software, {' '}
-                  <span className='underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400'>
+                  </span>{' '}
+                  building crossborder software,{' '}
+                  <span className='hover:decoration-green-700 hover:dark:decoration-blue-400 underline underline-offset-4'>
                     Goldman Sachs
-                  </span>
-                   {' '} determining market risk and{' '}
-                  <span className='underline underline-offset-4 hover:decoration-green-700 hover:dark:decoration-blue-400'>
+                  </span>{' '}
+                  determining market risk and{' '}
+                  <span className='hover:decoration-green-700 hover:dark:decoration-blue-400 underline underline-offset-4'>
                     PricewaterhouseCoopers
-                  </span>
-                    {' '}helping non-profits.
+                  </span>{' '}
+                  helping non-profits.
                 </p>
               </div>
               <div className='mt-8'>
@@ -123,7 +127,7 @@ export default function Home() {
                   <a href='/resume.pdf' className='group'>
                     <p className='relative text-sm hover:underline hover:underline-offset-4'>
                       Resume
-                      <span className='absolute bottom-0 left-0 h-[1px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+                      <span className='bg-current absolute bottom-0 left-0 h-[1px] w-0 transition-all duration-300 group-hover:w-full'></span>
                     </p>
                   </a>
                 </div>
@@ -137,7 +141,7 @@ export default function Home() {
               transition={{ delay: 1.3, duration: 1 }}
             >
               <div className='flex flex-col items-center gap-4'>
-                <motion.p 
+                <motion.p
                   className='text-m mb-2 tracking-widest'
                   animate={{ y: [0, -10, 0] }}
                   transition={{ repeat: Infinity, duration: 1.5 }}
@@ -155,21 +159,21 @@ export default function Home() {
                     className='dark:stroke-white'
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: 1 }}
-                    transition={{ duration: 3, ease: "easeOut" }}
+                    transition={{ duration: 3, ease: 'easeOut' }}
                   />
                 </svg>
               </div>
             </motion.section>
-            
+
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: '-100px' }}
             >
-              <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
+              <p className='underline-offset-3 decoration-gray-300 group relative mt-2 inline-block text-xl font-bold underline'>
                 Projects{' '}
-                <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+                <span className='bg-current absolute bottom-0 left-0 mt-1 block h-[2px] w-0 transition-all duration-300 group-hover:w-full'></span>
               </p>
               <p className='mb-4 mt-2'>
                 Here is a collection of some projects that I have worked on
@@ -181,11 +185,11 @@ export default function Home() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: '-100px' }}
             >
-              <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
+              <p className='underline-offset-3 decoration-gray-300 group relative mt-2 inline-block text-xl font-bold underline'>
                 Updates and Things{' '}
-                <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+                <span className='bg-current absolute bottom-0 left-0 mt-1 block h-[2px] w-0 transition-all duration-300 group-hover:w-full'></span>
               </p>
               <p className='mt-2'>
                 Here is a collection of some life updates and things
@@ -196,7 +200,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: '-100px' }}
             >
               <Updates category='all' />
             </motion.div>
@@ -205,11 +209,11 @@ export default function Home() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: '-100px' }}
             >
-              <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
+              <p className='underline-offset-3 decoration-gray-300 group relative mt-2 inline-block text-xl font-bold underline'>
                 Books{' '}
-                <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+                <span className='bg-current absolute bottom-0 left-0 mt-1 block h-[2px] w-0 transition-all duration-300 group-hover:w-full'></span>
               </p>
               <p className='mb-4 mt-2'>
                 Here are a few books I have read recently, in progress or will
@@ -222,11 +226,11 @@ export default function Home() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: '-100px' }}
             >
-              <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
+              <p className='underline-offset-3 decoration-gray-300 group relative mt-2 inline-block text-xl font-bold underline'>
                 Images{' '}
-                <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+                <span className='bg-current absolute bottom-0 left-0 mt-1 block h-[2px] w-0 transition-all duration-300 group-hover:w-full'></span>
               </p>
               <p className='mb-4 mt-2'>
                 Here are a few images that I want to highlight that define me
@@ -238,11 +242,11 @@ export default function Home() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: '-100px' }}
             >
-              <p className='underline-offset-3 group relative mt-2 inline-block text-xl font-bold underline decoration-gray-300'>
+              <p className='underline-offset-3 decoration-gray-300 group relative mt-2 inline-block text-xl font-bold underline'>
                 Movies{' '}
-                <span className='absolute bottom-0 left-0 mt-1 block h-[2px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+                <span className='bg-current absolute bottom-0 left-0 mt-1 block h-[2px] w-0 transition-all duration-300 group-hover:w-full'></span>
               </p>
               <p className='mb-4 mt-2'>
                 Here are some of the most recent movies I have watched.

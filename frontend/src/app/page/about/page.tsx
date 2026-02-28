@@ -18,8 +18,9 @@ export default function Page() {
               height={500}
               className='rounded-xl'
             />
-            <p className='text-xs mt-2'>
-              *** This is me a few years ago (age 7), I look a little older now ***
+            <p className='mt-2 text-xs'>
+              *** This is me a few years ago (age 7), I look a little older now
+              ***
             </p>
           </div>
         </div>

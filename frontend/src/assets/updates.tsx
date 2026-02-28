@@ -27,16 +27,19 @@ export const updates: Update[] = [
   },
   {
     icon: '📠',
-    description: 'Completed my first re:invent project working to democratize model customization through AI Agents. Check it out by clicking this update',
+    description:
+      'Completed my first re:invent project working to democratize model customization through AI Agents. Check it out by clicking this update',
     date: 'Winter 2025',
     category: 'all',
-    url: 'https://www.youtube.com/watch?v=BspjnO1Vjao&pp=ygUtc2FnZW1ha2VyIG1vZGVsIGN1c3RvbWl6YXRpb24gdXNpbmcgYWkgYWdlbnRz'
-  },{
+    url: 'https://www.youtube.com/watch?v=BspjnO1Vjao&pp=ygUtc2FnZW1ha2VyIG1vZGVsIGN1c3RvbWl6YXRpb24gdXNpbmcgYWkgYWdlbnRz',
+  },
+  {
     icon: '🏈',
     description: 'Watched Texans vs Seahawks @ Lumen Field',
     date: 'October 2025',
     category: 'all',
-  },{
+  },
+  {
     icon: '🤵‍♂️',
     description: 'Added Zoher and Zahra Darugers wedding in Chicago',
     date: 'September 2025',
@@ -44,13 +47,15 @@ export const updates: Update[] = [
   },
   {
     icon: '🏀',
-    description: 'Flew to detroit, drove to Toronto, went to Niagra Falls and competed in BBA. Went undefeated till the finals',
+    description:
+      'Flew to detroit, drove to Toronto, went to Niagra Falls and competed in BBA. Went undefeated till the finals',
     date: 'August 2025',
     category: 'all',
   },
   {
     icon: '🎰',
-    description: 'Got assigned to an AWS team doing GenAI for marketing in the SageMaker Ground Truth team. Also signed for an apartment',
+    description:
+      'Got assigned to an AWS team doing GenAI for marketing in the SageMaker Ground Truth team. Also signed for an apartment',
     url: 'https://aws.amazon.com/sagemaker/ground-truth/',
     date: 'July 2025',
     category: 'all',
@@ -64,7 +69,8 @@ export const updates: Update[] = [
   },
   {
     icon: '🏰',
-    description: "Traveled to Epic Universe in Orlando, Florida and got into an unfortunate car accident",
+    description:
+      'Traveled to Epic Universe in Orlando, Florida and got into an unfortunate car accident',
     url: 'https://www.universalorlando.com/web/en/us/theme-parks/universal-orlando-resort/epic-universe',
     date: 'June 2025',
     category: 'all',
@@ -72,20 +78,23 @@ export const updates: Update[] = [
 
   {
     icon: '🏖️',
-    description: 'Traveled to San Diego for Memorial Day weekend and my birthday',
+    description:
+      'Traveled to San Diego for Memorial Day weekend and my birthday',
     date: 'May 2025',
     category: 'all',
   },
   {
     icon: '✈️',
-    description: 'Traveled to London with my dad and watched New Castle vs Chelsea',
+    description:
+      'Traveled to London with my dad and watched New Castle vs Chelsea',
     date: 'April 2025',
     category: 'all',
   },
 
   {
     icon: '🏎️',
-    description: 'Got my car towed for the first time and hit on the SNKRS app for KOBE 6s',
+    description:
+      'Got my car towed for the first time and hit on the SNKRS app for KOBE 6s',
     url: 'https://rapidrecoverytx.com/',
     date: 'Feb 13 2025',
     category: 'all',

@@ -8,16 +8,24 @@ interface AlbumItemProps {
   title: string;
   letterboxd_url: string;
   poster_url: string;
-  rating?: string,
-  director?: string[],
-  review?: string,
+  rating?: string;
+  director?: string[];
+  review?: string;
 }
 
-const API_URL = 'https://api.fast.adamsulemanji.com/movies/search?username=adamsulemanji&limit=10';
+const API_URL =
+  'https://api.fast.adamsulemanji.com/movies/search?username=adamsulemanji&limit=10';
 const discColorClass = `disc-color-${Math.floor(Math.random() * 7)}`;
 const diskStyles = ['disk-cd', 'disk-bluray'];
 
-function MovieItem({ title, letterboxd_url, poster_url, rating, director, review }: AlbumItemProps) {
+function MovieItem({
+  title,
+  letterboxd_url,
+  poster_url,
+  rating,
+  director,
+  review,
+}: AlbumItemProps) {
   const randomDiskStyle =
     diskStyles[Math.floor(Math.random() * diskStyles.length)];
 
@@ -26,7 +34,7 @@ function MovieItem({ title, letterboxd_url, poster_url, rating, director, review
       href={letterboxd_url}
       className='mb-6 h-full w-full cursor-pointer rounded-xl'
     >
-      <div className='music-item group relative flex w-full items-center rounded-lg border border-gray-200 bg-neutral-100 px-6 py-10 dark:border-gray-700 dark:bg-gray-800 sm:px-10 sm:py-16 lg:px-16 lg:py-24'>
+      <div className='music-item border-gray-200 bg-neutral-100 dark:border-gray-700 dark:bg-gray-800 group relative flex w-full items-center rounded-lg border px-6 py-10 sm:px-10 sm:py-16 lg:px-16 lg:py-24'>
         <div className='album-container'>
           <div className='album-wrap'>
             <div
@@ -34,8 +42,10 @@ function MovieItem({ title, letterboxd_url, poster_url, rating, director, review
               style={{ backgroundImage: `url(${poster_url})` }}
             >
               {review && (
-                <div className='review-overlay opacity-0 group-hover:opacity-100 bg-black bg-opacity-75 flex items-center justify-center w-full h-full'>
-                  <p className='italic text-center text-white text-xs p-2 overflow-y-auto max-h-full'>"{review}"</p>
+                <div className='review-overlay bg-black flex h-full w-full items-center justify-center bg-opacity-75 opacity-0 group-hover:opacity-100'>
+                  <p className='text-white max-h-full overflow-y-auto p-2 text-center text-xs italic'>
+                    "{review}"
+                  </p>
                 </div>
               )}
             </div>
@@ -47,9 +57,13 @@ function MovieItem({ title, letterboxd_url, poster_url, rating, director, review
       </div>
       <div className='mt-4 text-xs'>
         <p className='text-black-700 font-bold'>{title}</p>
-        {rating && <p className='text-gray-700 dark:text-gray-200'>Rating: {rating}</p>}
+        {rating && (
+          <p className='text-gray-700 dark:text-gray-200'>Rating: {rating}</p>
+        )}
         {director && director.length > 0 && (
-          <p className='text-gray-700 dark:text-gray-200'>Directors: {director.join(', ')}</p>
+          <p className='text-gray-700 dark:text-gray-200'>
+            Directors: {director.join(', ')}
+          </p>
         )}
       </div>
     </a>
@@ -62,7 +76,9 @@ export default function MovieList() {
 
   useEffect(() => {
     axios
-      .get('https://api.fast.adamsulemanji.com/movies/search?username=adamsulemanji&limit=10')
+      .get(
+        'https://api.fast.adamsulemanji.com/movies/search?username=adamsulemanji&limit=10'
+      )
       .then((response) => {
         setAlbumList(response.data);
         setLoading(false);

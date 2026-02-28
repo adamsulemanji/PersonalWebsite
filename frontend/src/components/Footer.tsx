@@ -3,7 +3,7 @@ import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 export default function Footer() {
   return (
     <footer className='mt-20 px-4 transition-opacity duration-500 sm:px-8'>
-      <hr className='my-10 w-full border-t border-gray-300' />
+      <hr className='border-gray-300 my-10 w-full border-t' />
       <h6 className='mb-5 mt-10 text-center'>
         Thanks for reading this far, feel free to reach out to grab something to
         eat and chat !
@@ -45,7 +45,7 @@ export default function Footer() {
         <a href='/resume.pdf' className='group'>
           <p className='relative text-sm hover:underline hover:underline-offset-4'>
             Resume
-            <span className='absolute bottom-0 left-0 h-[1px] w-0 bg-current transition-all duration-300 group-hover:w-full'></span>
+            <span className='bg-current absolute bottom-0 left-0 h-[1px] w-0 transition-all duration-300 group-hover:w-full'></span>
           </p>
         </a>
       </div>

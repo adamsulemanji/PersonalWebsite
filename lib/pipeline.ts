@@ -46,7 +46,10 @@ export class Pipeline extends cdk.Stack {
             runtimeVersions: {
               nodejs: "20",
             },
-            commands: ["npm install -g aws-cdk", "npm install --legacy-peer-deps"],
+            commands: [
+              "npm install -g aws-cdk",
+              "npm install --legacy-peer-deps",
+            ],
           },
           pre_build: {
             commands: ["node --version", "npm --version", "cdk --version"],

@@ -9,16 +9,15 @@ export interface projectsInterface {
 }
 
 export const colorMap: Record<string, string[]> = {
-    red:    ['#ef4444', '#f87171'],
-    blue:   ['#3b82f6', '#60a5fa'],
-    green:  ['#14b8a6', '#2dd4bf'],
-    purple: ['#8b5cf6', '#a78bfa'],
-    orange: ['#f97316', '#fb923c'],
-    banana: ['#eab308', '#facc15'],
-    sky:    ['#0ea5e9', '#38bdf8'],
-    pink:   ['#d63384', '#f56565'],
-
-  };
+  red: ['#ef4444', '#f87171'],
+  blue: ['#3b82f6', '#60a5fa'],
+  green: ['#14b8a6', '#2dd4bf'],
+  purple: ['#8b5cf6', '#a78bfa'],
+  orange: ['#f97316', '#fb923c'],
+  banana: ['#eab308', '#facc15'],
+  sky: ['#0ea5e9', '#38bdf8'],
+  pink: ['#d63384', '#f56565'],
+};
 
 export const projects: projectsInterface[] = [
   {
@@ -52,7 +51,8 @@ export const projects: projectsInterface[] = [
   },
   {
     title: 'Course Monitoring',
-    description: 'A course monitoring tool for students about TAMU classes (unfortunately not available anymore)',
+    description:
+      'A course monitoring tool for students about TAMU classes (unfortunately not available anymore)',
     date: 'May 2022 - Present',
     url: 'https://courses.adamsulemanji.com/',
     pictures: ['/images/coursemonitoring.png'],
@@ -61,7 +61,8 @@ export const projects: projectsInterface[] = [
   },
   {
     title: 'Letterboxd Movie Scraper',
-    description: 'A movie scraper for most recent movies on letterboxd and of course its overengineered',
+    description:
+      'A movie scraper for most recent movies on letterboxd and of course its overengineered',
     date: 'January 2025 - Present',
     url: 'https://api.fast.adamsulemanji.com/',
     pictures: ['/images/letterboxd.png'],
