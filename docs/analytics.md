@@ -1,80 +1,65 @@
-# Analytics Setup
+# AWS Traffic Analytics
 
-This repo now supports two observability layers:
+This stack now uses AWS-native traffic analytics for the website:
 
-- `PostHog` for page views, clicks, and a shareable dashboard.
-- `CloudFront` access logs for raw request traffic in S3.
+- CloudFront standard access logs are written to S3.
+- Athena is configured to query those logs.
+- Saved Athena queries are created for common traffic questions.
+- A CloudWatch dashboard is created for high-level traffic metrics.
 
-## 1. Create a PostHog project
+## What gets created
 
-1. Log in to PostHog and create or open your project.
-2. Copy the project API key.
-3. If you use PostHog Cloud in the US, the host is `https://us.i.posthog.com`.
-   If your project is in the EU, use the matching PostHog host for that region.
+The CDK stack provisions:
 
-## 2. Create a dashboard to embed on `/admin`
+- a CloudFront access logs bucket
+- an Athena results bucket
+- an Athena database: `personal_website_analytics`
+- an Athena table: `cloudfront_access_logs`
+- an Athena workgroup: `personal-website-observability`
+- a CloudWatch dashboard: `personal-website-traffic`
 
-1. In PostHog, create a dashboard with the charts you want.
-2. Suggested panels:
-   - page views by route
-   - top clicked projects
-   - social link clicks
-   - resume downloads
-   - outbound link clicks
-3. Share the dashboard publicly and copy the shared dashboard URL.
+## What the dashboard shows
 
-## 3. Configure local development
+The CloudWatch dashboard shows:
 
-Copy the example file and add your values:
+- request volume
+- bytes downloaded and uploaded
+- 4xx error rate
+- 5xx error rate
+- cache hit rate
 
-```bash
-cp frontend/.env.example frontend/.env.local
-```
+This is the fast overview dashboard inside your AWS account.
 
-Set:
+## What Athena is for
 
-- `NEXT_PUBLIC_POSTHOG_TOKEN`
-- `NEXT_PUBLIC_POSTHOG_HOST`
-- `NEXT_PUBLIC_POSTHOG_DASHBOARD_URL`
+Use the saved Athena queries for deeper log analysis, including:
 
-## 4. Configure the production pipeline
+- requests per day
+- top requested paths
+- top referrers
+- top user agents
+- status code counts
 
-The CDK pipeline expects a Secrets Manager secret named
-`personal-website-posthog` with JSON keys:
+## Deploy
 
-```json
-{
-  "host": "https://us.i.posthog.com",
-  "token": "phc_your_project_api_key",
-  "dashboardUrl": "https://us.posthog.com/shared_dashboard/your-dashboard-id"
-}
-```
-
-Create it with the AWS CLI:
+Deploy the CDK stack once:
 
 ```bash
-aws secretsmanager create-secret \
-  --name personal-website-posthog \
-  --secret-string '{"host":"https://us.i.posthog.com","token":"phc_your_project_api_key","dashboardUrl":"https://us.posthog.com/shared_dashboard/your-dashboard-id"}'
+npx cdk deploy
 ```
 
-If the secret already exists, update it:
+After the deploy:
 
-```bash
-aws secretsmanager put-secret-value \
-  --secret-id personal-website-posthog \
-  --secret-string '{"host":"https://us.i.posthog.com","token":"phc_your_project_api_key","dashboardUrl":"https://us.posthog.com/shared_dashboard/your-dashboard-id"}'
-```
+1. Open CloudWatch Dashboards and view `personal-website-traffic`.
+2. Open Athena.
+3. Choose the workgroup `personal-website-observability`.
+4. Open the saved queries and run the ones you want.
 
-## 5. Deploy
+## Notes
 
-1. Deploy the CDK stack once so the pipeline picks up the new build env vars
-   and CloudFront logging bucket.
-2. Push to `main`.
-3. Open `/admin/` after the deploy to confirm the dashboard embed.
-
-## 6. Query raw traffic logs
-
-CloudFront access logs are written to the S3 bucket output by the stack.
-Use Athena or QuickSight on top of that bucket if you want a second dashboard
-for request-level traffic, referrers, and geo analysis.
+- CloudFront logs are not instant. Expect a delay before data appears.
+- The Athena table points at the CloudFront log prefix automatically.
+- CloudFront metrics are shown in CloudWatch immediately, but log-based Athena
+  analysis only becomes useful after logs land in S3.
+- This setup tracks traffic and request behavior, not client-side clicks. For
+  click-level product analytics, you still need a frontend event system.

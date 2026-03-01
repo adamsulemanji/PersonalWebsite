@@ -130,6 +130,7 @@ export class FrontendConstruct extends Construct {
         domainNames: [domainName],
         certificate: apexCertificate,
         enableLogging: true,
+        publishAdditionalMetrics: true,
         errorResponses: [
           {
             httpStatus: 404,
