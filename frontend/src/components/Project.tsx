@@ -5,6 +5,7 @@ import { projects, colorMap } from '@/assets/projects';
 import { projectsInterface } from '@/assets/projects';
 import { FiArrowUpRight } from 'react-icons/fi';
 import Image from 'next/image';
+import { analyticsAttributes } from '@/lib/analytics';
 
 interface ProjectProps {
   category?: string;
@@ -76,6 +77,10 @@ export default function Project({ category = '' }: ProjectProps) {
                     target='_blank'
                     rel='noopener noreferrer'
                     className='bg-white/20 text-white hover:bg-white/30 border-white/30 inline-flex w-fit items-center rounded-lg border px-3 py-2 backdrop-blur-sm transition-all duration-300 hover:scale-105'
+                    {...analyticsAttributes('project_clicked', {
+                      category: 'home-grid',
+                      label: project.title,
+                    })}
                   >
                     Visit {project.title} <FiArrowUpRight className='ml-1' />
                   </a>

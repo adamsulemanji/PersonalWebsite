@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { imagesLeft, imagesRight } from '@/assets/images';
 import { motion, AnimatePresence } from 'framer-motion';
+import { analyticsAttributes } from '@/lib/analytics';
 
 type ImageType = {
   src: string;
@@ -103,6 +104,10 @@ export default function Page() {
             whileHover={{ scale: 1.02 }}
             className='group relative w-full cursor-pointer overflow-hidden rounded-lg shadow-md'
             onClick={(e) => openModal(image, e)}
+            {...analyticsAttributes('picture_opened', {
+              label: image.alt,
+              src: image.src,
+            })}
           >
             <div style={{ paddingBottom }} className='relative w-full'>
               <Image
@@ -225,6 +230,10 @@ export default function Page() {
                 <button
                   onClick={closeModal}
                   className='bg-white/10 hover:bg-white/20 text-white rounded-full p-2 transition-colors'
+                  {...analyticsAttributes('ui_clicked', {
+                    label: 'picture-modal-close',
+                    section: 'pictures-modal',
+                  })}
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'

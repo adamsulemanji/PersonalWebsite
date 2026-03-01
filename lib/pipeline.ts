@@ -4,6 +4,7 @@ import * as codepipeline from "aws-cdk-lib/aws-codepipeline";
 import * as codepipeline_actions from "aws-cdk-lib/aws-codepipeline-actions";
 import * as codebuild from "aws-cdk-lib/aws-codebuild";
 import * as iam from "aws-cdk-lib/aws-iam";
+import * as secretsmanager from "aws-cdk-lib/aws-secretsmanager";
 
 import { FrontendConstruct } from "./cloudfront";
 
@@ -90,12 +91,32 @@ export class Pipeline extends cdk.Stack {
     });
 
     // ********** FRONTEND BUILD PROJECT **********
+    const posthogSecret = secretsmanager.Secret.fromSecretNameV2(
+      this,
+      "PostHogSecret",
+      "personal-website-posthog"
+    );
+
     const frontendBuildProject = new codebuild.PipelineProject(
       this,
       "FrontendBuildProject",
       {
         environment: {
           buildImage: codebuild.LinuxBuildImage.STANDARD_7_0,
+        },
+        environmentVariables: {
+          NEXT_PUBLIC_POSTHOG_DASHBOARD_URL: {
+            type: codebuild.BuildEnvironmentVariableType.SECRETS_MANAGER,
+            value: "personal-website-posthog:dashboardUrl",
+          },
+          NEXT_PUBLIC_POSTHOG_HOST: {
+            type: codebuild.BuildEnvironmentVariableType.SECRETS_MANAGER,
+            value: "personal-website-posthog:host",
+          },
+          NEXT_PUBLIC_POSTHOG_TOKEN: {
+            type: codebuild.BuildEnvironmentVariableType.SECRETS_MANAGER,
+            value: "personal-website-posthog:token",
+          },
         },
         buildSpec: codebuild.BuildSpec.fromObjectToYaml({
           version: "0.2",
@@ -114,6 +135,8 @@ export class Pipeline extends cdk.Stack {
         }),
       }
     );
+
+    posthogSecret.grantRead(frontendBuildProject);
 
     // ********** FRONTEND BUILD ACTION **********
     const buildFrontendAction = new codepipeline_actions.CodeBuildAction({

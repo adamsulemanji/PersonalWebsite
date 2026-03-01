@@ -2,7 +2,7 @@
   "name": "personal-website",
   "version": "0.1.0",
   "bin": {
-    "personal-website": "bin/personal-website.js"
+    "personal-website": "dist/bin/personal-website.js"
   },
   "scripts": {
     "build": "tsc",

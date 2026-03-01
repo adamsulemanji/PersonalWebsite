@@ -8,6 +8,7 @@ import Updates from '@/components/Update';
 import Projects from '@/components/Project';
 import Images from '@/components/Images';
 import MovieList from '@/components/Movie/MovieList';
+import { analyticsAttributes } from '@/lib/analytics';
 
 export default function Home() {
   return (
@@ -99,6 +100,10 @@ export default function Home() {
                     href='https://github.com/adamsulemanji'
                     target='_blank'
                     rel='noopener noreferrer'
+                    {...analyticsAttributes('social_link_clicked', {
+                      label: 'github',
+                      section: 'hero',
+                    })}
                   >
                     <FaGithub />
                   </a>
@@ -107,6 +112,10 @@ export default function Home() {
                     href='https://www.linkedin.com/in/adamsulemanji/'
                     target='_blank'
                     rel='noopener noreferrer'
+                    {...analyticsAttributes('social_link_clicked', {
+                      label: 'linkedin',
+                      section: 'hero',
+                    })}
                   >
                     <FaLinkedin />
                   </a>
@@ -115,16 +124,31 @@ export default function Home() {
                     href='https://www.instagram.com/adam_sulemanji'
                     target='_blank'
                     rel='noopener noreferrer'
+                    {...analyticsAttributes('social_link_clicked', {
+                      label: 'instagram',
+                      section: 'hero',
+                    })}
                   >
                     <FaInstagram />
                   </a>
                   <a
                     className='hover:underline hover:underline-offset-4'
                     href='mailto:adam.k.sulemanji@gmail.com'
+                    {...analyticsAttributes('social_link_clicked', {
+                      label: 'email',
+                      section: 'hero',
+                    })}
                   >
                     <FaEnvelope />
                   </a>
-                  <a href='/resume.pdf' className='group'>
+                  <a
+                    href='/resume.pdf'
+                    className='group'
+                    {...analyticsAttributes('resume_downloaded', {
+                      label: 'resume',
+                      section: 'hero',
+                    })}
+                  >
                     <p className='relative text-sm hover:underline hover:underline-offset-4'>
                       Resume
                       <span className='bg-current absolute bottom-0 left-0 h-[1px] w-0 transition-all duration-300 group-hover:w-full'></span>

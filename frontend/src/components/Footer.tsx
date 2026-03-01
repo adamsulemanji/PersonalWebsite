@@ -1,4 +1,5 @@
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import { analyticsAttributes } from '@/lib/analytics';
 
 export default function Footer() {
   return (
@@ -17,6 +18,10 @@ export default function Footer() {
           href='https://github.com/adamsulemanji'
           target='_blank'
           rel='noopener noreferrer'
+          {...analyticsAttributes('social_link_clicked', {
+            label: 'github',
+            section: 'footer',
+          })}
         >
           <FaGithub />
         </a>
@@ -25,6 +30,10 @@ export default function Footer() {
           href='https://www.linkedin.com/in/adamsulemanji/'
           target='_blank'
           rel='noopener noreferrer'
+          {...analyticsAttributes('social_link_clicked', {
+            label: 'linkedin',
+            section: 'footer',
+          })}
         >
           <FaLinkedin />
         </a>
@@ -33,16 +42,31 @@ export default function Footer() {
           href='https://www.instagram.com/adam_sulemanji'
           target='_blank'
           rel='noopener noreferrer'
+          {...analyticsAttributes('social_link_clicked', {
+            label: 'instagram',
+            section: 'footer',
+          })}
         >
           <FaInstagram />
         </a>
         <a
           className='flex items-center gap-2 hover:underline hover:underline-offset-4'
           href='mailto:adam.k.sulemanji@gmail.com'
+          {...analyticsAttributes('social_link_clicked', {
+            label: 'email',
+            section: 'footer',
+          })}
         >
           <FaEnvelope />
         </a>
-        <a href='/resume.pdf' className='group'>
+        <a
+          href='/resume.pdf'
+          className='group'
+          {...analyticsAttributes('resume_downloaded', {
+            label: 'resume',
+            section: 'footer',
+          })}
+        >
           <p className='relative text-sm hover:underline hover:underline-offset-4'>
             Resume
             <span className='bg-current absolute bottom-0 left-0 h-[1px] w-0 transition-all duration-300 group-hover:w-full'></span>

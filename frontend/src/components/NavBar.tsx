@@ -12,6 +12,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import LightDarkToggle from '@/components/theme/LightDarkToggle';
 import { usePathname } from 'next/navigation';
+import { analyticsAttributes } from '@/lib/analytics';
 
 interface NavItem {
   title: string;
@@ -37,6 +38,10 @@ export default function Navbar() {
           <a
             className='hover:bg-gray-100 dark:hover:bg-gray-800 m-2 mr-6 flex items-center space-x-2 rounded-md px-4 py-2'
             href='/'
+            {...analyticsAttributes('nav_link_clicked', {
+              label: 'home',
+              section: 'desktop',
+            })}
           >
             <span className='hidden text-left font-sans text-xl font-extrabold sm:inline-block'>
               Adam
@@ -55,6 +60,10 @@ export default function Navbar() {
                         : ''
                     }`}
                     href={'redirect' in item ? item.redirect : '#'}
+                    {...analyticsAttributes('nav_link_clicked', {
+                      label: item.title,
+                      section: 'desktop',
+                    })}
                   >
                     {item.title}
                   </NavigationMenuLink>
@@ -107,7 +116,15 @@ interface MobileLinkProps {
 
 function MobileLink({ href, onClick, children }: MobileLinkProps) {
   return (
-    <a href={href} onClick={onClick} className='block py-2 text-lg font-medium'>
+    <a
+      href={href}
+      onClick={onClick}
+      className='block py-2 text-lg font-medium'
+      {...analyticsAttributes('nav_link_clicked', {
+        label: typeof children === 'string' ? children : 'mobile-link',
+        section: 'mobile',
+      })}
+    >
       {children}
     </a>
   );

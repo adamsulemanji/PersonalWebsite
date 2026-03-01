@@ -10,6 +10,7 @@ import * as acm from "aws-cdk-lib/aws-certificatemanager";
 
 export class FrontendConstruct extends Construct {
   public readonly apexBucket: s3.Bucket;
+  public readonly accessLogsBucket: s3.Bucket;
   public readonly apexDistribution: cloudfront.Distribution;
   public readonly wwwDistribution: cloudfront.Distribution;
 
@@ -28,6 +29,20 @@ export class FrontendConstruct extends Construct {
     this.apexBucket = new s3.Bucket(this, "ApexBucket", {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
+    });
+
+    this.accessLogsBucket = new s3.Bucket(this, "AccessLogsBucket", {
+      accessControl: s3.BucketAccessControl.LOG_DELIVERY_WRITE,
+      autoDeleteObjects: true,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      enforceSSL: true,
+      lifecycleRules: [
+        {
+          expiration: cdk.Duration.days(90),
+        },
+      ],
+      objectOwnership: s3.ObjectOwnership.OBJECT_WRITER,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
     const apexOAI = new cloudfront.OriginAccessIdentity(this, "ApexOAI");
@@ -114,6 +129,7 @@ export class FrontendConstruct extends Construct {
         },
         domainNames: [domainName],
         certificate: apexCertificate,
+        enableLogging: true,
         errorResponses: [
           {
             httpStatus: 404,
@@ -128,6 +144,8 @@ export class FrontendConstruct extends Construct {
             ttl: cdk.Duration.minutes(0),
           },
         ],
+        logBucket: this.accessLogsBucket,
+        logFilePrefix: "cloudfront/",
       }
     );
 
@@ -179,6 +197,11 @@ export class FrontendConstruct extends Construct {
       value: this.wwwDistribution.distributionDomainName,
       description: "Distribution Domain Name (www)",
       exportName: "WwwDistributionDomainName",
+    });
+    new cdk.CfnOutput(this, "CloudFrontAccessLogsBucketName", {
+      value: this.accessLogsBucket.bucketName,
+      description: "Bucket receiving CloudFront access logs",
+      exportName: "CloudFrontAccessLogsBucketName",
     });
   }
 }

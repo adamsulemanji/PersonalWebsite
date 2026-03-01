@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { analyticsAttributes } from '@/lib/analytics';
 
 export default function Page() {
   const handlePasswordSubmit = () => {
@@ -176,6 +177,10 @@ export default function Page() {
                       onClick={project.onClick}
                       aria-label={`Open ${project.title}`}
                       className='group relative block w-full text-left'
+                      {...analyticsAttributes('project_clicked', {
+                        category: 'featured-projects',
+                        label: project.title,
+                      })}
                     >
                       {imageCard}
                     </button>
@@ -186,6 +191,10 @@ export default function Page() {
                       rel='noopener noreferrer'
                       aria-label={`Open ${project.title}`}
                       className='group relative block'
+                      {...analyticsAttributes('project_clicked', {
+                        category: 'featured-projects',
+                        label: project.title,
+                      })}
                     >
                       {imageCard}
                     </a>
@@ -218,6 +227,10 @@ export default function Page() {
                         type='button'
                         onClick={project.onClick}
                         className='border-gray-900/10 bg-gray-900 text-white hover:bg-gray-800 dark:border-white/20 dark:bg-white/10 dark:text-gray-100 dark:hover:bg-white/20 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] shadow-sm transition hover:-translate-y-0.5'
+                        {...analyticsAttributes('project_clicked', {
+                          category: 'featured-projects',
+                          label: `${project.title}-cta`,
+                        })}
                       >
                         {ctaLabel}
                       </button>
@@ -227,6 +240,10 @@ export default function Page() {
                         target='_blank'
                         rel='noopener noreferrer'
                         className='border-gray-900/10 bg-gray-900 text-white hover:bg-gray-800 dark:border-white/20 dark:bg-white/10 dark:text-gray-100 dark:hover:bg-white/20 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] shadow-sm transition hover:-translate-y-0.5'
+                        {...analyticsAttributes('project_clicked', {
+                          category: 'featured-projects',
+                          label: `${project.title}-cta`,
+                        })}
                       >
                         {ctaLabel}
                       </a>

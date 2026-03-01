@@ -84,7 +84,7 @@ export const projects: projectsInterface[] = [
       'Democratizing model customization through AI agents and evaluation ',
     url: 'https://aws.amazon.com/sagemaker/ai/model-customization/',
     date: 'October 2025 - Jan 2026',
-    pictures: ['/images/sagemaker.JPG'],
+    pictures: ['/images/sagemaker.jpg'],
     categories: [],
     color: 'pink',
   },

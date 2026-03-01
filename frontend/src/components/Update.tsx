@@ -1,6 +1,7 @@
 'use client';
 
 import { updates } from '@/assets/updates';
+import { analyticsAttributes } from '@/lib/analytics';
 
 interface UpdatesProps {
   category: string;
@@ -17,6 +18,11 @@ export default function Updates({ category }: UpdatesProps) {
             target='_blank'
             rel='noopener noreferrer'
             key={index}
+            {...analyticsAttributes('update_clicked', {
+              category,
+              date: update.date,
+              label: update.description,
+            })}
           >
             <div className='border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 flex flex-col gap-2 rounded-md p-3 sm:flex-row sm:items-center sm:justify-between'>
               <div className='flex items-center space-x-2'>
