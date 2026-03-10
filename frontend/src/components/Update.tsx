@@ -18,16 +18,17 @@ export default function Updates({ category }: UpdatesProps) {
             target='_blank'
             rel='noopener noreferrer'
             key={index}
+            className='block w-full'
             {...analyticsAttributes('update_clicked', {
               category,
               date: update.date,
               label: update.description,
             })}
           >
-            <div className='border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 flex flex-col gap-2 rounded-md p-3 sm:flex-row sm:items-center sm:justify-between'>
-              <div className='flex items-center space-x-2'>
-                <span className='text-2xl'>{update.icon}</span>
-                <p className='text-sm font-light sm:text-base'>
+            <div className='border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 flex w-full flex-col gap-2 overflow-hidden rounded-md p-3 sm:flex-row sm:items-center sm:justify-between'>
+              <div className='flex min-w-0 items-start space-x-2'>
+                <span className='shrink-0 text-2xl'>{update.icon}</span>
+                <p className='min-w-0 break-words pr-2 text-sm font-light sm:text-base'>
                   {update.description}
                 </p>
               </div>
@@ -38,7 +39,7 @@ export default function Updates({ category }: UpdatesProps) {
                 </span>
               </div>
 
-              <div className='flex-shrink-0'>
+              <div className='flex-shrink-0 pl-8 sm:pl-0'>
                 <p className='text-gray-500 text-xs sm:text-sm'>
                   {update.date}
                 </p>

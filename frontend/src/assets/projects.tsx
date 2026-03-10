@@ -35,7 +35,7 @@ export const projects: projectsInterface[] = [
     description: 'Custom and personalized mealtracker for nikki.',
     url: 'https://mealtracker.adamsulemanji.com',
     date: 'Nov 2024 - Present',
-    pictures: ['images/mealtracker.png'],
+    pictures: ['/images/mealtracker.png'],
     categories: ['crud', 'fastapi', 'docker'],
     color: 'blue',
   },
@@ -66,7 +66,7 @@ export const projects: projectsInterface[] = [
     date: 'January 2025 - Present',
     url: 'https://api.fast.adamsulemanji.com/',
     pictures: ['/images/letterboxd.png'],
-    categories: ['webscrapping', 'dynamodb', 'fastapi'],
+    categories: ['webscrapping', 'dynamodb',],
     color: 'red',
   },
   {

@@ -12,23 +12,22 @@ import { analyticsAttributes } from '@/lib/analytics';
 
 export default function Home() {
   return (
-    <div className='flex justify-center'>
-      <div className='w-full max-w-[1200px]'>
-        <div className='m-4 grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 pb-20 sm:p-20'>
-          <main className='row-start-2 flex w-full max-w-[1500px] flex-col gap-8 px-4 sm:px-8'>
+    <div className='w-full'>
+      <div className='w-full px-3 pb-12 pt-4 sm:m-4 sm:p-20'>
+        <main className='mx-auto flex min-h-screen w-full max-w-[1500px] flex-col gap-8 px-1 sm:px-8'>
             <motion.section
-              className='one group relative text-center text-4xl sm:text-5xl md:text-6xl'
+              className='one group relative text-center text-3xl sm:text-5xl md:text-6xl'
               id='section-intro'
-              initial={{ x: -100, opacity: 0 }}
+              initial={false}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 1 }}
             >
               <div>
                 <div>
-                  <div className='text-left font-serif text-4xl font-light leading-tight sm:text-5xl md:mt-12 md:text-7xl'>
+                  <div className='text-left font-serif text-3xl font-light leading-[1.05] sm:text-5xl sm:leading-tight md:mt-12 md:text-7xl'>
                     <motion.span
                       className='block'
-                      initial={{ x: -10, opacity: 0 }}
+                      initial={false}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 0.3, duration: 1 }}
                     >
@@ -36,12 +35,12 @@ export default function Home() {
                     </motion.span>
                     <motion.span
                       className='block'
-                      initial={{ x: 10, opacity: 0 }}
+                      initial={false}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 0.5, duration: 1 }}
                     >
                       name is{' '}
-                      <b className='text-5xl sm:text-6xl md:text-8xl'>Adam</b>
+                      <b className='text-4xl sm:text-6xl md:text-8xl'>Adam</b>
                       <span className='accent'>.</span>
                     </motion.span>
                   </div>
@@ -53,14 +52,14 @@ export default function Home() {
 
             <motion.section
               className='text-center text-lg'
-              initial={{ y: 10, opacity: 0 }}
+              initial={false}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.7, duration: 1 }}
             ></motion.section>
 
             <motion.div
-              className='line-wrapped mt-3 leading-tight'
-              initial={{ y: 10, opacity: 0 }}
+              className='line-wrapped mt-2 max-w-3xl text-[15px] leading-7 sm:mt-3 sm:text-base'
+              initial={false}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 1, duration: 1 }}
             >
@@ -159,8 +158,8 @@ export default function Home() {
             </motion.div>
 
             <motion.section
-              className='mt-32 grid w-full grid-cols-1 md:grid-cols-2'
-              initial={{ y: 10, opacity: 0 }}
+              className='mt-10 hidden w-full grid-cols-1 md:mt-32 md:grid md:grid-cols-2'
+              initial={false}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 1.3, duration: 1 }}
             >
@@ -277,8 +276,7 @@ export default function Home() {
               </p>
               <MovieList />
             </motion.div>
-          </main>
-        </div>
+        </main>
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className='flex justify-center'>
+      <body className='flex min-h-screen justify-center overflow-x-hidden'>
         <ThemeProvider attribute='class' defaultTheme='system'>
           <AnalyticsProvider>
             <div className='w-full max-w-[1200px]'>

@@ -1,7 +1,30 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { analyticsAttributes } from '@/lib/analytics';
+
+const accentPillColors = {
+  emerald: '#2dd4bf',
+  amber: '#facc15',
+  sky: '#38bdf8',
+  orange: '#fb923c',
+} as const;
+
+type AccentName = keyof typeof accentPillColors;
+
+type ProjectItem = {
+  id: number;
+  title: string;
+  description: string;
+  details: string;
+  image: string;
+  alt: string;
+  link?: string;
+  onClick?: () => void;
+  accent: AccentName;
+  tags: string[];
+};
 
 export default function Page() {
   const handlePasswordSubmit = () => {
@@ -28,7 +51,7 @@ export default function Page() {
     show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
-  const projectItems = [
+  const projectItems: ProjectItem[] = [
     {
       id: 1,
       title: 'This website',
@@ -39,6 +62,8 @@ export default function Page() {
       image: '/images/systemdiagram.png',
       alt: 'Website',
       link: 'https://www.adamsulemanji.com',
+      accent: 'orange',
+      tags: ['next.js', 'tailwindcss', 'aws'],
     },
     {
       id: 2,
@@ -50,6 +75,8 @@ export default function Page() {
       image: '/images/coursemonitoring.png',
       alt: 'Course Monitoring',
       link: 'https://courses.adamsulemanji.com',
+      accent: 'emerald',
+      tags: ['aws', 'monitoring', 'sms'],
     },
     {
       id: 3,
@@ -61,6 +88,8 @@ export default function Page() {
       image: '/images/mealtracker.png',
       alt: 'Meal Tracker',
       onClick: handlePasswordSubmit,
+      accent: 'sky',
+      tags: ['crud', 'fastapi', 'docker'],
     },
     {
       id: 4,
@@ -72,56 +101,53 @@ export default function Page() {
       image: '/images/basketball.jpg',
       alt: 'CDK Template',
       link: 'https://github.com/adamsulemanji/test-aws-cdk-app',
+      accent: 'amber',
+      tags: ['aws', 'cdk', 'ci/cd'],
     },
   ];
 
   return (
     <motion.section
-      className='relative mx-auto mt-24 w-full max-w-6xl px-4 pb-24 sm:px-8'
+      className='mx-auto w-full max-w-[1200px] px-4 pb-16 pt-10 sm:px-8 sm:pb-24 sm:pt-16'
       id='section-projects'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
       <motion.div
-        className='border-gray-200/70 bg-white/70 dark:border-gray-800/80 dark:bg-black/40 relative overflow-hidden rounded-3xl border p-8 shadow-sm backdrop-blur-sm sm:p-12'
+        className='max-w-3xl'
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className='pointer-events-none absolute inset-0'>
-          <div className='bg-emerald-500/10 dark:bg-blue-500/20 absolute -right-20 -top-20 h-56 w-56 rounded-full blur-3xl' />
-          <div className='bg-amber-400/10 dark:bg-amber-400/10 absolute -bottom-20 left-10 h-40 w-40 rounded-full blur-3xl' />
-          <div className='staggered-dots absolute inset-0 opacity-10' />
-        </div>
-        <div className='relative'>
-          <p className='text-gray-500 dark:text-gray-400 text-xs uppercase tracking-[0.35em]'>
-            Selected work
-          </p>
-          <h1 className='text-gray-900 dark:text-gray-100 mt-4 font-serif text-4xl font-semibold md:text-6xl'>
-            Projects<span className='accent'>.</span>
-          </h1>
-          <p className='text-gray-600 dark:text-gray-300 mt-4 max-w-2xl text-base leading-relaxed'>
-            Here is a collection of things I have been building recently. Each
-            project is a mix of experimentation, problem-solving, and polishing
-            the details.
-          </p>
-          <div className='text-gray-500 dark:text-gray-400 mt-6 flex flex-wrap gap-3 text-xs uppercase tracking-[0.2em]'>
-            <span className='border-gray-200/70 bg-white/80 dark:border-gray-700 dark:bg-black/30 rounded-full border px-3 py-1'>
-              Live builds
+        <p className='underline-offset-3 decoration-gray-300 group relative inline-block text-xl font-bold underline'>
+          Projects
+          <span className='bg-current absolute bottom-0 left-0 mt-1 block h-[2px] w-0 transition-all duration-300 group-hover:w-full'></span>
+        </p>
+        <h1 className='mt-6 font-serif text-4xl font-light leading-tight sm:text-5xl md:text-6xl'>
+          A few things I&apos;ve built
+          <span className='accent'>.</span>
+        </h1>
+        <p className='text-gray-600 dark:text-gray-300 mt-4 max-w-2xl text-[15px] leading-7 sm:text-base'>
+          Here is a collection of projects I have spent time building. They
+          range from personal tools to production deployments, but the through
+          line is the same: build something useful, learn from it, and keep
+          refining it.
+        </p>
+        <div className='mt-6 flex flex-wrap gap-3'>
+          {['featured work', 'clean systems', 'small accents'].map((label) => (
+            <span
+              key={label}
+              className='border-[color:var(--main)]/30 bg-[color:var(--main)]/10 rounded-full border px-3 py-1 text-xs font-semibold text-[color:var(--main)]'
+            >
+              {label}
             </span>
-            <span className='border-gray-200/70 bg-white/80 dark:border-gray-700 dark:bg-black/30 rounded-full border px-3 py-1'>
-              Open source
-            </span>
-            <span className='border-gray-200/70 bg-white/80 dark:border-gray-700 dark:bg-black/30 rounded-full border px-3 py-1'>
-              Private demos
-            </span>
-          </div>
+          ))}
         </div>
       </motion.div>
 
       <motion.div
-        className='mt-16 space-y-16'
+        className='mt-10 space-y-8 sm:mt-14 sm:space-y-10'
         variants={container}
         initial='hidden'
         whileInView='show'
@@ -142,18 +168,31 @@ export default function Page() {
               : 'Visit site';
           const imageOrder = index % 2 === 0 ? 'lg:order-1' : 'lg:order-2';
           const textOrder = index % 2 === 0 ? 'lg:order-2' : 'lg:order-1';
+          const pillColor = accentPillColors[project.accent];
 
           const imageCard = (
-            <div className='border-gray-200/70 bg-white/80 dark:border-gray-800/80 dark:bg-black/40 relative overflow-hidden rounded-2xl border p-2 shadow-xl'>
-              <img
-                src={project.image}
-                alt={project.alt}
-                className='h-full w-full rounded-xl object-cover transition-transform duration-500 group-hover:scale-[1.03]'
-              />
-              <div className='bg-gradient-to-t from-black/45 via-black/0 to-transparent pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
-              <div className='text-white/90 pointer-events-none absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs uppercase tracking-[0.25em] opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
-                <span>{metaLabel}</span>
-                <span>{`0${index + 1}`}</span>
+            <div className='border-white/15 bg-neutral-950 dark:bg-neutral-900 relative overflow-hidden rounded-2xl border p-3 shadow-sm'>
+              <div className='relative aspect-[4/3] overflow-hidden rounded-xl'>
+                <Image
+                  src={project.image}
+                  alt={project.alt}
+                  fill
+                  sizes='(max-width: 1024px) 100vw, 55vw'
+                  className='object-cover transition-transform duration-500 group-hover:scale-[1.03]'
+                />
+                <div className='bg-gradient-to-t from-black/35 via-black/0 to-transparent pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
+                <div className='border-white/15 absolute inset-0 rounded-xl border' />
+              </div>
+              <div className='mt-3 flex items-center justify-between gap-3'>
+                <span
+                  className='border-white/20 text-white rounded-full border px-3 py-1 text-xs font-semibold'
+                  style={{ backgroundColor: pillColor }}
+                >
+                  {metaLabel}
+                </span>
+                <span className='text-white/45 text-[11px]'>
+                  {`0${index + 1}`}
+                </span>
               </div>
             </div>
           );
@@ -161,16 +200,15 @@ export default function Page() {
           return (
             <motion.article
               key={project.id}
-              className='relative'
+              className='border-white/15 bg-neutral-950 dark:bg-neutral-900 rounded-3xl border p-4 shadow-sm sm:p-6 lg:p-8'
               variants={item}
             >
-              <div className='grid items-center gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]'>
+              <div className='grid items-center gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-10'>
                 <motion.div
                   className={`relative ${imageOrder}`}
                   whileHover={{ y: -6 }}
                   transition={{ type: 'spring', stiffness: 200, damping: 18 }}
                 >
-                  <div className='bg-gradient-to-br from-emerald-500/10 via-transparent to-amber-400/10 dark:from-blue-500/15 dark:to-amber-400/10 absolute -inset-4 rounded-3xl blur-2xl' />
                   {isPrivate ? (
                     <button
                       type='button'
@@ -202,31 +240,42 @@ export default function Page() {
                 </motion.div>
 
                 <div className={`relative ${textOrder}`}>
-                  <div className='text-gray-400 dark:text-gray-500 flex items-center gap-3 text-xs uppercase tracking-[0.3em]'>
-                    <span className='text-gray-600 dark:text-gray-300 text-sm font-semibold'>
+                  <div className='text-white/35 flex items-center gap-3 text-xs'>
+                    <span className='text-white/70 text-sm font-semibold'>
                       {`0${index + 1}`}
                     </span>
-                    <span className='bg-gray-200 dark:bg-gray-700 h-px flex-1' />
+                    <span className='bg-white/10 h-px flex-1' />
                   </div>
-                  <h3 className='text-gray-900 dark:text-gray-100 mt-4 text-3xl font-semibold'>
+                  <h3 className='text-white mt-4 text-2xl font-bold sm:text-3xl'>
                     {project.title}
                     <span className='accent'>.</span>
                   </h3>
-                  <p className='text-gray-600 dark:text-gray-300 mt-3 leading-relaxed'>
+                  <div className='mt-4 flex flex-wrap gap-2'>
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className='border-white/20 text-white rounded-full border px-3 py-1 text-xs font-semibold'
+                        style={{ backgroundColor: pillColor }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <p className='text-white/78 mt-4 text-[15px] leading-7 sm:text-base'>
                     {project.description}
                   </p>
-                  <p className='border-[color:var(--main)]/60 text-gray-600 dark:text-gray-300 mt-4 border-l-2 pl-4 text-sm leading-relaxed'>
+                  <p className='border-[color:var(--main)]/60 text-white/62 mt-4 border-l-2 pl-4 text-[15px] leading-7 sm:text-sm'>
                     {project.details}
                   </p>
                   <div className='mt-6 flex flex-wrap items-center gap-4'>
-                    <span className='border-gray-200/70 bg-gray-50 text-gray-500 dark:border-gray-700 dark:bg-black/30 dark:text-gray-400 rounded-full border px-3 py-1 text-xs uppercase tracking-[0.2em]'>
+                    <span className='border-white/15 text-white/65 rounded-full border px-3 py-1 text-xs font-semibold'>
                       {metaLabel}
                     </span>
                     {isPrivate ? (
                       <button
                         type='button'
                         onClick={project.onClick}
-                        className='border-gray-900/10 bg-gray-900 text-white hover:bg-gray-800 dark:border-white/20 dark:bg-white/10 dark:text-gray-100 dark:hover:bg-white/20 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] shadow-sm transition hover:-translate-y-0.5'
+                        className='border-white/20 bg-white/8 text-white hover:bg-white/14 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5'
                         {...analyticsAttributes('project_clicked', {
                           category: 'featured-projects',
                           label: `${project.title}-cta`,
@@ -239,7 +288,7 @@ export default function Page() {
                         href={project.link}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='border-gray-900/10 bg-gray-900 text-white hover:bg-gray-800 dark:border-white/20 dark:bg-white/10 dark:text-gray-100 dark:hover:bg-white/20 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] shadow-sm transition hover:-translate-y-0.5'
+                        className='border-white/20 bg-white/8 text-white hover:bg-white/14 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5'
                         {...analyticsAttributes('project_clicked', {
                           category: 'featured-projects',
                           label: `${project.title}-cta`,

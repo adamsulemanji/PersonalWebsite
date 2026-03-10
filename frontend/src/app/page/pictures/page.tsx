@@ -2,13 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { imagesLeft, imagesRight } from '@/assets/images';
+import {
+  imagesLeft,
+  imagesRight,
+  type PictureAsset,
+  type PictureCategory,
+} from '@/assets/images';
 import { motion, AnimatePresence } from 'framer-motion';
 import { analyticsAttributes } from '@/lib/analytics';
 
-type ImageType = {
-  src: string;
-  alt: string;
+type ImageType = PictureAsset & {
   aspectRatio?: number;
 };
 
@@ -19,9 +22,35 @@ type PositionType = {
   height: number;
 };
 
+const accentPills = ['#38bdf8', '#2dd4bf', '#fb923c', '#facc15'] as const;
+
+const categoryPillClasses: Record<'All photos' | PictureCategory, string> = {
+  'All photos':
+    'border-white/15 bg-white/8 text-white hover:bg-white/12 dark:border-white/15 dark:bg-white/8 dark:text-white',
+  'Personal archive': 'border-white/20 text-white',
+  Trips: 'border-white/20 text-white',
+  Friends: 'border-white/20 text-white',
+};
+
+const categoryAccentColors: Record<PictureCategory, string> = {
+  'Personal archive': '#38bdf8',
+  Trips: '#2dd4bf',
+  Friends: '#fb923c',
+};
+
+const filterCategories: Array<'All photos' | PictureCategory> = [
+  'All photos',
+  'Personal archive',
+  'Trips',
+  'Friends',
+];
+
 export default function Page() {
   const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
   const [imagePosition, setImagePosition] = useState<PositionType | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<
+    'All photos' | PictureCategory
+  >('All photos');
   const [imagesWithRatio, setImagesWithRatio] = useState<{
     left: ImageType[];
     right: ImageType[];
@@ -88,12 +117,26 @@ export default function Page() {
     setSelectedImage(null);
   };
 
-  const ImageGrid = ({ images }: { images: ImageType[] }) => (
+  const filterImages = (images: ImageType[]) =>
+    selectedCategory === 'All photos'
+      ? images
+      : images.filter((image) => image.category === selectedCategory);
+
+  const ImageGrid = ({
+    images,
+    columnOffset,
+  }: {
+    images: ImageType[];
+    columnOffset: number;
+  }) => (
     <div className='flex flex-col gap-8'>
       {images.map((image, index) => {
-        // Calculate height based on aspect ratio or use a default value
         const aspectRatio = image.aspectRatio || 1.33; // 4:3 as fallback
         const paddingBottom = `${(1 / aspectRatio) * 100}%`;
+        const pillClass = categoryPillClasses[image.category];
+        const pillColor =
+          categoryAccentColors[image.category] ??
+          accentPills[(index + columnOffset) % accentPills.length];
 
         return (
           <motion.div
@@ -102,14 +145,17 @@ export default function Page() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             whileHover={{ scale: 1.02 }}
-            className='group relative w-full cursor-pointer overflow-hidden rounded-lg shadow-md'
+            className='border-white/15 bg-neutral-950 dark:bg-neutral-900 group relative w-full cursor-pointer overflow-hidden rounded-3xl border p-3 shadow-sm sm:p-4'
             onClick={(e) => openModal(image, e)}
             {...analyticsAttributes('picture_opened', {
               label: image.alt,
               src: image.src,
             })}
           >
-            <div style={{ paddingBottom }} className='relative w-full'>
+            <div
+              style={{ paddingBottom }}
+              className='relative w-full overflow-hidden rounded-2xl'
+            >
               <Image
                 src={image.src}
                 alt={image.alt}
@@ -118,9 +164,30 @@ export default function Page() {
                 sizes='(max-width: 768px) 100vw, 50vw'
                 priority={index < 2}
               />
+              <div className='border-white/15 absolute inset-0 rounded-2xl border' />
               <div className='bg-gradient-to-t from-black/70 to-transparent absolute inset-0 flex items-end p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
                 <p className='text-white font-medium'>{image.alt}</p>
               </div>
+            </div>
+            <div className='mt-4 flex items-center justify-between gap-3'>
+              <p className='text-white text-sm font-semibold leading-relaxed'>
+                {image.alt}
+              </p>
+              <button
+                type='button'
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setSelectedCategory(image.category);
+                }}
+                className={`shrink-0 rounded-full border px-3 py-1 text-xs font-semibold ${pillClass}`}
+                style={{ backgroundColor: pillColor }}
+                {...analyticsAttributes('pictures_filter_clicked', {
+                  label: image.category,
+                  source: 'picture-card',
+                })}
+              >
+                {image.category}
+              </button>
             </div>
           </motion.div>
         );
@@ -129,31 +196,76 @@ export default function Page() {
   );
 
   return (
-    <div className='min-h-screen px-4 py-8 sm:px-6 lg:px-8'>
-      <section className='mx-auto max-w-7xl'>
+    <section className='mx-auto w-full max-w-[1200px] px-4 pb-16 pt-10 sm:px-8 sm:pb-24 sm:pt-16'>
+      <div className='max-w-3xl'>
+        <p className='underline-offset-3 decoration-gray-300 group relative inline-block text-xl font-bold underline'>
+          Pictures
+          <span className='bg-current absolute bottom-0 left-0 mt-1 block h-[2px] w-0 transition-all duration-300 group-hover:w-full'></span>
+        </p>
+        <h1 className='mt-6 font-serif text-4xl font-light leading-tight sm:text-5xl md:text-6xl'>
+          Photographs and memories
+          <span className='accent'>.</span>
+        </h1>
+        <p className='text-gray-600 dark:text-gray-300 mt-4 max-w-2xl text-[15px] leading-7 sm:text-base'>
+          A small visual archive of places, people, and moments I want to keep
+          around.
+        </p>
+        <div className='mt-6 flex flex-wrap gap-3'>
+          {filterCategories.map((category) => {
+            const isSelected = selectedCategory === category;
+
+            return (
+              <button
+                key={category}
+                type='button'
+                onClick={() => setSelectedCategory(category)}
+                className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${categoryPillClasses[category]} ${isSelected ? 'ring-offset-transparent ring-2 ring-[color:var(--main)] ring-offset-2' : ''}`}
+                style={
+                  category === 'All photos'
+                    ? undefined
+                    : { backgroundColor: categoryAccentColors[category] }
+                }
+                {...analyticsAttributes('pictures_filter_clicked', {
+                  label: category,
+                  source: 'filter-bar',
+                })}
+              >
+                {category}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className='mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10'>
         <motion.div
-          className='mb-16 text-center'
+          className='border-white/15 bg-neutral-950 dark:bg-neutral-900 rounded-3xl border p-5 shadow-sm sm:p-6 lg:col-span-2 lg:p-8'
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className='relative mb-6 inline-block text-5xl font-bold md:text-6xl'>
-            Photographs & Memories
-            <span className='text-blue-500 absolute -right-6 font-serif text-7xl'>
-              .
-            </span>
-          </h1>
-          <p className='text-gray-600 mx-auto max-w-2xl text-lg leading-relaxed'>
-            A visual journey through the moments and people that have shaped my
-            life and experiences.
+          <p className='text-white/74 max-w-3xl text-[15px] leading-7 sm:text-base'>
+            The page keeps the same quiet structure as the rest of the site:
+            clean type, simple boxes, and just enough color to guide the eye
+            without turning the gallery into a different product.
+          </p>
+          <p className='text-white/52 mt-3 text-sm leading-relaxed'>
+            Click a category pill to filter the gallery. Clicking a photo still
+            opens it full screen.
           </p>
         </motion.div>
 
-        <div className='grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10'>
-          <ImageGrid images={imagesWithRatio.left} />
-          <ImageGrid images={imagesWithRatio.right} />
+        <div className='grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10 lg:col-span-2'>
+          <ImageGrid
+            images={filterImages(imagesWithRatio.left)}
+            columnOffset={0}
+          />
+          <ImageGrid
+            images={filterImages(imagesWithRatio.right)}
+            columnOffset={1}
+          />
         </div>
-      </section>
+      </div>
 
       {/* Image Modal with fluid animation */}
       <AnimatePresence>
@@ -266,6 +378,6 @@ export default function Page() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </section>
   );
 }

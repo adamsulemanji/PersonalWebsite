@@ -9,7 +9,13 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from '@/components/ui/navigation-menu';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 import LightDarkToggle from '@/components/theme/LightDarkToggle';
 import { usePathname } from 'next/navigation';
 import { analyticsAttributes } from '@/lib/analytics';
@@ -25,14 +31,12 @@ const leftNavItems: NavItem[] = [
   { title: 'Pictures', redirect: '/page/pictures/' },
 ];
 
-const rightNavItems = [{ title: 'Dark Mode', action: 'toggleDarkMode' }];
-
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
   return (
-    <header className='sticky top-0 z-50 w-full border-b bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:p-8'>
+    <header className='bg-white/95 dark:bg-neutral-950/95 sticky top-0 z-50 w-full border-b p-4 backdrop-blur sm:p-8'>
       <div className='flex h-8 w-full items-center justify-between px-4 md:px-8'>
         <div className='mr-4 hidden md:flex'>
           <a
@@ -87,18 +91,52 @@ export default function Navbar() {
               <span className='sr-only'>Toggle Menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side='left' className='pr-0'>
-            <div className='my-4 h-[calc(100vh-8rem)] pb-10 pl-6'>
-              <div className='flex flex-col space-y-3'>
-                {[...leftNavItems, ...rightNavItems].map((item, index) => (
+          <SheetContent
+            side='left'
+            className='bg-white text-black dark:bg-neutral-950 dark:text-white w-[85vw] border-r p-0 sm:max-w-sm'
+          >
+            <SheetTitle className='sr-only'>Mobile navigation</SheetTitle>
+            <SheetDescription className='sr-only'>
+              Navigate between pages or return to the homepage.
+            </SheetDescription>
+            <div className='bg-white dark:bg-neutral-950 flex h-full flex-col px-6 pb-8 pt-12'>
+              <a
+                className='mb-8 block text-left font-sans text-2xl font-extrabold'
+                href='/'
+                onClick={() => setIsOpen(false)}
+                {...analyticsAttributes('nav_link_clicked', {
+                  label: 'home',
+                  section: 'mobile',
+                })}
+              >
+                Adam
+                <br />
+                Sulemanji
+              </a>
+              <div className='flex flex-col space-y-2'>
+                <MobileLink
+                  href='/'
+                  onClick={() => setIsOpen(false)}
+                  active={pathname === '/'}
+                >
+                  Home
+                </MobileLink>
+                {leftNavItems.map((item) => (
                   <MobileLink
-                    key={index}
-                    href={'redirect' in item ? item.redirect : '#'}
+                    key={item.title}
+                    href={item.redirect}
                     onClick={() => setIsOpen(false)}
+                    active={pathname === item.redirect}
                   >
                     {item.title}
                   </MobileLink>
                 ))}
+              </div>
+              <div className='mt-auto border-t px-1 pt-4'>
+                <p className='mb-2 text-xs uppercase tracking-[0.2em] text-muted-foreground'>
+                  Theme
+                </p>
+                <LightDarkToggle mobile />
               </div>
             </div>
           </SheetContent>
@@ -112,14 +150,19 @@ interface MobileLinkProps {
   href: string;
   onClick?: () => void;
   children: React.ReactNode;
+  active?: boolean;
 }
 
-function MobileLink({ href, onClick, children }: MobileLinkProps) {
+function MobileLink({ href, onClick, children, active }: MobileLinkProps) {
   return (
     <a
       href={href}
       onClick={onClick}
-      className='block py-2 text-lg font-medium'
+      className={`block rounded-md px-3 py-3 text-lg font-medium ${
+        active
+          ? 'bg-black/5 dark:bg-white/10 font-bold'
+          : 'hover:bg-black/5 dark:hover:bg-white/10'
+      }`}
       {...analyticsAttributes('nav_link_clicked', {
         label: typeof children === 'string' ? children : 'mobile-link',
         section: 'mobile',
