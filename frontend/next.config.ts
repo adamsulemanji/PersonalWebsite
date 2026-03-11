@@ -1,8 +1,13 @@
-// next.config.js
+const isProduction = process.env.NODE_ENV === 'production';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  distDir: 'build',
+  ...(isProduction
+    ? {
+        output: 'export',
+        distDir: 'build',
+      }
+    : {}),
   images: {
     unoptimized: true,
   },

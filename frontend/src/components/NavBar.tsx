@@ -16,7 +16,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import LightDarkToggle from '@/components/theme/LightDarkToggle';
 import { usePathname } from 'next/navigation';
 import { analyticsAttributes } from '@/lib/analytics';
 
@@ -77,10 +76,6 @@ export default function Navbar() {
           </NavigationMenu>
         </div>
 
-        <div className='hidden items-center space-x-4 md:flex md:space-x-6'>
-          <LightDarkToggle />
-        </div>
-
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button
@@ -131,12 +126,6 @@ export default function Navbar() {
                     {item.title}
                   </MobileLink>
                 ))}
-              </div>
-              <div className='mt-auto border-t px-1 pt-4'>
-                <p className='mb-2 text-xs uppercase tracking-[0.2em] text-muted-foreground'>
-                  Theme
-                </p>
-                <LightDarkToggle mobile />
               </div>
             </div>
           </SheetContent>

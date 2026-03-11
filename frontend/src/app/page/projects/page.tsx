@@ -171,7 +171,7 @@ export default function Page() {
           const pillColor = accentPillColors[project.accent];
 
           const imageCard = (
-            <div className='border-white/15 bg-neutral-950 dark:bg-neutral-900 relative overflow-hidden rounded-2xl border p-3 shadow-sm'>
+            <div className='border-gray-200 bg-white dark:border-white/15 dark:bg-neutral-900 relative overflow-hidden rounded-2xl border p-3 shadow-sm'>
               <div className='relative aspect-[4/3] overflow-hidden rounded-xl'>
                 <Image
                   src={project.image}
@@ -181,7 +181,7 @@ export default function Page() {
                   className='object-cover transition-transform duration-500 group-hover:scale-[1.03]'
                 />
                 <div className='bg-gradient-to-t from-black/35 via-black/0 to-transparent pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
-                <div className='border-white/15 absolute inset-0 rounded-xl border' />
+                <div className='border-gray-200 dark:border-white/15 absolute inset-0 rounded-xl border' />
               </div>
               <div className='mt-3 flex items-center justify-between gap-3'>
                 <span
@@ -190,7 +190,7 @@ export default function Page() {
                 >
                   {metaLabel}
                 </span>
-                <span className='text-white/45 text-[11px]'>
+                <span className='text-gray-500 dark:text-white/45 text-[11px]'>
                   {`0${index + 1}`}
                 </span>
               </div>
@@ -200,7 +200,7 @@ export default function Page() {
           return (
             <motion.article
               key={project.id}
-              className='border-white/15 bg-neutral-950 dark:bg-neutral-900 rounded-3xl border p-4 shadow-sm sm:p-6 lg:p-8'
+              className='border-gray-200 bg-white dark:border-white/15 dark:bg-neutral-900 rounded-3xl border p-4 shadow-sm sm:p-6 lg:p-8'
               variants={item}
             >
               <div className='grid items-center gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-10'>
@@ -240,13 +240,13 @@ export default function Page() {
                 </motion.div>
 
                 <div className={`relative ${textOrder}`}>
-                  <div className='text-white/35 flex items-center gap-3 text-xs'>
-                    <span className='text-white/70 text-sm font-semibold'>
+                  <div className='text-gray-400 dark:text-white/35 flex items-center gap-3 text-xs'>
+                    <span className='text-gray-600 dark:text-white/70 text-sm font-semibold'>
                       {`0${index + 1}`}
                     </span>
-                    <span className='bg-white/10 h-px flex-1' />
+                    <span className='bg-gray-200 dark:bg-white/10 h-px flex-1' />
                   </div>
-                  <h3 className='text-white mt-4 text-2xl font-bold sm:text-3xl'>
+                  <h3 className='text-gray-900 dark:text-white mt-4 text-2xl font-bold sm:text-3xl'>
                     {project.title}
                     <span className='accent'>.</span>
                   </h3>
@@ -261,21 +261,21 @@ export default function Page() {
                       </span>
                     ))}
                   </div>
-                  <p className='text-white/78 mt-4 text-[15px] leading-7 sm:text-base'>
+                  <p className='text-gray-700 dark:text-white/78 mt-4 text-[15px] leading-7 sm:text-base'>
                     {project.description}
                   </p>
-                  <p className='border-[color:var(--main)]/60 text-white/62 mt-4 border-l-2 pl-4 text-[15px] leading-7 sm:text-sm'>
+                  <p className='border-[color:var(--main)]/60 text-gray-600 dark:text-white/62 mt-4 border-l-2 pl-4 text-[15px] leading-7 sm:text-sm'>
                     {project.details}
                   </p>
                   <div className='mt-6 flex flex-wrap items-center gap-4'>
-                    <span className='border-white/15 text-white/65 rounded-full border px-3 py-1 text-xs font-semibold'>
+                    <span className='border-gray-200 text-gray-500 dark:border-white/15 dark:text-white/65 rounded-full border px-3 py-1 text-xs font-semibold'>
                       {metaLabel}
                     </span>
                     {isPrivate ? (
                       <button
                         type='button'
                         onClick={project.onClick}
-                        className='border-white/20 bg-white/8 text-white hover:bg-white/14 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5'
+                        className='border-gray-900/10 bg-gray-900 text-white hover:bg-gray-800 dark:border-white/20 dark:bg-white/8 dark:text-white dark:hover:bg-white/14 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5'
                         {...analyticsAttributes('project_clicked', {
                           category: 'featured-projects',
                           label: `${project.title}-cta`,
@@ -288,7 +288,7 @@ export default function Page() {
                         href={project.link}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='border-white/20 bg-white/8 text-white hover:bg-white/14 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5'
+                        className='border-gray-900/10 bg-gray-900 text-white hover:bg-gray-800 dark:border-white/20 dark:bg-white/8 dark:text-white dark:hover:bg-white/14 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5'
                         {...analyticsAttributes('project_clicked', {
                           category: 'featured-projects',
                           label: `${project.title}-cta`,

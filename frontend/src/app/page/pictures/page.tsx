@@ -145,7 +145,7 @@ export default function Page() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             whileHover={{ scale: 1.02 }}
-            className='border-white/15 bg-neutral-950 dark:bg-neutral-900 group relative w-full cursor-pointer overflow-hidden rounded-3xl border p-3 shadow-sm sm:p-4'
+            className='border-gray-200 bg-white dark:border-white/15 dark:bg-neutral-900 group relative w-full cursor-pointer overflow-hidden rounded-3xl border p-3 shadow-sm sm:p-4'
             onClick={(e) => openModal(image, e)}
             {...analyticsAttributes('picture_opened', {
               label: image.alt,
@@ -164,13 +164,13 @@ export default function Page() {
                 sizes='(max-width: 768px) 100vw, 50vw'
                 priority={index < 2}
               />
-              <div className='border-white/15 absolute inset-0 rounded-2xl border' />
+              <div className='border-gray-200 dark:border-white/15 absolute inset-0 rounded-2xl border' />
               <div className='bg-gradient-to-t from-black/70 to-transparent absolute inset-0 flex items-end p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
                 <p className='text-white font-medium'>{image.alt}</p>
               </div>
             </div>
             <div className='mt-4 flex items-center justify-between gap-3'>
-              <p className='text-white text-sm font-semibold leading-relaxed'>
+              <p className='text-gray-900 dark:text-white text-sm font-semibold leading-relaxed'>
                 {image.alt}
               </p>
               <button
@@ -238,23 +238,7 @@ export default function Page() {
       </div>
 
       <div className='mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10'>
-        <motion.div
-          className='border-white/15 bg-neutral-950 dark:bg-neutral-900 rounded-3xl border p-5 shadow-sm sm:p-6 lg:col-span-2 lg:p-8'
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <p className='text-white/74 max-w-3xl text-[15px] leading-7 sm:text-base'>
-            The page keeps the same quiet structure as the rest of the site:
-            clean type, simple boxes, and just enough color to guide the eye
-            without turning the gallery into a different product.
-          </p>
-          <p className='text-white/52 mt-3 text-sm leading-relaxed'>
-            Click a category pill to filter the gallery. Clicking a photo still
-            opens it full screen.
-          </p>
-        </motion.div>
-
+      
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10 lg:col-span-2'>
           <ImageGrid
             images={filterImages(imagesWithRatio.left)}

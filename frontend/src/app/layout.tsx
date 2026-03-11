@@ -22,7 +22,11 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body className='flex min-h-screen justify-center overflow-x-hidden'>
-        <ThemeProvider attribute='class' defaultTheme='system'>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='light'
+          enableSystem={false}
+        >
           <AnalyticsProvider>
             <div className='w-full max-w-[1200px]'>
               <Navbar />
