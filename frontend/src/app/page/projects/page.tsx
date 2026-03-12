@@ -171,7 +171,7 @@ export default function Page() {
           const pillColor = accentPillColors[project.accent];
 
           const imageCard = (
-            <div className='border-gray-200 bg-white dark:border-white/15 dark:bg-neutral-900 relative overflow-hidden rounded-2xl border p-3 shadow-sm'>
+            <div className='border-gray-200 bg-white dark:border-white/15 dark:bg-neutral-800 relative overflow-hidden rounded-2xl border p-3 shadow-sm'>
               <div className='relative aspect-[4/3] overflow-hidden rounded-xl'>
                 <Image
                   src={project.image}
@@ -200,7 +200,7 @@ export default function Page() {
           return (
             <motion.article
               key={project.id}
-              className='border-gray-200 bg-white dark:border-white/15 dark:bg-neutral-900 rounded-3xl border p-4 shadow-sm sm:p-6 lg:p-8'
+              className='border-gray-200 bg-white dark:border-white/15 dark:bg-neutral-800 rounded-3xl border p-4 shadow-sm sm:p-6 lg:p-8'
               variants={item}
             >
               <div className='grid items-center gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-10'>

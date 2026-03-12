@@ -1,4 +1,4 @@
-interface Update {
+export interface Update {
   icon: string;
   description: string;
   url?: string;

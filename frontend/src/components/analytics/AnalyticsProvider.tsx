@@ -12,10 +12,7 @@ let hasInitializedPostHog = false;
 let lastTrackedUrl = '';
 
 function getClickableElement(target: EventTarget | null) {
-  if (!(target instanceof HTMLElement)) {
-    return null;
-  }
-
+  if (!(target instanceof HTMLElement)) return null;
   return target.closest<HTMLElement>(
     '[data-analytics-event], a[href], button, [role="button"]'
   );
@@ -30,9 +27,7 @@ export default function AnalyticsProvider({ children }: PropsWithChildren) {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!posthogToken || hasInitializedPostHog) {
-      return;
-    }
+    if (!posthogToken || hasInitializedPostHog) return;
 
     posthog.init(posthogToken, {
       api_host: posthogHost,
@@ -51,18 +46,13 @@ export default function AnalyticsProvider({ children }: PropsWithChildren) {
       !pathname ||
       !hasInitializedPostHog ||
       typeof window === 'undefined'
-    ) {
+    )
       return;
-    }
 
     const url = window.location.href;
-
-    if (lastTrackedUrl === url) {
-      return;
-    }
+    if (lastTrackedUrl === url) return;
 
     lastTrackedUrl = url;
-
     posthog.capture('page_viewed', {
       path: pathname,
       search: window.location.search,
@@ -72,43 +62,32 @@ export default function AnalyticsProvider({ children }: PropsWithChildren) {
   }, [pathname]);
 
   useEffect(() => {
-    if (
-      !posthogToken ||
-      !hasInitializedPostHog ||
-      typeof document === 'undefined'
-    ) {
+    if (!posthogToken || !hasInitializedPostHog || typeof document === 'undefined')
       return;
-    }
 
     const handleClick = (event: MouseEvent) => {
-      const clickableElement = getClickableElement(event.target);
-
-      if (!clickableElement) {
-        return;
-      }
+      const el = getClickableElement(event.target);
+      if (!el) return;
 
       const trackedLink =
-        clickableElement instanceof HTMLAnchorElement
-          ? clickableElement
-          : clickableElement.closest<HTMLAnchorElement>('a[href]');
+        el instanceof HTMLAnchorElement
+          ? el
+          : el.closest<HTMLAnchorElement>('a[href]');
 
-      const properties = Object.entries(clickableElement.dataset).reduce<
+      const properties = Object.entries(el.dataset).reduce<
         Record<string, string | boolean>
-      >((accumulator, [key, value]) => {
-        if (!value || key === 'analyticsEvent') {
-          return accumulator;
-        }
-
-        accumulator[normalizeDatasetKey(key)] = value;
-        return accumulator;
+      >((acc, [key, value]) => {
+        if (!value || key === 'analyticsEvent') return acc;
+        acc[normalizeDatasetKey(key)] = value;
+        return acc;
       }, {});
 
-      const eventName = clickableElement.dataset.analyticsEvent || 'ui_clicked';
+      const eventName = el.dataset.analyticsEvent || 'ui_clicked';
       const label =
-        clickableElement.dataset.analyticsLabel ||
-        clickableElement.getAttribute('aria-label') ||
-        clickableElement.textContent?.trim() ||
-        clickableElement.tagName.toLowerCase();
+        el.dataset.analyticsLabel ||
+        el.getAttribute('aria-label') ||
+        el.textContent?.trim() ||
+        el.tagName.toLowerCase();
 
       if (trackedLink) {
         properties.href = trackedLink.href;
@@ -119,15 +98,12 @@ export default function AnalyticsProvider({ children }: PropsWithChildren) {
         ...properties,
         currentPath: window.location.pathname,
         label,
-        tagName: clickableElement.tagName.toLowerCase(),
+        tagName: el.tagName.toLowerCase(),
       });
     };
 
     document.addEventListener('click', handleClick);
-
-    return () => {
-      document.removeEventListener('click', handleClick);
-    };
+    return () => document.removeEventListener('click', handleClick);
   }, []);
 
   return <>{children}</>;

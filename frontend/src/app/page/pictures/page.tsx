@@ -122,79 +122,6 @@ export default function Page() {
       ? images
       : images.filter((image) => image.category === selectedCategory);
 
-  const ImageGrid = ({
-    images,
-    columnOffset,
-  }: {
-    images: ImageType[];
-    columnOffset: number;
-  }) => (
-    <div className='flex flex-col gap-8'>
-      {images.map((image, index) => {
-        const aspectRatio = image.aspectRatio || 1.33; // 4:3 as fallback
-        const paddingBottom = `${(1 / aspectRatio) * 100}%`;
-        const pillClass = categoryPillClasses[image.category];
-        const pillColor =
-          categoryAccentColors[image.category] ??
-          accentPills[(index + columnOffset) % accentPills.length];
-
-        return (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            whileHover={{ scale: 1.02 }}
-            className='border-gray-200 bg-white dark:border-white/15 dark:bg-neutral-900 group relative w-full cursor-pointer overflow-hidden rounded-3xl border p-3 shadow-sm sm:p-4'
-            onClick={(e) => openModal(image, e)}
-            {...analyticsAttributes('picture_opened', {
-              label: image.alt,
-              src: image.src,
-            })}
-          >
-            <div
-              style={{ paddingBottom }}
-              className='relative w-full overflow-hidden rounded-2xl'
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                className='object-cover transition-transform duration-300 group-hover:scale-105'
-                sizes='(max-width: 768px) 100vw, 50vw'
-                priority={index < 2}
-              />
-              <div className='border-gray-200 dark:border-white/15 absolute inset-0 rounded-2xl border' />
-              <div className='bg-gradient-to-t from-black/70 to-transparent absolute inset-0 flex items-end p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
-                <p className='text-white font-medium'>{image.alt}</p>
-              </div>
-            </div>
-            <div className='mt-4 flex items-center justify-between gap-3'>
-              <p className='text-gray-900 dark:text-white text-sm font-semibold leading-relaxed'>
-                {image.alt}
-              </p>
-              <button
-                type='button'
-                onClick={(event) => {
-                  event.stopPropagation();
-                  setSelectedCategory(image.category);
-                }}
-                className={`shrink-0 rounded-full border px-3 py-1 text-xs font-semibold ${pillClass}`}
-                style={{ backgroundColor: pillColor }}
-                {...analyticsAttributes('pictures_filter_clicked', {
-                  label: image.category,
-                  source: 'picture-card',
-                })}
-              >
-                {image.category}
-              </button>
-            </div>
-          </motion.div>
-        );
-      })}
-    </div>
-  );
-
   return (
     <section className='mx-auto w-full max-w-[1200px] px-4 pb-16 pt-10 sm:px-8 sm:pb-24 sm:pt-16'>
       <div className='max-w-3xl'>
@@ -243,10 +170,14 @@ export default function Page() {
           <ImageGrid
             images={filterImages(imagesWithRatio.left)}
             columnOffset={0}
+            onOpen={openModal}
+            onFilterByCategory={setSelectedCategory}
           />
           <ImageGrid
             images={filterImages(imagesWithRatio.right)}
             columnOffset={1}
+            onOpen={openModal}
+            onFilterByCategory={setSelectedCategory}
           />
         </div>
       </div>
@@ -363,5 +294,81 @@ export default function Page() {
         )}
       </AnimatePresence>
     </section>
+  );
+}
+
+interface ImageGridProps {
+  images: ImageType[];
+  columnOffset: number;
+  onOpen: (image: ImageType, e: React.MouseEvent<HTMLDivElement>) => void;
+  onFilterByCategory: (category: PictureCategory) => void;
+}
+
+function ImageGrid({ images, columnOffset, onOpen, onFilterByCategory }: ImageGridProps) {
+  return (
+    <div className='flex flex-col gap-8'>
+      {images.map((image, index) => {
+        const aspectRatio = image.aspectRatio || 1.33;
+        const paddingBottom = `${(1 / aspectRatio) * 100}%`;
+        const pillClass = categoryPillClasses[image.category];
+        const pillColor =
+          categoryAccentColors[image.category] ??
+          accentPills[(index + columnOffset) % accentPills.length];
+
+        return (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            whileHover={{ scale: 1.02 }}
+            className='border-gray-200 bg-white dark:border-white/15 dark:bg-neutral-800 group relative w-full cursor-pointer overflow-hidden rounded-3xl border p-3 shadow-sm sm:p-4'
+            onClick={(e) => onOpen(image, e)}
+            {...analyticsAttributes('picture_opened', {
+              label: image.alt,
+              src: image.src,
+            })}
+          >
+            <div
+              style={{ paddingBottom }}
+              className='relative w-full overflow-hidden rounded-2xl'
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                className='object-cover transition-transform duration-300 group-hover:scale-105'
+                sizes='(max-width: 768px) 100vw, 50vw'
+                priority={index < 2}
+              />
+              <div className='border-gray-200 dark:border-white/15 absolute inset-0 rounded-2xl border' />
+              <div className='bg-gradient-to-t from-black/70 to-transparent absolute inset-0 flex items-end p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+                <p className='text-white font-medium'>{image.alt}</p>
+              </div>
+            </div>
+            <div className='mt-4 flex items-center justify-between gap-3'>
+              <p className='text-gray-900 dark:text-white text-sm font-semibold leading-relaxed'>
+                {image.alt}
+              </p>
+              <button
+                type='button'
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onFilterByCategory(image.category);
+                }}
+                className={`shrink-0 rounded-full border px-3 py-1 text-xs font-semibold ${pillClass}`}
+                style={{ backgroundColor: pillColor }}
+                {...analyticsAttributes('pictures_filter_clicked', {
+                  label: image.category,
+                  source: 'picture-card',
+                })}
+              >
+                {image.category}
+              </button>
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
   );
 }

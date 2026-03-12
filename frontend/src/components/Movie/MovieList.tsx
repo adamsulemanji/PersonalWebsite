@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import './movie-item.css';
-import axios from 'axios';
 
-interface AlbumItemProps {
+interface MovieItemProps {
   title: string;
   letterboxd_url: string;
   poster_url: string;
@@ -15,8 +14,8 @@ interface AlbumItemProps {
 
 const API_URL =
   'https://api.fast.adamsulemanji.com/movies/search?username=adamsulemanji&limit=10';
-const discColorClass = `disc-color-${Math.floor(Math.random() * 7)}`;
-const diskStyles = ['disk-cd', 'disk-bluray'];
+const DISK_STYLES = ['disk-cd', 'disk-bluray'];
+const DISC_COLOR_COUNT = 7;
 
 function MovieItem({
   title,
@@ -25,16 +24,16 @@ function MovieItem({
   rating,
   director,
   review,
-}: AlbumItemProps) {
-  const randomDiskStyle =
-    diskStyles[Math.floor(Math.random() * diskStyles.length)];
+}: MovieItemProps) {
+  const discColorClass = `disc-color-${Math.floor(Math.random() * DISC_COLOR_COUNT)}`;
+  const diskStyle = DISK_STYLES[Math.floor(Math.random() * DISK_STYLES.length)];
 
   return (
     <a
       href={letterboxd_url}
       className='mb-6 block h-full w-full cursor-pointer rounded-xl'
     >
-      <div className='border-gray-200 bg-neutral-100 dark:border-gray-700 dark:bg-gray-800 flex items-start gap-4 rounded-lg border p-4 sm:hidden'>
+      <div className='border-gray-200 bg-neutral-100 dark:border-gray-700 dark:bg-neutral-800 flex items-start gap-4 rounded-lg border p-4 sm:hidden'>
         <img
           src={poster_url}
           alt={title}
@@ -60,7 +59,7 @@ function MovieItem({
         </div>
       </div>
 
-      <div className='music-item border-gray-200 bg-neutral-100 dark:border-gray-700 dark:bg-gray-800 group relative hidden w-full items-center rounded-lg border px-10 py-16 sm:flex lg:px-16 lg:py-24'>
+      <div className='music-item border-gray-200 bg-neutral-100 dark:border-gray-700 dark:bg-neutral-800 group relative hidden w-full items-center rounded-lg border px-10 py-16 sm:flex lg:px-16 lg:py-24'>
         <div className='album-container'>
           <div className='album-wrap'>
             <div
@@ -75,7 +74,7 @@ function MovieItem({
                 </div>
               )}
             </div>
-            <div className={`disk ${discColorClass} ${randomDiskStyle}`}>
+            <div className={`disk ${discColorClass} ${diskStyle}`}>
               <div className='disk__inside'></div>
             </div>
           </div>
@@ -97,20 +96,18 @@ function MovieItem({
 }
 
 export default function MovieList() {
-  const [album_list, setAlbumList] = useState<AlbumItemProps[]>([]);
+  const [movies, setMovies] = useState<MovieItemProps[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(
-        'https://api.fast.adamsulemanji.com/movies/search?username=adamsulemanji&limit=10'
-      )
-      .then((response) => {
-        setAlbumList(response.data);
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((data) => {
+        setMovies(data);
         setLoading(false);
       })
       .catch((error) => {
-        console.error('Error fetching album list:', error);
+        console.error('Error fetching movies:', error);
         setLoading(false);
       });
   }, []);
@@ -121,15 +118,15 @@ export default function MovieList() {
 
   return (
     <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-      {album_list.map((album, index) => (
+      {movies.map((movie, index) => (
         <MovieItem
           key={index}
-          title={album.title}
-          letterboxd_url={album.letterboxd_url}
-          poster_url={album.poster_url}
-          rating={album.rating}
-          director={album.director}
-          review={album.review}
+          title={movie.title}
+          letterboxd_url={movie.letterboxd_url}
+          poster_url={movie.poster_url}
+          rating={movie.rating}
+          director={movie.director}
+          review={movie.review}
         />
       ))}
     </div>

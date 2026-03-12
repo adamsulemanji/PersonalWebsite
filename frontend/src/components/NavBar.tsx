@@ -65,7 +65,7 @@ export default function Navbar() {
                         ? 'font-extrabold underline underline-offset-2'
                         : ''
                     }`}
-                    href={'redirect' in item ? item.redirect : '#'}
+                    href={item.redirect}
                     {...analyticsAttributes('nav_link_clicked', {
                       label: item.title,
                       section: 'desktop',

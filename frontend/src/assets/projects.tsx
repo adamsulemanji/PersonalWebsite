@@ -66,7 +66,7 @@ export const projects: projectsInterface[] = [
     date: 'January 2025 - Present',
     url: 'https://api.fast.adamsulemanji.com/',
     pictures: ['/images/letterboxd.png'],
-    categories: ['webscrapping', 'dynamodb',],
+    categories: ['webscrapping', 'dynamodb'],
     color: 'red',
   },
   {

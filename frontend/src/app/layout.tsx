@@ -1,7 +1,7 @@
-'use strict';
-
 import localFont from 'next/font/local';
 import '../styles/globals.css';
+
+export { metadata, viewport } from './metadata';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import AnalyticsProvider from '@/components/analytics/AnalyticsProvider';
 
@@ -31,7 +31,7 @@ export default function RootLayout({
             <div className='w-full max-w-[1200px] bg-[var(--background)]'>
               <Navbar />
               <main
-                className={`${geistMono.variable} ${geistMono.variable} accent-bg accent-text bg-[var(--background)] antialiased`}
+                className={`${geistMono.variable} bg-[var(--background)] antialiased`}
               >
                 {children}
               </main>

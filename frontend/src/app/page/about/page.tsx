@@ -25,7 +25,7 @@ export default function Page() {
       </div>
 
       <div className='mt-10 grid gap-8 lg:mt-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-10'>
-        <div className='border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-950 overflow-hidden rounded-3xl border p-4 shadow-sm sm:p-6'>
+        <div className='border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-800 overflow-hidden rounded-3xl border p-4 shadow-sm sm:p-6'>
           <div className='relative aspect-[4/5] overflow-hidden rounded-2xl'>
             <Image
               src='/images/kid.jpg'
@@ -41,7 +41,7 @@ export default function Page() {
         </div>
 
         <div className='space-y-6'>
-          <div className='border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-950 rounded-3xl border p-5 shadow-sm sm:p-6 lg:p-8'>
+          <div className='border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-800 rounded-3xl border p-5 shadow-sm sm:p-6 lg:p-8'>
             <div className='text-gray-700 dark:text-gray-300 space-y-5 text-base leading-relaxed'>
               <p>
                 I&apos;m a software engineer at Amazon in Seattle, building
@@ -65,7 +65,7 @@ export default function Page() {
             {highlights.map((item) => (
               <div
                 key={item.label}
-                className='border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-950 rounded-2xl border p-4 shadow-sm'
+                className='border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-800 rounded-2xl border p-4 shadow-sm'
               >
                 <p className='text-gray-500 dark:text-gray-400 text-xs uppercase tracking-[0.25em]'>
                   {item.label}

@@ -13,16 +13,11 @@ function ThemeScheduler() {
   const { setTheme } = useTheme();
 
   React.useEffect(() => {
-    const syncTheme = () => {
+    const stored = localStorage.getItem('theme');
+    if (!stored) {
       setTheme(getScheduledTheme());
-    };
-
-    syncTheme();
-
-    const intervalId = window.setInterval(syncTheme, 60_000);
-
-    return () => window.clearInterval(intervalId);
-  }, [setTheme]);
+    }
+  }, []);
 
   return null;
 }
