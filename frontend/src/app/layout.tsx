@@ -21,17 +21,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className='flex min-h-screen justify-center overflow-x-hidden'>
+      <body className='flex min-h-screen justify-center overflow-x-hidden bg-[var(--background)] text-[var(--foreground)]'>
         <ThemeProvider
           attribute='class'
           defaultTheme='light'
           enableSystem={false}
         >
           <AnalyticsProvider>
-            <div className='w-full max-w-[1200px]'>
+            <div className='w-full max-w-[1200px] bg-[var(--background)]'>
               <Navbar />
               <main
-                className={`${geistMono.variable} ${geistMono.variable} accent-bg accent-text antialiased`}
+                className={`${geistMono.variable} ${geistMono.variable} accent-bg accent-text bg-[var(--background)] antialiased`}
               >
                 {children}
               </main>

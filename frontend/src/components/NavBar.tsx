@@ -35,7 +35,10 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className='bg-white/95 dark:bg-neutral-950/95 sticky top-0 z-50 w-full border-b p-4 backdrop-blur sm:p-8'>
+    <header
+      className='sticky top-0 z-50 w-full border-b p-4 backdrop-blur sm:p-8'
+      style={{ backgroundColor: 'var(--background)' }}
+    >
       <div className='flex h-8 w-full items-center justify-between px-4 md:px-8'>
         <div className='mr-4 hidden md:flex'>
           <a
@@ -88,13 +91,17 @@ export default function Navbar() {
           </SheetTrigger>
           <SheetContent
             side='left'
-            className='bg-white text-black dark:bg-neutral-950 dark:text-white w-[85vw] border-r p-0 sm:max-w-sm'
+            className='text-black dark:text-white w-[85vw] border-r p-0 sm:max-w-sm'
+            style={{ backgroundColor: 'var(--background)' }}
           >
             <SheetTitle className='sr-only'>Mobile navigation</SheetTitle>
             <SheetDescription className='sr-only'>
               Navigate between pages or return to the homepage.
             </SheetDescription>
-            <div className='bg-white dark:bg-neutral-950 flex h-full flex-col px-6 pb-8 pt-12'>
+            <div
+              className='flex h-full flex-col px-6 pb-8 pt-12'
+              style={{ backgroundColor: 'var(--background)' }}
+            >
               <a
                 className='mb-8 block text-left font-sans text-2xl font-extrabold'
                 href='/'
