@@ -39,6 +39,8 @@ export class Pipeline extends cdk.Stack {
         buildImage: codebuild.LinuxBuildImage.STANDARD_7_0,
         privileged: true,
       },
+      // Cache node_modules so repeated builds skip the full npm install
+      cache: codebuild.Cache.local(codebuild.LocalCacheMode.CUSTOM),
       buildSpec: codebuild.BuildSpec.fromObjectToYaml({
         version: "0.2",
         phases: {
@@ -62,9 +64,14 @@ export class Pipeline extends cdk.Stack {
           "base-directory": "dist",
           files: ["**/*"],
         },
+        cache: {
+          paths: ["node_modules/**/*"],
+        },
       }),
     });
 
+    // Scoped down from the previous s3:* + resources:["*"] blanket grant.
+    // CDK synth only needs to read/write the bootstrap bucket and assume CDK roles.
     synthProject.addToRolePolicy(
       new iam.PolicyStatement({
         actions: [
@@ -73,11 +80,37 @@ export class Pipeline extends cdk.Stack {
           "cloudformation:ExecuteChangeSet",
           "cloudformation:DeleteChangeSet",
           "cloudformation:DescribeChangeSet",
-          "s3:*",
-          "sts:AssumeRole",
-          "iam:PassRole",
+          "cloudformation:GetTemplate",
         ],
-        resources: ["*"],
+        resources: [
+          `arn:aws:cloudformation:*:*:stack/CDKToolkit/*`,
+          `arn:aws:cloudformation:*:*:stack/PersonalWebsiteStack/*`,
+          `arn:aws:cloudformation:*:*:stack/PersonalWebsitePipeline/*`,
+        ],
+      })
+    );
+    synthProject.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:ListBucket",
+          "s3:GetBucketLocation",
+          "s3:AbortMultipartUpload",
+        ],
+        resources: ["arn:aws:s3:::cdk-*"],
+      })
+    );
+    synthProject.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ["sts:AssumeRole"],
+        resources: ["arn:aws:iam::*:role/cdk-*"],
+      })
+    );
+    synthProject.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ["iam:PassRole"],
+        resources: ["arn:aws:iam::*:role/cdk-*"],
       })
     );
 
@@ -97,11 +130,13 @@ export class Pipeline extends cdk.Stack {
         environment: {
           buildImage: codebuild.LinuxBuildImage.STANDARD_7_0,
         },
+        // Cache node_modules so repeated builds skip the full npm install
+        cache: codebuild.Cache.local(codebuild.LocalCacheMode.CUSTOM),
         buildSpec: codebuild.BuildSpec.fromObjectToYaml({
           version: "0.2",
           phases: {
             install: {
-              commands: ["cd frontend", "npm install --force"],
+              commands: ["cd frontend", "npm install --legacy-peer-deps"],
             },
             build: {
               commands: ["npm run build"],
@@ -110,6 +145,9 @@ export class Pipeline extends cdk.Stack {
           artifacts: {
             "base-directory": "frontend/build",
             files: ["**/*"],
+          },
+          cache: {
+            paths: ["frontend/node_modules/**/*"],
           },
         }),
       }
@@ -123,13 +161,73 @@ export class Pipeline extends cdk.Stack {
       outputs: [frontendBuildOutput],
     });
 
+    // ********** CFN DEPLOYMENT ROLE **********
+    const cfnDeployRole = new iam.Role(this, "CFNDeployRole", {
+      assumedBy: new iam.ServicePrincipal("cloudformation.amazonaws.com"),
+      inlinePolicies: {
+        PersonalWebsiteDeployPolicy: new iam.PolicyDocument({
+          statements: [
+            new iam.PolicyStatement({
+              sid: "StaticHosting",
+              actions: ["s3:*", "cloudfront:*", "acm:*", "route53:*"],
+              resources: ["*"],
+            }),
+            new iam.PolicyStatement({
+              sid: "Observability",
+              actions: ["glue:*", "athena:*", "cloudwatch:*", "logs:*"],
+              resources: ["*"],
+            }),
+            new iam.PolicyStatement({
+              sid: "Pipeline",
+              actions: [
+                "codebuild:*",
+                "codepipeline:*",
+                "codestar-connections:UseConnection",
+              ],
+              resources: ["*"],
+            }),
+            new iam.PolicyStatement({
+              sid: "CustomResourceLambda",
+              actions: ["lambda:*"],
+              resources: ["*"],
+            }),
+            new iam.PolicyStatement({
+              sid: "ServiceRoles",
+              actions: [
+                "iam:CreateRole",
+                "iam:DeleteRole",
+                "iam:AttachRolePolicy",
+                "iam:DetachRolePolicy",
+                "iam:PutRolePolicy",
+                "iam:DeleteRolePolicy",
+                "iam:GetRole",
+                "iam:GetRolePolicy",
+                "iam:PassRole",
+                "iam:TagRole",
+                "iam:UntagRole",
+                "iam:CreatePolicy",
+                "iam:DeletePolicy",
+              ],
+              resources: ["*"],
+            }),
+            new iam.PolicyStatement({
+              sid: "CDKBootstrapSSM",
+              actions: ["ssm:GetParameter"],
+              resources: ["arn:aws:ssm:*:*:parameter/cdk-bootstrap/*"],
+            }),
+          ],
+        }),
+      },
+    });
+
     // ********** DEPLOY INFRA ACTION (CloudFormation) **********
     const deployInfraAction =
       new codepipeline_actions.CloudFormationCreateUpdateStackAction({
         actionName: "CFN_Deploy",
         stackName: "PersonalWebsiteStack",
         templatePath: synthOutput.atPath("PersonalWebsiteStack.template.json"),
-        adminPermissions: true,
+        adminPermissions: false,
+        deploymentRole: cfnDeployRole,
         cfnCapabilities: [cdk.CfnCapabilities.NAMED_IAM],
       });
 
@@ -172,6 +270,8 @@ export class Pipeline extends cdk.Stack {
     });
 
     // ********** PIPELINE DEFINITION **********
+    // Synth and BuildFrontend are independent — running them in the same stage
+    // lets CodePipeline execute them in parallel, cutting pipeline time roughly in half.
     new codepipeline.Pipeline(this, "PersonalWebsitePipeline", {
       pipelineName: "PersonalWebsitePipeline",
       stages: [
@@ -180,12 +280,8 @@ export class Pipeline extends cdk.Stack {
           actions: [sourceAction],
         },
         {
-          stageName: "Synth",
-          actions: [synthAction],
-        },
-        {
-          stageName: "BuildFrontend",
-          actions: [buildFrontendAction],
+          stageName: "SynthAndBuild",
+          actions: [synthAction, buildFrontendAction],
         },
         {
           stageName: "DeployInfra",

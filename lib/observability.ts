@@ -117,6 +117,8 @@ export class ObservabilityConstruct extends Construct {
         enforceWorkGroupConfiguration: true,
         publishCloudWatchMetricsEnabled: true,
         requesterPaysEnabled: false,
+        // Hard cap at 1 GB per query to prevent runaway scans on large log history
+        bytesScannedCutoffPerQuery: 1 * 1024 * 1024 * 1024,
         resultConfiguration: {
           outputLocation: `s3://${this.athenaResultsBucket.bucketName}/query-results/`,
         },
@@ -191,14 +193,46 @@ ORDER BY requests DESC;`,
       namedQuery.addDependency(table);
     });
 
+    // ***********************
+    // CLOUDWATCH ALARMS
+    // ***********************
+    const metricOptions = { region: "us-east-1" };
+
+    const alarm5xx = new cloudwatch.Alarm(this, "Alarm5xx", {
+      metric: props.frontendConstruct.apexDistribution.metric5xxErrorRate({
+        ...metricOptions,
+        period: cdk.Duration.minutes(5),
+        statistic: "Average",
+      }),
+      threshold: 1,
+      evaluationPeriods: 2,
+      comparisonOperator:
+        cloudwatch.ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
+      alarmDescription: "5xx error rate >= 1% for 10 consecutive minutes",
+      treatMissingData: cloudwatch.TreatMissingData.NOT_BREACHING,
+    });
+
+    const alarm4xx = new cloudwatch.Alarm(this, "Alarm4xx", {
+      metric: props.frontendConstruct.apexDistribution.metric4xxErrorRate({
+        ...metricOptions,
+        period: cdk.Duration.minutes(5),
+        statistic: "Average",
+      }),
+      threshold: 10,
+      evaluationPeriods: 2,
+      comparisonOperator:
+        cloudwatch.ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
+      alarmDescription: "4xx error rate >= 10% for 10 consecutive minutes",
+      treatMissingData: cloudwatch.TreatMissingData.NOT_BREACHING,
+    });
+
+    // ***********************
+    // CLOUDWATCH DASHBOARD
+    // ***********************
     this.dashboard = new cloudwatch.Dashboard(this, "TrafficDashboard", {
       dashboardName: "personal-website-traffic",
       defaultInterval: cdk.Duration.days(14),
     });
-
-    const metricOptions = {
-      region: "us-east-1",
-    };
 
     this.dashboard.addWidgets(
       new cloudwatch.TextWidget({
@@ -215,6 +249,12 @@ ORDER BY requests DESC;`,
         ].join("\n"),
         width: 24,
         height: 6,
+      }),
+      new cloudwatch.AlarmStatusWidget({
+        title: "Active Alarms",
+        alarms: [alarm5xx, alarm4xx],
+        width: 24,
+        height: 3,
       }),
       new cloudwatch.GraphWidget({
         title: "Requests and Data Transfer",
