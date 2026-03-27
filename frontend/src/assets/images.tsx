@@ -7,11 +7,7 @@ export type PictureAsset = {
 };
 
 export const imagesLeft: PictureAsset[] = [
-  {
-    src: '/images/nikki.jpg',
-    alt: 'Nikki and I at an event',
-    category: 'Friends',
-  },
+  
   {
     src: '/images/aggiefootball.jpg',
     alt: 'Texas A&M Aggie Football game day',
@@ -46,6 +42,11 @@ export const imagesLeft: PictureAsset[] = [
     src: '/images/skiing.jpg',
     alt: 'Winter skiing trip with friends',
     category: 'Trips',
+  },
+  {
+    src: '/images/nikki.jpg',
+    alt: 'Nikki and I at an event',
+    category: 'Friends',
   },
 ];
 

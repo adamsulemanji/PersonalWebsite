@@ -13,7 +13,7 @@ interface MovieItemProps {
 }
 
 const API_URL =
-  'https://api.fast.adamsulemanji.com/movies/search?username=adamsulemanji&limit=10';
+  'https://api.fast.adamsulemanji.com/movies/search?username=adamsulemanji&limit=8';
 const DISK_STYLES = ['disk-cd', 'disk-bluray'];
 const DISC_COLOR_COUNT = 7;
 
