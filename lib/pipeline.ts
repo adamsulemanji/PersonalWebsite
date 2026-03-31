@@ -212,7 +212,7 @@ export class Pipeline extends cdk.Stack {
             }),
             new iam.PolicyStatement({
               sid: "CDKBootstrapSSM",
-              actions: ["ssm:GetParameter"],
+              actions: ["ssm:GetParameter", "ssm:GetParameters"],
               resources: ["arn:aws:ssm:*:*:parameter/cdk-bootstrap/*"],
             }),
           ],
