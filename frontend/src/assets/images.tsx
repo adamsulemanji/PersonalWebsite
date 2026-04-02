@@ -43,11 +43,11 @@ export const imagesLeft: PictureAsset[] = [
     alt: 'Winter skiing trip with friends',
     category: 'Trips',
   },
-  {
-    src: '/images/nikki.jpg',
-    alt: 'Nikki and I at an event',
-    category: 'Friends',
-  },
+  // {
+  //   src: '/images/nikki.jpg',
+  //   alt: 'Nikki and I at an event',
+  //   category: 'Friends',
+  // },
 ];
 
 export const imagesRight: PictureAsset[] = [

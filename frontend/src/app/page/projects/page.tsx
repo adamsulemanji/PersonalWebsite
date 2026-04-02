@@ -80,9 +80,9 @@ export default function Page() {
     },
     {
       id: 3,
-      title: 'Meal Tracker for Nikki',
+      title: 'Meal Tracker',
       description:
-        "Nikki used to track her meals on a spreadsheet, which I couldn't allow as a developer.",
+        "used to track her meals on a spreadsheet, which I couldn't allow as a developer.",
       details:
         'This simple website allows her to track her meals. The site was built completely using my CDK template project.',
       image: '/images/mealtracker.png',

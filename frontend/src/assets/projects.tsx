@@ -32,7 +32,7 @@ export const projects: projectsInterface[] = [
   },
   {
     title: 'Meal Tracker',
-    description: 'Custom and personalized mealtracker for nikki.',
+    description: 'Custom and personalized mealtracker',
     url: 'https://mealtracker.adamsulemanji.com',
     date: 'Nov 2024 - Present',
     pictures: ['/images/mealtracker.png'],
