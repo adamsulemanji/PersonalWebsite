@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import SectionHeader from '@/components/SectionHeader';
 
 const highlights = [
   { label: 'Based in', value: 'Seattle, WA' },
@@ -10,10 +11,7 @@ export default function Page() {
   return (
     <section className='mx-auto w-full max-w-[1200px] px-4 pb-16 pt-10 sm:px-8 sm:pb-24 sm:pt-16'>
       <div className='max-w-3xl'>
-        <p className='underline-offset-3 decoration-gray-300 group relative inline-block text-xl font-bold underline'>
-          About
-          <span className='bg-current absolute bottom-0 left-0 mt-1 block h-[2px] w-0 transition-all duration-300 group-hover:w-full'></span>
-        </p>
+        <SectionHeader title='About' />
         <h1 className='mt-6 font-serif text-4xl font-light leading-tight sm:text-5xl md:text-6xl'>
           A little more about me
           <span className='accent'>.</span>

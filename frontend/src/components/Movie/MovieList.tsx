@@ -98,6 +98,7 @@ function MovieItem({
 export default function MovieList() {
   const [movies, setMovies] = useState<MovieItemProps[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetch(API_URL)
@@ -106,14 +107,23 @@ export default function MovieList() {
         setMovies(data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.error('Error fetching movies:', error);
+      .catch((err) => {
+        console.error('Error fetching movies:', err);
+        setError(true);
         setLoading(false);
       });
   }, []);
 
   if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return (
+      <p className='text-gray-500 dark:text-gray-400 text-sm'>
+        Unable to load movies right now. Check back later.
+      </p>
+    );
   }
 
   return (

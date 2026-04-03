@@ -7,6 +7,7 @@ import Books from '@/components/Books';
 import Updates from '@/components/Update';
 import Projects from '@/components/Project';
 import MovieList from '@/components/Movie/MovieList';
+import SectionHeader from '@/components/SectionHeader';
 import { analyticsAttributes } from '@/lib/analytics';
 
 export default function Home() {
@@ -225,14 +226,5 @@ export default function Home() {
         </motion.div>
       </div>
     </div>
-  );
-}
-
-function SectionHeader({ title }: { title: string }) {
-  return (
-    <p className='underline-offset-3 decoration-gray-300 group relative mt-2 inline-block text-xl font-bold underline'>
-      {title}{' '}
-      <span className='bg-current absolute bottom-0 left-0 mt-1 block h-[2px] w-0 transition-all duration-300 group-hover:w-full' />
-    </p>
   );
 }

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import SectionHeader from '@/components/SectionHeader';
 import { analyticsAttributes } from '@/lib/analytics';
 
 const accentPillColors = {
@@ -120,10 +121,7 @@ export default function Page() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <p className='underline-offset-3 decoration-gray-300 group relative inline-block text-xl font-bold underline'>
-          Projects
-          <span className='bg-current absolute bottom-0 left-0 mt-1 block h-[2px] w-0 transition-all duration-300 group-hover:w-full'></span>
-        </p>
+        <SectionHeader title='Projects' />
         <h1 className='mt-6 font-serif text-4xl font-light leading-tight sm:text-5xl md:text-6xl'>
           A few things I&apos;ve built
           <span className='accent'>.</span>

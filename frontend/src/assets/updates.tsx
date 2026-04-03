@@ -10,18 +10,18 @@ export const updates: Update[] = [
   {
     icon: '💷',
     description: 'Switched to a new team in Global Payments',
-    date: 'Feburary 2026',
+    date: 'February 2026',
     category: 'all',
   },
   {
     icon: '🎿',
     description: 'Went Skiing with Mustafa and Ryan @ Breckenridge, CO',
-    date: 'Janurary 2026',
+    date: 'January 2026',
     category: 'all',
   },
   {
     icon: '🏖️',
-    description: 'Went to Florida againnnnnnnn. Beach time',
+    description: 'Went to Florida again. Beach time',
     date: 'December 2025',
     category: 'all',
   },

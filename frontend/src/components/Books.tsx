@@ -1,8 +1,11 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import '../styles/book.css';
 import Image from 'next/image';
 import { books } from '@/assets/books';
+
+type BookCSSProperties = CSSProperties & { '--book-height': string };
 
 export default function Books() {
   return (
@@ -26,7 +29,7 @@ export default function Books() {
             </div>
             <div
               className='duration-[0.7s] before-top-0 bookThreeD before:border-x-gray-800 before:border-t-gray-200 before:bg-white after:border-gray-800 after:bg-gray-100 relative order-1 !my-0 w-full max-w-[120px] shrink-0 transition-transform ease-in-out before:absolute before:-right-[0] before:block before:h-[calc(100%+0.5px)] before:border-x-[3px] before:border-t-[3px] before:content-[""] after:absolute after:left-0 after:block after:w-[calc(100%+0.5px)] after:rounded-l-md after:border-y-[3px] after:border-l-[4px] after:content-[""] lg:w-1/2'
-              style={{ '--book-height': `${book.book_thickness}px` } as any}
+              style={{ '--book-height': `${book.book_thickness}px` } as BookCSSProperties}
             >
               <Image
                 src={book.img_url}
