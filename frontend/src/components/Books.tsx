@@ -15,7 +15,7 @@ export default function Books() {
           href={book.goodreads_url}
           target='_blank'
           rel='noopener noreferrer'
-          className='transition-background duration-[0.7s] bookPerspectiveContainer border-gray-200 bg-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-800 block w-full cursor-pointer rounded-xl border p-8 sm:p-12 lg:p-14'
+          className='transition-background duration-[0.7s] bookPerspectiveContainer border-gray-200 bg-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-800 relative z-0 block w-full cursor-pointer rounded-xl border p-8 hover:z-10 sm:p-12 lg:p-14'
           key={index}
         >
           <div className='bookPerspective !my-0 flex h-full items-center justify-center gap-[0]'>

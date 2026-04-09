@@ -134,7 +134,7 @@ function PictureCarousel() {
 export default function Home() {
   return (
     <div className='w-full px-6 pb-32 pt-16 sm:px-12 sm:pt-24 md:px-20'>
-      <div className='mx-auto flex w-full max-w-3xl flex-col gap-24'>
+      <div className='mx-auto flex w-full max-w-4xl flex-col gap-24'>
 
         {/* Hero */}
         <motion.section
