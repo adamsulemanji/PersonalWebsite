@@ -1,7 +1,12 @@
 'use client';
 
-import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaStrava, FaGoodreads } from 'react-icons/fa';
+import { SiLetterboxd } from 'react-icons/si';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight, Sun, Moon } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 import Books from '@/components/Books';
 import Updates from '@/components/Update';
@@ -9,6 +14,122 @@ import Projects from '@/components/Project';
 import MovieList from '@/components/Movie/MovieList';
 import SectionHeader from '@/components/SectionHeader';
 import { analyticsAttributes } from '@/lib/analytics';
+import { imagesLeft, imagesRight } from '@/assets/images';
+
+const allImages = [...imagesLeft, ...imagesRight];
+
+const highlights = [
+  { label: 'Based in', value: 'Seattle, WA' },
+  { label: 'Current role', value: 'Software Engineer at Amazon' },
+  { label: 'Outside of work', value: 'Skiing, sports, and being outdoors' },
+];
+
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
+  const isDark = theme === 'dark';
+  return (
+    <button
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      className='flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-600 p-1.5 text-gray-500 dark:text-gray-400 hover:border-gray-400 dark:hover:border-gray-500 transition-colors'
+      aria-label='Toggle theme'
+    >
+      {isDark ? <Sun size={14} /> : <Moon size={14} />}
+    </button>
+  );
+}
+
+function PictureCarousel() {
+  const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+
+  const prev = useCallback(() => {
+    setDirection(-1);
+    setIndex((i) => (i - 1 + allImages.length) % allImages.length);
+  }, []);
+
+  const next = useCallback(() => {
+    setDirection(1);
+    setIndex((i) => (i + 1) % allImages.length);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(next, 4000);
+    return () => clearInterval(timer);
+  }, [next]);
+
+  const variants = {
+    enter: (dir: number) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (dir: number) => ({ x: dir > 0 ? '-100%' : '100%', opacity: 0 }),
+  };
+
+  return (
+    <div className='relative mx-auto max-w-2xl overflow-hidden rounded-2xl bg-neutral-100 dark:bg-neutral-800'>
+      <div className='relative aspect-[4/3]'>
+        <AnimatePresence custom={direction} mode='popLayout'>
+          <motion.div
+            key={index}
+            custom={direction}
+            variants={variants}
+            initial='enter'
+            animate='center'
+            exit='exit'
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            className='absolute inset-0'
+          >
+            <Image
+              src={allImages[index].src}
+              alt={allImages[index].alt}
+              fill
+              className='object-cover'
+              sizes='(max-width: 768px) 100vw, 80vw'
+            />
+          </motion.div>
+        </AnimatePresence>
+
+        <div className='absolute inset-0 flex items-center justify-between px-3'>
+          <button
+            onClick={prev}
+            className='rounded-full bg-white/70 p-2 shadow backdrop-blur-sm transition hover:bg-white dark:bg-black/50 dark:hover:bg-black/80'
+            aria-label='Previous image'
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            onClick={next}
+            className='rounded-full bg-white/70 p-2 shadow backdrop-blur-sm transition hover:bg-white dark:bg-black/50 dark:hover:bg-black/80'
+            aria-label='Next image'
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+
+        <div className='absolute bottom-3 left-0 right-0 flex justify-center gap-1.5'>
+          {allImages.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                setDirection(i > index ? 1 : -1);
+                setIndex(i);
+              }}
+              className={`h-1.5 rounded-full transition-all ${i === index ? 'w-4 bg-white' : 'w-1.5 bg-white/50'}`}
+              aria-label={`Go to image ${i + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      <p className='px-4 py-3 text-sm text-gray-500 dark:text-gray-400'>
+        {allImages[index].alt}
+      </p>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
@@ -79,7 +200,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className='mt-8 flex flex-wrap justify-start gap-4 pb-10 text-xl sm:gap-8'>
+          <div className='mt-8 flex flex-wrap items-center justify-start gap-4 pb-10 text-xl sm:gap-8'>
             <a
               className='hover:underline hover:underline-offset-4'
               href='https://github.com/adamsulemanji'
@@ -127,6 +248,57 @@ export default function Home() {
               <FaEnvelope />
             </a>
             <a
+              className='hover:underline hover:underline-offset-4'
+              href='https://www.strava.com/athletes/109469044'
+              target='_blank'
+              rel='noopener noreferrer'
+              {...analyticsAttributes('social_link_clicked', {
+                label: 'strava',
+                section: 'hero',
+              })}
+            >
+              <FaStrava />
+            </a>
+            <a
+              className='hover:underline hover:underline-offset-4'
+              href='https://www.goodreads.com/user/show/146321248-adam-sulemanji'
+              target='_blank'
+              rel='noopener noreferrer'
+              {...analyticsAttributes('social_link_clicked', {
+                label: 'goodreads',
+                section: 'hero',
+              })}
+            >
+              <FaGoodreads />
+            </a>
+            <a
+              className='hover:underline hover:underline-offset-4'
+              href='https://letterboxd.com/adamsulemanji'
+              target='_blank'
+              rel='noopener noreferrer'
+              {...analyticsAttributes('social_link_clicked', {
+                label: 'letterboxd',
+                section: 'hero',
+              })}
+            >
+              <SiLetterboxd />
+            </a>
+            <a
+              href='https://beliapp.co/user/adamsulemanji'
+              className='group'
+              target='_blank'
+              rel='noopener noreferrer'
+              {...analyticsAttributes('social_link_clicked', {
+                label: 'beli',
+                section: 'hero',
+              })}
+            >
+              <p className='relative text-sm hover:underline hover:underline-offset-4'>
+                Beli
+                <span className='bg-current absolute bottom-0 left-0 h-[1px] w-0 transition-all duration-300 group-hover:w-full' />
+              </p>
+            </a>
+            <a
               href='/resume.pdf'
               className='group'
               {...analyticsAttributes('resume_downloaded', {
@@ -139,6 +311,7 @@ export default function Home() {
                 <span className='bg-current absolute bottom-0 left-0 h-[1px] w-0 transition-all duration-300 group-hover:w-full' />
               </p>
             </a>
+            <ThemeToggle />
           </div>
         </motion.div>
 
@@ -172,6 +345,82 @@ export default function Home() {
             </svg>
           </div>
         </motion.section>
+
+        {/* About Section */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: '-100px' }}
+        >
+          <SectionHeader title='About' />
+          <div className='mt-6 grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-10'>
+            <div className='border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-800 overflow-hidden rounded-3xl border p-4 shadow-sm sm:p-6'>
+              <div className='relative aspect-[4/5] overflow-hidden rounded-2xl'>
+                <Image
+                  src='/images/kid.jpg'
+                  alt='Picture of little me'
+                  fill
+                  sizes='(max-width: 1024px) 100vw, 40vw'
+                  className='object-cover'
+                />
+              </div>
+              <p className='text-gray-500 dark:text-gray-400 mt-4 text-sm leading-relaxed'>
+                This is me a few years ago, around age 7. I look a little older now.
+              </p>
+            </div>
+
+            <div className='space-y-6'>
+              <div className='border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-800 rounded-3xl border p-5 shadow-sm sm:p-6 lg:p-8'>
+                <div className='text-gray-700 dark:text-gray-300 space-y-5 text-base leading-relaxed'>
+                  <p>
+                    I&apos;m a software engineer at Amazon in Seattle, building
+                    software that helps connect people to international products.
+                  </p>
+                  <p>
+                    Outside of work, I spend a lot of time outdoors and I&apos;ll
+                    play almost any sport. Right now skiing is the main obsession,
+                    and I&apos;ve been trying to make the most of being close to the
+                    mountains.
+                  </p>
+                  <p>
+                    During the rest of the year, I sign up for impromptu races, keep
+                    building side projects, and stay in touch with friends through
+                    whatever app, group chat, or hobby is current.
+                  </p>
+                </div>
+              </div>
+
+              <div className='grid gap-4 sm:grid-cols-3'>
+                {highlights.map((item) => (
+                  <div
+                    key={item.label}
+                    className='border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-800 rounded-2xl border p-4 shadow-sm'
+                  >
+                    <p className='text-gray-500 dark:text-gray-400 text-xs uppercase tracking-[0.25em]'>
+                      {item.label}
+                    </p>
+                    <p className='text-gray-900 dark:text-gray-100 mt-3 text-sm font-semibold leading-relaxed'>
+                      {item.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Picture Carousel */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: '-100px' }}
+        >
+          <SectionHeader title='Pictures' />
+          <p className='mb-4 mt-2'>A few moments from along the way</p>
+          <PictureCarousel />
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}

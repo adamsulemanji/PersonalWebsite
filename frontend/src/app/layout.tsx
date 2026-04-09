@@ -5,7 +5,6 @@ export { metadata, viewport } from './metadata';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import AnalyticsProvider from '@/components/analytics/AnalyticsProvider';
 
-import Navbar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 
 const geistMono = localFont({
@@ -29,7 +28,6 @@ export default function RootLayout({
         >
           <AnalyticsProvider>
             <div className='w-full max-w-[1200px] bg-[var(--background)]'>
-              <Navbar />
               <main
                 className={`${geistMono.variable} bg-[var(--background)] antialiased`}
               >
