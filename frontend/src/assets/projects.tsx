@@ -30,25 +30,25 @@ export const projects: projectsInterface[] = [
     categories: ['cdk', 'tailwind', 'aws', 'hosting'],
     color: 'orange',
   },
-  {
-    title: 'Meal Tracker',
-    description: 'Custom and personalized mealtracker',
-    url: 'https://mealtracker.adamsulemanji.com',
-    date: 'Nov 2024 - Present',
-    pictures: ['/images/mealtracker.png'],
-    categories: ['crud', 'fastapi', 'docker'],
-    color: 'blue',
-  },
   // {
-  //   title: 'Create ACS app',
-  //   description:
-  //     'Command line tool to create full cdk applications with a single command.',
-  //   date: 'September 2024 - Present',
-  //   url: 'https://github.com/adamsulemanji',
-  //   pictures: ['/images/systemdiagram.png'],
-  //   categories: ['cli', 'ci/cd', 'aws'],
-  //   color: 'green',
+  //   title: 'Meal Tracker',
+  //   description: 'Custom and personalized mealtracker',
+  //   url: 'https://mealtracker.adamsulemanji.com',
+  //   date: 'Nov 2024 - Present',
+  //   pictures: ['/images/mealtracker.png'],
+  //   categories: ['crud', 'fastapi', 'docker'],
+  //   color: 'blue',
   // },
+  {
+    title: 'Create ACS app',
+    description:
+      'Command line tool to create full cdk applications with a single command.',
+    date: 'September 2024 - Present',
+    url: 'https://github.com/adamsulemanji',
+    pictures: ['/images/systemdiagram.png'],
+    categories: ['cli', 'ci/cd', 'aws'],
+    color: 'green',
+  },
   {
     title: 'Course Monitoring',
     description:
