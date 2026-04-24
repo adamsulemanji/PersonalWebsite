@@ -11,6 +11,8 @@ import { useTheme } from 'next-themes';
 import Books from '@/components/Books';
 import Updates from '@/components/Update';
 import Projects from '@/components/Project';
+import Experience from '@/components/Experience';
+import Writing from '@/components/Writing';
 import MovieList from '@/components/Movie/MovieList';
 import SectionHeader from '@/components/SectionHeader';
 import { analyticsAttributes } from '@/lib/analytics';
@@ -164,7 +166,7 @@ export default function Home() {
               <span className='accent'>.</span>
             </motion.span>
           </div>
-          <span className='bg-green-700 dark:bg-blue-500 absolute -bottom-5 left-0 mt-5 h-2 w-0 transition-all group-hover:w-2/3' />
+          <span className='accent-bar absolute -bottom-5 left-0 mt-5 h-2 w-0 transition-all group-hover:w-2/3' />
         </motion.section>
 
         {/* Intro text + links */}
@@ -284,6 +286,33 @@ export default function Home() {
           </div>
         </motion.div>
 
+        {/* Now */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: '-100px' }}
+          id='section-now'
+        >
+          <SectionHeader title='Now' />
+          <div className='max-w-2xl space-y-4 text-[15px] leading-7 text-gray-600 dark:text-gray-300'>
+            <p>
+              Ramping up on a new team in Global Payments at Amazon — relearning
+              a large codebase from scratch and enjoying the fresh context.
+              Outside of work, I&apos;m stretching the tail end of ski season
+              and starting to plan a few spring races.
+            </p>
+            <p>
+              Side-project-wise, I&apos;m iterating on this site, cleaning up
+              the CDK pipeline behind it, and slowly chipping away at a writing
+              habit (see below).
+            </p>
+            <p className='text-xs uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500'>
+              Updated April 2026
+            </p>
+          </div>
+        </motion.div>
+
         {/* Scroll line */}
         <motion.section
           className='hidden w-full grid-cols-1 md:grid md:grid-cols-2'
@@ -375,6 +404,21 @@ export default function Home() {
           </div>
         </motion.div>
 
+        {/* Experience */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: '-100px' }}
+          id='section-experience'
+        >
+          <SectionHeader title='Experience' />
+          <p className='mb-6 text-sm text-gray-500 dark:text-gray-400'>
+            Where I&apos;ve worked
+          </p>
+          <Experience />
+        </motion.div>
+
         {/* Pictures */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -398,6 +442,21 @@ export default function Home() {
             Things I&apos;ve built
           </p>
           <Projects />
+        </motion.div>
+
+        {/* Writing */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: '-100px' }}
+          id='section-writing'
+        >
+          <SectionHeader title='Writing' />
+          <p className='mb-6 text-sm text-gray-500 dark:text-gray-400'>
+            Occasional notes and essays
+          </p>
+          <Writing />
         </motion.div>
 
         {/* Updates */}

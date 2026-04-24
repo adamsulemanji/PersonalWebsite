@@ -61,10 +61,10 @@
 }
 
 .accent {
-  color: var(--main); /* Tailwind's green-700 */
+  color: var(--main);
 }
 
-.dark .accent {
-  color: var(--main); /* Tailwind's blue-400 */
+.accent-bar {
+  background-color: var(--main);
 }
 

@@ -34,7 +34,7 @@ export default function Project({ category = '' }: ProjectProps) {
                     sizes='100vw'
                   />
                 </div>
-                <div className='bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white space-y-4 p-4'>
+                <div className='bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white space-y-4 p-4'>
                   <div>
                     <h3 className='text-lg font-bold'>{project.title}</h3>
                     <div className='mt-3 flex flex-wrap gap-1.5'>
@@ -49,11 +49,11 @@ export default function Project({ category = '' }: ProjectProps) {
                       ))}
                     </div>
                   </div>
-                  <p className='text-neutral-700 dark:text-white/90 text-sm leading-relaxed'>
+                  <p className='text-gray-700 dark:text-white/90 text-sm leading-relaxed'>
                     {project.description}
                   </p>
-                  <p className='text-neutral-500 dark:text-white/70 flex items-center text-xs'>
-                    <span className='bg-neutral-400 dark:bg-white/50 mr-2 h-2 w-2 rounded-full'></span>
+                  <p className='text-gray-500 dark:text-white/70 flex items-center text-xs'>
+                    <span className='bg-gray-400 dark:bg-white/50 mr-2 h-2 w-2 rounded-full'></span>
                     {project.date}
                   </p>
                   {project.url && (
@@ -61,7 +61,7 @@ export default function Project({ category = '' }: ProjectProps) {
                       href={project.url}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='border-neutral-300 dark:border-white/20 bg-neutral-200 dark:bg-white/10 text-neutral-900 dark:text-white hover:bg-neutral-300 dark:hover:bg-white/20 inline-flex w-fit items-center rounded-lg border px-3 py-2 text-sm transition-colors'
+                      className='border-gray-300 dark:border-white/20 bg-gray-200 dark:bg-white/10 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-white/20 inline-flex w-fit items-center rounded-lg border px-3 py-2 text-sm transition-colors'
                       {...analyticsAttributes('project_clicked', {
                         category: 'home-grid',
                         label: project.title,
@@ -73,7 +73,7 @@ export default function Project({ category = '' }: ProjectProps) {
                 </div>
               </div>
 
-              <div className='border-neutral-200 dark:border-white/15 bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white group relative hidden h-80 w-full overflow-hidden rounded-xl border shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl lg:block'>
+              <div className='border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white group relative hidden h-80 w-full overflow-hidden rounded-xl border shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl lg:block'>
                 <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
                   <div className='bg-gradient-to-b from-black/5 dark:from-white/5 via-transparent to-transparent absolute inset-0' />
                 </div>
@@ -90,7 +90,7 @@ export default function Project({ category = '' }: ProjectProps) {
                     <div className='border-black/10 dark:border-white/15 absolute inset-4 rounded-2xl border' />
                   </div>
                   <div className='flex-1 p-4'>
-                    <h3 className='text-neutral-900 dark:text-white group-hover:text-neutral-700 dark:group-hover:text-white/90 text-lg font-bold drop-shadow-sm transition-colors duration-300'>
+                    <h3 className='text-gray-900 dark:text-white group-hover:text-gray-700 dark:group-hover:text-white/90 text-lg font-bold drop-shadow-sm transition-colors duration-300'>
                       {project.title}
                     </h3>
                     <div className='mt-3 flex flex-wrap gap-1.5'>
@@ -107,13 +107,13 @@ export default function Project({ category = '' }: ProjectProps) {
                   </div>
                 </div>
 
-                <div className='bg-neutral-100 dark:bg-neutral-800 absolute inset-0 mt-4 flex translate-y-2/3 transform flex-col justify-center p-6 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100'>
+                <div className='bg-gray-100 dark:bg-gray-800 absolute inset-0 mt-4 flex translate-y-2/3 transform flex-col justify-center p-6 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100'>
                   <div className='space-y-3'>
-                    <p className='text-neutral-700 dark:text-white/90 text-sm leading-relaxed'>
+                    <p className='text-gray-700 dark:text-white/90 text-sm leading-relaxed'>
                       {project.description}
                     </p>
-                    <p className='text-neutral-500 dark:text-white/70 flex items-center text-xs'>
-                      <span className='bg-neutral-400 dark:bg-white/50 mr-2 h-2 w-2 rounded-full'></span>
+                    <p className='text-gray-500 dark:text-white/70 flex items-center text-xs'>
+                      <span className='bg-gray-400 dark:bg-white/50 mr-2 h-2 w-2 rounded-full'></span>
                       {project.date}
                     </p>
                     {project.url && (
@@ -121,7 +121,7 @@ export default function Project({ category = '' }: ProjectProps) {
                         href={project.url}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='border-neutral-300 dark:border-white/30 bg-neutral-200 dark:bg-white/20 text-neutral-900 dark:text-white hover:bg-neutral-300 dark:hover:bg-white/30 inline-flex w-fit items-center rounded-lg border px-3 py-2 text-sm transition-all duration-300 hover:scale-105'
+                        className='border-gray-300 dark:border-white/30 bg-gray-200 dark:bg-white/20 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-white/30 inline-flex w-fit items-center rounded-lg border px-3 py-2 text-sm transition-all duration-300 hover:scale-105'
                         {...analyticsAttributes('project_clicked', {
                           category: 'home-grid',
                           label: project.title,

@@ -33,7 +33,7 @@ function MovieItem({
       href={letterboxd_url}
       className='relative z-0 mb-6 block h-full w-full cursor-pointer rounded-xl hover:z-10'
     >
-      <div className='border-gray-200 bg-neutral-100 dark:border-gray-700 dark:bg-neutral-800 flex items-start gap-4 rounded-lg border p-4 sm:hidden'>
+      <div className='border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800 flex items-start gap-4 rounded-lg border p-4 sm:hidden'>
         <img
           src={poster_url}
           alt={title}
@@ -59,7 +59,7 @@ function MovieItem({
         </div>
       </div>
 
-      <div className='music-item border-gray-200 bg-neutral-100 dark:border-gray-700 dark:bg-neutral-800 group relative hidden w-full items-center overflow-visible rounded-lg border px-10 py-16 sm:flex lg:px-16 lg:py-24'>
+      <div className='music-item border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800 group relative hidden w-full items-center overflow-visible rounded-lg border px-10 py-16 sm:flex lg:px-16 lg:py-24'>
         <div className='album-container'>
           <div className='album-wrap'>
             <div
