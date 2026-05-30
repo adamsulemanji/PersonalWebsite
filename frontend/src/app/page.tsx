@@ -1,10 +1,17 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, type ReactNode } from 'react';
 import Image from 'next/image';
-import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaStrava, FaGoodreads } from 'react-icons/fa';
+import {
+  FaGithub,
+  FaLinkedin,
+  FaInstagram,
+  FaEnvelope,
+  FaStrava,
+  FaGoodreads,
+} from 'react-icons/fa';
 import { SiLetterboxd } from 'react-icons/si';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Sun, Moon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
@@ -16,6 +23,7 @@ import Writing from '@/components/Writing';
 import MovieList from '@/components/Movie/MovieList';
 import SectionHeader from '@/components/SectionHeader';
 import { analyticsAttributes } from '@/lib/analytics';
+import { metaLabel } from '@/lib/styles';
 import { imagesLeft, imagesRight } from '@/assets/images';
 
 const allImages = [...imagesLeft, ...imagesRight];
@@ -25,6 +33,125 @@ const highlights = [
   { label: 'Current role', value: 'Software Engineer at Amazon' },
   { label: 'Outside of work', value: 'Skiing, sports, and being outdoors' },
 ];
+
+interface SocialLink {
+  label: string;
+  href: string;
+  icon: ReactNode;
+  event?: string;
+  small?: boolean;
+}
+
+const socials: SocialLink[] = [
+  {
+    label: 'github',
+    href: 'https://github.com/adamsulemanji',
+    icon: <FaGithub />,
+  },
+  {
+    label: 'linkedin',
+    href: 'https://www.linkedin.com/in/adamsulemanji/',
+    icon: <FaLinkedin />,
+  },
+  {
+    label: 'instagram',
+    href: 'https://www.instagram.com/adam_sulemanji',
+    icon: <FaInstagram />,
+  },
+  {
+    label: 'email',
+    href: 'mailto:adam.k.sulemanji@gmail.com',
+    icon: <FaEnvelope />,
+  },
+  {
+    label: 'strava',
+    href: 'https://www.strava.com/athletes/109469044',
+    icon: <FaStrava />,
+  },
+  {
+    label: 'goodreads',
+    href: 'https://www.goodreads.com/user/show/146321248-adam-sulemanji',
+    icon: <FaGoodreads />,
+  },
+  {
+    label: 'letterboxd',
+    href: 'https://letterboxd.com/adamsulemanji',
+    icon: <SiLetterboxd />,
+  },
+  {
+    label: 'beli',
+    href: 'https://beliapp.co/user/adamsulemanji',
+    icon: 'Beli',
+    small: true,
+  },
+  {
+    label: 'resume',
+    href: '/resume.pdf',
+    icon: 'Resume',
+    event: 'resume_downloaded',
+    small: true,
+  },
+];
+
+function SocialLinks() {
+  return (
+    <div className='mt-8 flex flex-wrap items-center gap-5 text-xl text-gray-500 dark:text-gray-400'>
+      {socials.map((social) => {
+        const isExternal = social.href.startsWith('http');
+        return (
+          <a
+            key={social.label}
+            href={social.href}
+            {...(isExternal
+              ? { target: '_blank', rel: 'noopener noreferrer' }
+              : {})}
+            className={`rounded transition-colors hover:text-gray-900 focus-visible:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:hover:text-white dark:focus-visible:text-white dark:focus-visible:ring-gray-500 ${
+              social.small ? 'text-sm' : ''
+            }`}
+            {...analyticsAttributes(social.event ?? 'social_link_clicked', {
+              label: social.label,
+              section: 'hero',
+            })}
+          >
+            {social.icon}
+          </a>
+        );
+      })}
+      <ThemeToggle />
+    </div>
+  );
+}
+
+/** Fade-in-on-scroll section wrapper with an optional header and subtitle. */
+function Section({
+  title,
+  subtitle,
+  id,
+  children,
+}: {
+  title: string;
+  subtitle?: string;
+  id?: string;
+  children: ReactNode;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true, margin: '-100px' }}
+      id={id}
+    >
+      <SectionHeader title={title} />
+      {subtitle && (
+        <p className='mb-6 text-sm text-gray-500 dark:text-gray-400'>
+          {subtitle}
+        </p>
+      )}
+      {children}
+    </motion.div>
+  );
+}
 
 function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -37,8 +164,8 @@ function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className='flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-600 p-1.5 text-gray-500 dark:text-gray-400 hover:border-gray-400 dark:hover:border-gray-500 transition-colors'
-      aria-label='Toggle theme'
+      className='flex items-center justify-center rounded-full border border-gray-300 p-1.5 text-gray-500 transition-colors hover:border-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:border-gray-600 dark:text-gray-400 dark:hover:border-gray-500 dark:focus-visible:ring-gray-500'
+      aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
     >
       {isDark ? <Sun size={14} /> : <Moon size={14} />}
     </button>
@@ -48,6 +175,8 @@ function ThemeToggle() {
 function PictureCarousel() {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [paused, setPaused] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   const prev = useCallback(() => {
     setDirection(-1);
@@ -59,10 +188,13 @@ function PictureCarousel() {
     setIndex((i) => (i + 1) % allImages.length);
   }, []);
 
+  // Autoplay, but pause on hover/focus and never auto-advance for visitors
+  // who prefer reduced motion — they can still step through manually.
   useEffect(() => {
+    if (paused || reduceMotion) return;
     const timer = setInterval(next, 4000);
     return () => clearInterval(timer);
-  }, [next]);
+  }, [next, paused, reduceMotion]);
 
   const variants = {
     enter: (dir: number) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
@@ -71,7 +203,16 @@ function PictureCarousel() {
   };
 
   return (
-    <div className='relative mx-auto max-w-2xl overflow-hidden rounded-2xl'>
+    <div
+      className='relative mx-auto max-w-2xl overflow-hidden rounded-2xl'
+      role='group'
+      aria-roledescription='carousel'
+      aria-label='Photos of Adam'
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+    >
       <div className='relative aspect-[4/3]'>
         <AnimatePresence custom={direction} mode='popLayout'>
           <motion.div
@@ -97,14 +238,14 @@ function PictureCarousel() {
         <div className='absolute inset-0 flex items-center justify-between px-3'>
           <button
             onClick={prev}
-            className='rounded-full bg-white/70 p-2 shadow backdrop-blur-sm transition hover:bg-white dark:bg-black/50 dark:hover:bg-black/80'
+            className='rounded-full bg-white/70 p-2 shadow backdrop-blur-sm transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900/40 dark:bg-black/50 dark:hover:bg-black/80 dark:focus-visible:ring-white/50'
             aria-label='Previous image'
           >
             <ChevronLeft size={20} />
           </button>
           <button
             onClick={next}
-            className='rounded-full bg-white/70 p-2 shadow backdrop-blur-sm transition hover:bg-white dark:bg-black/50 dark:hover:bg-black/80'
+            className='rounded-full bg-white/70 p-2 shadow backdrop-blur-sm transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900/40 dark:bg-black/50 dark:hover:bg-black/80 dark:focus-visible:ring-white/50'
             aria-label='Next image'
           >
             <ChevronRight size={20} />
@@ -119,14 +260,18 @@ function PictureCarousel() {
                 setDirection(i > index ? 1 : -1);
                 setIndex(i);
               }}
-              className={`h-1.5 rounded-full transition-all ${i === index ? 'w-4 bg-white' : 'w-1.5 bg-white/50'}`}
+              className={`h-1.5 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${i === index ? 'w-4 bg-white' : 'w-1.5 bg-white/50'}`}
               aria-label={`Go to image ${i + 1}`}
+              aria-current={i === index}
             />
           ))}
         </div>
       </div>
 
-      <p className='mt-3 text-sm text-gray-400 dark:text-gray-500'>
+      <p
+        className='mt-3 text-sm text-gray-400 dark:text-gray-500'
+        aria-live='polite'
+      >
         {allImages[index].alt}
       </p>
     </div>
@@ -137,7 +282,6 @@ export default function Home() {
   return (
     <div className='w-full px-6 pb-32 pt-16 sm:px-12 sm:pt-24 md:px-20'>
       <div className='mx-auto flex w-full max-w-4xl flex-col gap-24'>
-
         {/* Hero */}
         <motion.section
           className='one group relative'
@@ -161,8 +305,7 @@ export default function Home() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.5, duration: 1 }}
             >
-              name is{' '}
-              <b className='text-5xl sm:text-7xl md:text-8xl'>Adam</b>
+              name is <b className='text-5xl sm:text-7xl md:text-8xl'>Adam</b>
               <span className='accent'>.</span>
             </motion.span>
           </div>
@@ -177,8 +320,8 @@ export default function Home() {
         >
           <div className='max-w-2xl space-y-4 text-[15px] leading-7 text-gray-600 dark:text-gray-300 sm:text-base'>
             <p>
-              I'm a Software Engineer at{' '}
-              <span className='text-gray-900 dark:text-white underline underline-offset-4 decoration-gray-300 dark:decoration-gray-600 hover:decoration-gray-600 dark:hover:decoration-gray-300 transition-colors'>
+              I&apos;m a Software Engineer at{' '}
+              <span className='text-gray-900 underline decoration-gray-300 underline-offset-4 transition-colors hover:decoration-gray-600 dark:text-white dark:decoration-gray-600 dark:hover:decoration-gray-300'>
                 Amazon
               </span>{' '}
               in Seattle, WA building systems to aid the payments processing
@@ -188,113 +331,27 @@ export default function Home() {
               lives of people around me easier.
             </p>
             <p>
-              I've previously worked at{' '}
-              <span className='text-gray-900 dark:text-white underline underline-offset-4 decoration-gray-300 dark:decoration-gray-600'>
+              I&apos;ve previously worked at{' '}
+              <span className='text-gray-900 underline decoration-gray-300 underline-offset-4 dark:text-white dark:decoration-gray-600'>
                 Amazon.com
               </span>{' '}
               building crossborder software,{' '}
-              <span className='text-gray-900 dark:text-white underline underline-offset-4 decoration-gray-300 dark:decoration-gray-600'>
+              <span className='text-gray-900 underline decoration-gray-300 underline-offset-4 dark:text-white dark:decoration-gray-600'>
                 Goldman Sachs
               </span>{' '}
               determining market risk, and{' '}
-              <span className='text-gray-900 dark:text-white underline underline-offset-4 decoration-gray-300 dark:decoration-gray-600'>
+              <span className='text-gray-900 underline decoration-gray-300 underline-offset-4 dark:text-white dark:decoration-gray-600'>
                 PricewaterhouseCoopers
               </span>{' '}
               helping non-profits.
             </p>
           </div>
 
-          <div className='mt-8 flex flex-wrap items-center gap-5 text-gray-500 dark:text-gray-400 text-xl'>
-            <a
-              href='https://github.com/adamsulemanji'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hover:text-gray-900 dark:hover:text-white transition-colors'
-              {...analyticsAttributes('social_link_clicked', { label: 'github', section: 'hero' })}
-            >
-              <FaGithub />
-            </a>
-            <a
-              href='https://www.linkedin.com/in/adamsulemanji/'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hover:text-gray-900 dark:hover:text-white transition-colors'
-              {...analyticsAttributes('social_link_clicked', { label: 'linkedin', section: 'hero' })}
-            >
-              <FaLinkedin />
-            </a>
-            <a
-              href='https://www.instagram.com/adam_sulemanji'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hover:text-gray-900 dark:hover:text-white transition-colors'
-              {...analyticsAttributes('social_link_clicked', { label: 'instagram', section: 'hero' })}
-            >
-              <FaInstagram />
-            </a>
-            <a
-              href='mailto:adam.k.sulemanji@gmail.com'
-              className='hover:text-gray-900 dark:hover:text-white transition-colors'
-              {...analyticsAttributes('social_link_clicked', { label: 'email', section: 'hero' })}
-            >
-              <FaEnvelope />
-            </a>
-            <a
-              href='https://www.strava.com/athletes/109469044'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hover:text-gray-900 dark:hover:text-white transition-colors'
-              {...analyticsAttributes('social_link_clicked', { label: 'strava', section: 'hero' })}
-            >
-              <FaStrava />
-            </a>
-            <a
-              href='https://www.goodreads.com/user/show/146321248-adam-sulemanji'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hover:text-gray-900 dark:hover:text-white transition-colors'
-              {...analyticsAttributes('social_link_clicked', { label: 'goodreads', section: 'hero' })}
-            >
-              <FaGoodreads />
-            </a>
-            <a
-              href='https://letterboxd.com/adamsulemanji'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hover:text-gray-900 dark:hover:text-white transition-colors'
-              {...analyticsAttributes('social_link_clicked', { label: 'letterboxd', section: 'hero' })}
-            >
-              <SiLetterboxd />
-            </a>
-            <a
-              href='https://beliapp.co/user/adamsulemanji'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='text-sm hover:text-gray-900 dark:hover:text-white transition-colors'
-              {...analyticsAttributes('social_link_clicked', { label: 'beli', section: 'hero' })}
-            >
-              Beli
-            </a>
-            <a
-              href='/resume.pdf'
-              className='text-sm hover:text-gray-900 dark:hover:text-white transition-colors'
-              {...analyticsAttributes('resume_downloaded', { label: 'resume', section: 'hero' })}
-            >
-              Resume
-            </a>
-            <ThemeToggle />
-          </div>
+          <SocialLinks />
         </motion.div>
 
         {/* Now */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: '-100px' }}
-          id='section-now'
-        >
-          <SectionHeader title='Now' />
+        <Section title='Now' id='section-now'>
           <div className='max-w-2xl space-y-4 text-[15px] leading-7 text-gray-600 dark:text-gray-300'>
             <p>
               Ramping up on a new team in Global Payments at Amazon — relearning
@@ -307,11 +364,9 @@ export default function Home() {
               the CDK pipeline behind it, and slowly chipping away at a writing
               habit (see below).
             </p>
-            <p className='text-xs uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500'>
-              Updated April 2026
-            </p>
+            <p className={metaLabel}>Updated April 2026</p>
           </div>
-        </motion.div>
+        </Section>
 
         {/* Scroll line */}
         <motion.section
@@ -346,13 +401,7 @@ export default function Home() {
         </motion.section>
 
         {/* About */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: '-100px' }}
-        >
-          <SectionHeader title='About' />
+        <Section title='About'>
           <div className='grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-12'>
             <div>
               <div className='relative aspect-[4/5] overflow-hidden rounded-2xl'>
@@ -391,7 +440,7 @@ export default function Home() {
               <div className='space-y-3'>
                 {highlights.map((item) => (
                   <div key={item.label} className='flex gap-4'>
-                    <span className='w-28 shrink-0 text-xs uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500 pt-0.5'>
+                    <span className={`w-28 shrink-0 pt-0.5 ${metaLabel}`}>
                       {item.label}
                     </span>
                     <span className='text-sm text-gray-700 dark:text-gray-300'>
@@ -402,105 +451,53 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </Section>
 
         {/* Experience */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: '-100px' }}
+        <Section
+          title='Experience'
+          subtitle="Where I've worked"
           id='section-experience'
         >
-          <SectionHeader title='Experience' />
-          <p className='mb-6 text-sm text-gray-500 dark:text-gray-400'>
-            Where I&apos;ve worked
-          </p>
           <Experience />
-        </motion.div>
+        </Section>
 
         {/* Pictures */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: '-100px' }}
-        >
-          <SectionHeader title='Pictures' />
+        <Section title='Pictures'>
           <PictureCarousel />
-        </motion.div>
+        </Section>
 
         {/* Projects */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: '-100px' }}
-        >
-          <SectionHeader title='Projects' />
-          <p className='mb-6 text-sm text-gray-500 dark:text-gray-400'>
-            Things I&apos;ve built
-          </p>
+        <Section title='Projects' subtitle="Things I've built">
           <Projects />
-        </motion.div>
+        </Section>
 
         {/* Writing */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: '-100px' }}
+        <Section
+          title='Writing'
+          subtitle='Occasional notes and essays'
           id='section-writing'
         >
-          <SectionHeader title='Writing' />
-          <p className='mb-6 text-sm text-gray-500 dark:text-gray-400'>
-            Occasional notes and essays
-          </p>
           <Writing />
-        </motion.div>
+        </Section>
 
         {/* Updates */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: '-100px' }}
-        >
-          <SectionHeader title='Updates' />
-          <p className='mb-6 text-sm text-gray-500 dark:text-gray-400'>
-            Life updates and things
-          </p>
+        <Section title='Updates' subtitle='Life updates and things'>
           <Updates category='all' />
-        </motion.div>
+        </Section>
 
         {/* Books */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: '-100px' }}
+        <Section
+          title='Books'
+          subtitle='Recently read, in progress, or on the list'
         >
-          <SectionHeader title='Books' />
-          <p className='mb-6 text-sm text-gray-500 dark:text-gray-400'>
-            Recently read, in progress, or on the list
-          </p>
           <Books />
-        </motion.div>
+        </Section>
 
         {/* Movies */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: '-100px' }}
-        >
-          <SectionHeader title='Movies' />
-          <p className='mb-6 text-sm text-gray-500 dark:text-gray-400'>
-            Most recent watches
-          </p>
+        <Section title='Movies' subtitle='Most recent watches'>
           <MovieList />
-        </motion.div>
-
+        </Section>
       </div>
     </div>
   );

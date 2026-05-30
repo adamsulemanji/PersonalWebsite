@@ -23,13 +23,15 @@ export default function Updates({ category }: UpdatesProps) {
             </div>
 
             <div className='mx-2 hidden flex-grow overflow-hidden sm:flex'>
-              <span className='text-gray-300 dark:text-gray-600 whitespace-nowrap text-sm font-light'>
+              <span className='whitespace-nowrap text-sm font-light text-gray-300 dark:text-gray-600'>
                 {Array(100).fill('•').join('')}
               </span>
             </div>
 
             <div className='flex-shrink-0 pl-8 sm:pl-0'>
-              <p className='text-gray-500 dark:text-gray-400 text-xs sm:text-sm'>{update.date}</p>
+              <p className='text-xs text-gray-500 dark:text-gray-400 sm:text-sm'>
+                {update.date}
+              </p>
             </div>
           </div>
         );
@@ -57,7 +59,11 @@ export default function Updates({ category }: UpdatesProps) {
           );
         }
 
-        return <div key={index} {...sharedProps}>{inner}</div>;
+        return (
+          <div key={index} {...sharedProps}>
+            {inner}
+          </div>
+        );
       })}
     </div>
   );

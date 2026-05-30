@@ -62,7 +62,11 @@ export default function AnalyticsProvider({ children }: PropsWithChildren) {
   }, [pathname]);
 
   useEffect(() => {
-    if (!posthogToken || !hasInitializedPostHog || typeof document === 'undefined')
+    if (
+      !posthogToken ||
+      !hasInitializedPostHog ||
+      typeof document === 'undefined'
+    )
       return;
 
     const handleClick = (event: MouseEvent) => {

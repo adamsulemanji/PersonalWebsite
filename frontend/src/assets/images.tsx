@@ -7,7 +7,6 @@ export type PictureAsset = {
 };
 
 export const imagesLeft: PictureAsset[] = [
-  
   {
     src: '/images/aggiefootball.jpg',
     alt: 'Texas A&M Aggie Football game day',

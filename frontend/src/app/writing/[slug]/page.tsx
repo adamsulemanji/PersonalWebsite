@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { FiArrowLeft } from 'react-icons/fi';
 import type { Metadata } from 'next';
 import { writing } from '@/assets/writing';
+import { metaLabel, sectionLabel } from '@/lib/styles';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -12,7 +13,9 @@ export function generateStaticParams() {
   return writing.map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = writing.find((p) => p.slug === slug);
   if (!post) return {};
@@ -77,7 +80,7 @@ export default async function WritingPost({ params }: PageProps) {
       <div className='mx-auto flex w-full max-w-2xl flex-col gap-10'>
         <Link
           href='/#section-writing'
-          className='inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors'
+          className={`inline-flex items-center gap-1.5 ${sectionLabel} transition-colors hover:text-gray-700 dark:hover:text-gray-300`}
         >
           <FiArrowLeft /> Back
         </Link>
@@ -86,7 +89,7 @@ export default async function WritingPost({ params }: PageProps) {
           <h1 className='font-serif text-3xl font-light leading-tight sm:text-4xl'>
             {post.title}
           </h1>
-          <div className='flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500'>
+          <div className={`flex flex-wrap items-center gap-3 ${metaLabel}`}>
             <span>{formatDate(post.date)}</span>
             {post.readingTime && <span>· {post.readingTime}</span>}
           </div>

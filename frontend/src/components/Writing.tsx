@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { writing } from '@/assets/writing';
 import { analyticsAttributes } from '@/lib/analytics';
+import { metaLabel } from '@/lib/styles';
 
 function formatDate(iso: string) {
   const d = new Date(iso);
@@ -29,7 +30,7 @@ export default function Writing() {
                 {post.description}
               </p>
             </div>
-            <div className='shrink-0 text-xs uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500'>
+            <div className={`shrink-0 ${metaLabel}`}>
               {formatDate(post.date)}
             </div>
           </div>
@@ -57,7 +58,11 @@ export default function Writing() {
 
         return (
           <li key={post.slug}>
-            <Link href={`/writing/${post.slug}`} className='block' {...analytics}>
+            <Link
+              href={`/writing/${post.slug}`}
+              className='block'
+              {...analytics}
+            >
               {inner}
             </Link>
           </li>

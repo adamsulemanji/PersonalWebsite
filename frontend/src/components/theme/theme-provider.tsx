@@ -9,6 +9,9 @@ function getScheduledTheme(date = new Date()) {
   return hour >= 8 && hour < 20 ? 'light' : 'dark';
 }
 
+// On a visitor's first load (no stored preference), pick light/dark by local
+// time of day. Once they toggle manually, next-themes persists it and this
+// no-ops on subsequent visits.
 function ThemeScheduler() {
   const { setTheme } = useTheme();
 
@@ -17,7 +20,7 @@ function ThemeScheduler() {
     if (!stored) {
       setTheme(getScheduledTheme());
     }
-  }, []);
+  }, [setTheme]);
 
   return null;
 }
