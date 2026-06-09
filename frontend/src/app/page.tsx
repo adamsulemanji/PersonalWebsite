@@ -409,8 +409,12 @@ function ScrollThread({
   };
 
   return (
+    // Isolate this onto its own compositor layer (translateZ + will-change) and
+    // contain its painting. Animating `pathLength` repaints the stroke every
+    // scroll frame; without isolation that invalidates the shared layer and
+    // re-rasterizes the page content sitting above it — the source of the lag.
     <div
-      className='pointer-events-none absolute inset-0 z-0 hidden md:block'
+      className='pointer-events-none absolute inset-0 z-0 hidden [contain:paint] [transform:translateZ(0)] [will-change:transform] md:block'
       aria-hidden
     >
       <svg
@@ -513,10 +517,10 @@ export default function Home() {
         <Section title='Now' id='section-now'>
           <div className='max-w-2xl space-y-4 text-[15px] leading-7 text-gray-600 dark:text-gray-300'>
             <p>
-              Ramping up on a new team in Global Payments at Amazon — relearning
-              a large codebase from scratch and enjoying the fresh context.
+              Ramping up on a new team in Global Payments at Amazon — learning
+              about the payments ecosystem and enjoying the fresh context.
               Outside of work, I&apos;m stretching the tail end of ski season
-              and starting to plan a few spring races.
+              and training for a marathon.
             </p>
             <p>
               Side-project-wise, I&apos;m iterating on this site, cleaning up
