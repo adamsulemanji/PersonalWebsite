@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss';
-import colors from 'tailwindcss/colors';
 
 const config: Config = {
   darkMode: ['class'],
@@ -8,9 +7,6 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    colors: {
-      ...colors,
-    },
     extend: {
       colors: {
         // Tokens are plain CSS custom properties (hex), so reference them
@@ -27,6 +23,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [],
 };
 export default config;

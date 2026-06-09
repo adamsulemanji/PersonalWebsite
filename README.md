@@ -82,6 +82,14 @@ A modern, responsive personal portfolio website built with Next.js and deployed 
 
    ```
 
+> **Note — pipeline changes are not self-mutating.** The pipeline's CFN deploy
+> step only updates `PersonalWebsiteStack` (site + observability). Changes to
+> `lib/pipeline.ts` itself must be deployed manually:
+>
+> ```bash
+> npm run build && npx cdk deploy PersonalWebsiteStackPersonalWebsitePipeline*
+> ```
+
 ## 📝 License
 
 This project is licensed under the terms specified in the LICENSE file.

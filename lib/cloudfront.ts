@@ -46,7 +46,7 @@ export class FrontendConstruct extends Construct {
 
     // OAC replaces the deprecated OAI — CDK automatically grants the bucket policy
     const apexOrigin = origins.S3BucketOrigin.withOriginAccessControl(
-      this.apexBucket
+      this.apexBucket,
     );
 
     // ***********************
@@ -80,7 +80,7 @@ export class FrontendConstruct extends Construct {
             }
             return request;
           }`),
-      }
+      },
     );
 
     // Returns a 301 before CloudFront ever contacts the origin — no redirect bucket needed
@@ -98,7 +98,7 @@ export class FrontendConstruct extends Construct {
               }
             };
           }`),
-      }
+      },
     );
 
     // ***********************
@@ -114,6 +114,10 @@ export class FrontendConstruct extends Construct {
             cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           // Static site only needs GET/HEAD — ALLOW_ALL was unnecessary
           allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
+          // Managed policy: HSTS, X-Content-Type-Options, frame-ancestors,
+          // Referrer-Policy, XSS protection
+          responseHeadersPolicy:
+            cloudfront.ResponseHeadersPolicy.SECURITY_HEADERS,
           functionAssociations: [
             {
               eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
@@ -141,7 +145,7 @@ export class FrontendConstruct extends Construct {
         ],
         logBucket: this.accessLogsBucket,
         logFilePrefix: "cloudfront/",
-      }
+      },
     );
 
     // WWW distribution: the CF Function returns a 301 before reaching the origin,
@@ -155,6 +159,8 @@ export class FrontendConstruct extends Construct {
           viewerProtocolPolicy:
             cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
+          responseHeadersPolicy:
+            cloudfront.ResponseHeadersPolicy.SECURITY_HEADERS,
           functionAssociations: [
             {
               eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
@@ -164,7 +170,7 @@ export class FrontendConstruct extends Construct {
         },
         domainNames: [wwwDomain],
         certificate: certificate,
-      }
+      },
     );
 
     // ***********************
@@ -174,7 +180,7 @@ export class FrontendConstruct extends Construct {
       zone,
       recordName: domainName,
       target: route53.RecordTarget.fromAlias(
-        new route53targets.CloudFrontTarget(this.apexDistribution)
+        new route53targets.CloudFrontTarget(this.apexDistribution),
       ),
     });
 
@@ -182,7 +188,7 @@ export class FrontendConstruct extends Construct {
       zone,
       recordName: wwwDomain,
       target: route53.RecordTarget.fromAlias(
-        new route53targets.CloudFrontTarget(this.wwwDistribution)
+        new route53targets.CloudFrontTarget(this.wwwDistribution),
       ),
     });
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, type PropsWithChildren } from 'react';
+import { useEffect, useState, type PropsWithChildren } from 'react';
 import { usePathname } from 'next/navigation';
 import posthog from 'posthog-js';
 
@@ -25,29 +25,40 @@ function normalizeDatasetKey(key: string) {
 
 export default function AnalyticsProvider({ children }: PropsWithChildren) {
   const pathname = usePathname();
+  const [ready, setReady] = useState(hasInitializedPostHog);
 
+  // Defer init to idle time so analytics doesn't compete with hydration and
+  // first paint. The capture effects below are gated on `ready` so the
+  // initial pageview still fires once init completes.
   useEffect(() => {
-    if (!posthogToken || hasInitializedPostHog) return;
+    if (!posthogToken) return;
+    if (hasInitializedPostHog) {
+      setReady(true);
+      return;
+    }
 
-    posthog.init(posthogToken, {
-      api_host: posthogHost,
-      autocapture: false,
-      capture_pageleave: true,
-      capture_pageview: false,
-      persistence: 'localStorage+cookie',
-    });
+    const init = () => {
+      posthog.init(posthogToken, {
+        api_host: posthogHost,
+        autocapture: false,
+        capture_pageleave: true,
+        capture_pageview: false,
+        persistence: 'localStorage+cookie',
+      });
+      hasInitializedPostHog = true;
+      setReady(true);
+    };
 
-    hasInitializedPostHog = true;
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(init, { timeout: 3000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const timer = setTimeout(init, 1500);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    if (
-      !posthogToken ||
-      !pathname ||
-      !hasInitializedPostHog ||
-      typeof window === 'undefined'
-    )
-      return;
+    if (!posthogToken || !pathname || !ready) return;
 
     const url = window.location.href;
     if (lastTrackedUrl === url) return;
@@ -59,15 +70,10 @@ export default function AnalyticsProvider({ children }: PropsWithChildren) {
       title: document.title,
       url,
     });
-  }, [pathname]);
+  }, [pathname, ready]);
 
   useEffect(() => {
-    if (
-      !posthogToken ||
-      !hasInitializedPostHog ||
-      typeof document === 'undefined'
-    )
-      return;
+    if (!posthogToken || !ready) return;
 
     const handleClick = (event: MouseEvent) => {
       const el = getClickableElement(event.target);
@@ -108,7 +114,7 @@ export default function AnalyticsProvider({ children }: PropsWithChildren) {
 
     document.addEventListener('click', handleClick);
     return () => document.removeEventListener('click', handleClick);
-  }, []);
+  }, [ready]);
 
   return <>{children}</>;
 }

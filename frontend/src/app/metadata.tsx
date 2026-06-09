@@ -21,13 +21,20 @@ export const metadata: Metadata = {
     siteName: 'Adam Sulemanji',
     title: 'Adam Sulemanji',
     description,
-    images: [{ url: '/images/me.JPG', alt: 'Adam Sulemanji' }],
+    images: [
+      {
+        url: '/images/og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Adam Sulemanji',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Adam Sulemanji',
     description,
-    images: ['/images/me.JPG'],
+    images: ['/images/og.jpg'],
   },
   icons: {
     icon: '/favicon.ico',

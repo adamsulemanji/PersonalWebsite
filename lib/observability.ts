@@ -1,8 +1,11 @@
 import * as cdk from "aws-cdk-lib";
 import * as athena from "aws-cdk-lib/aws-athena";
 import * as cloudwatch from "aws-cdk-lib/aws-cloudwatch";
+import * as cloudwatch_actions from "aws-cdk-lib/aws-cloudwatch-actions";
 import * as glue from "aws-cdk-lib/aws-glue";
 import * as s3 from "aws-cdk-lib/aws-s3";
+import * as sns from "aws-cdk-lib/aws-sns";
+import * as subscriptions from "aws-cdk-lib/aws-sns-subscriptions";
 import { Construct } from "constructs";
 
 import { FrontendConstruct } from "./cloudfront";
@@ -21,7 +24,7 @@ export class ObservabilityConstruct extends Construct {
   constructor(
     scope: Construct,
     id: string,
-    props: ObservabilityConstructProps
+    props: ObservabilityConstructProps,
   ) {
     super(scope, id);
 
@@ -187,7 +190,7 @@ ORDER BY requests DESC;`,
           name: query.name,
           queryString: query.queryString,
           workGroup: this.workGroupName,
-        }
+        },
       );
       namedQuery.addDependency(workGroup);
       namedQuery.addDependency(table);
@@ -197,6 +200,15 @@ ORDER BY requests DESC;`,
     // CLOUDWATCH ALARMS
     // ***********************
     const metricOptions = { region: "us-east-1" };
+
+    // Alarms are useless without a destination — notify by email.
+    // The subscription must be confirmed once from the inbox.
+    const alarmTopic = new sns.Topic(this, "AlarmTopic", {
+      displayName: "personal-website-alarms",
+    });
+    alarmTopic.addSubscription(
+      new subscriptions.EmailSubscription("adam.k.sulemanji@gmail.com"),
+    );
 
     const alarm5xx = new cloudwatch.Alarm(this, "Alarm5xx", {
       metric: props.frontendConstruct.apexDistribution.metric5xxErrorRate({
@@ -211,6 +223,8 @@ ORDER BY requests DESC;`,
       alarmDescription: "5xx error rate >= 1% for 10 consecutive minutes",
       treatMissingData: cloudwatch.TreatMissingData.NOT_BREACHING,
     });
+    alarm5xx.addAlarmAction(new cloudwatch_actions.SnsAction(alarmTopic));
+    alarm5xx.addOkAction(new cloudwatch_actions.SnsAction(alarmTopic));
 
     const alarm4xx = new cloudwatch.Alarm(this, "Alarm4xx", {
       metric: props.frontendConstruct.apexDistribution.metric4xxErrorRate({
@@ -225,6 +239,8 @@ ORDER BY requests DESC;`,
       alarmDescription: "4xx error rate >= 10% for 10 consecutive minutes",
       treatMissingData: cloudwatch.TreatMissingData.NOT_BREACHING,
     });
+    alarm4xx.addAlarmAction(new cloudwatch_actions.SnsAction(alarmTopic));
+    alarm4xx.addOkAction(new cloudwatch_actions.SnsAction(alarmTopic));
 
     // ***********************
     // CLOUDWATCH DASHBOARD
@@ -301,7 +317,7 @@ ORDER BY requests DESC;`,
             statistic: "Average",
           }),
         ],
-      })
+      }),
     );
 
     new cdk.CfnOutput(this, "AthenaResultsBucketName", {

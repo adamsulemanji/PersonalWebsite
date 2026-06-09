@@ -73,11 +73,11 @@ export default function Project({ category = '' }: ProjectProps) {
                 </div>
               </div>
 
-              <div className='group relative hidden h-80 w-full overflow-hidden rounded-xl border border-gray-200 bg-gray-100 text-gray-900 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl dark:border-gray-700 dark:bg-gray-800 dark:text-white lg:block'>
-                <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+              <div className='group relative hidden h-80 w-full overflow-hidden rounded-xl border border-gray-200 bg-gray-100 text-gray-900 shadow-lg transition-all duration-300 focus-within:-translate-y-1 focus-within:shadow-2xl hover:-translate-y-1 hover:shadow-2xl dark:border-gray-700 dark:bg-gray-800 dark:text-white lg:block'>
+                <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-focus-within:opacity-100 group-hover:opacity-100'>
                   <div className='absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-transparent dark:from-white/5' />
                 </div>
-                <div className='absolute inset-0 flex flex-col transition-transform duration-500 ease-out group-hover:-translate-y-2/3'>
+                <div className='absolute inset-0 flex flex-col transition-transform duration-500 ease-out group-focus-within:-translate-y-2/3 group-hover:-translate-y-2/3'>
                   <div className='relative h-2/3 w-full p-4'>
                     <Image
                       src={project.pictures?.[0] || ''}
@@ -107,7 +107,9 @@ export default function Project({ category = '' }: ProjectProps) {
                   </div>
                 </div>
 
-                <div className='absolute inset-0 mt-4 flex translate-y-2/3 transform flex-col justify-center bg-gray-100 p-6 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 dark:bg-gray-800'>
+                {/* Detail panel: revealed on hover, and on focus-within so the
+                    "Visit" link is reachable by keyboard. */}
+                <div className='absolute inset-0 mt-4 flex translate-y-2/3 transform flex-col justify-center bg-gray-100 p-6 opacity-0 transition-all duration-500 ease-out group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100 dark:bg-gray-800'>
                   <div className='space-y-3'>
                     <p className='text-sm leading-relaxed text-gray-700 dark:text-white/90'>
                       {project.description}

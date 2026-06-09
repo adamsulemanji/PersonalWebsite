@@ -22,6 +22,11 @@ export async function generateMetadata({
   return {
     title: `${post.title} — Adam Sulemanji`,
     description: post.description,
+    // Override the site-wide canonical ('/') inherited from the root layout —
+    // without this every post canonicalizes to the homepage.
+    alternates: {
+      canonical: `/writing/${slug}/`,
+    },
   };
 }
 

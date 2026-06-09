@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import localFont from 'next/font/local';
 import '../styles/globals.css';
 
 export { metadata, viewport } from './metadata';
@@ -9,12 +8,6 @@ import MotionProvider from '@/components/MotionProvider';
 
 import Footer from '@/components/Footer';
 
-const geistMono = localFont({
-  src: '../fonts/GeistVF.woff',
-  variable: '--font-geist-mono',
-  weight: '100 900',
-});
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,6 +15,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
+      <head>
+        {/* First visit only: seed the stored theme from local time of day
+            (light 8am-8pm) before next-themes' own pre-paint script reads it,
+            so evening visitors never see a light-mode flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if(!localStorage.getItem('theme')){var h=new Date().getHours();localStorage.setItem('theme',h>=8&&h<20?'light':'dark');}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className='flex min-h-screen justify-center overflow-x-hidden bg-[var(--background)] text-[var(--foreground)]'>
         <ThemeProvider
           attribute='class'
@@ -31,9 +34,7 @@ export default function RootLayout({
           <AnalyticsProvider>
             <MotionProvider>
               <div className='w-full max-w-[1200px] bg-[var(--background)]'>
-                <main
-                  className={`${geistMono.variable} bg-[var(--background)] antialiased`}
-                >
+                <main className='bg-[var(--background)] antialiased'>
                   {children}
                 </main>
                 <Footer />

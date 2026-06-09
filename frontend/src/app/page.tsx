@@ -35,7 +35,7 @@ import Writing from '@/components/Writing';
 import MovieList from '@/components/Movie/MovieList';
 import SectionHeader from '@/components/SectionHeader';
 import { analyticsAttributes } from '@/lib/analytics';
-import { metaLabel } from '@/lib/styles';
+import { metaLabel, underlineLink } from '@/lib/styles';
 import { imagesLeft, imagesRight } from '@/assets/images';
 
 const allImages = [...imagesLeft, ...imagesRight];
@@ -170,7 +170,19 @@ function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
-  if (!mounted) return null;
+
+  // Same-size placeholder until mounted so the social row doesn't shift
+  // when the real toggle appears after hydration.
+  if (!mounted) {
+    return (
+      <span
+        aria-hidden
+        className='flex items-center justify-center rounded-full border border-gray-300 p-1.5 dark:border-gray-600'
+      >
+        <Moon size={14} className='invisible' />
+      </span>
+    );
+  }
 
   const isDark = theme === 'dark';
   return (
@@ -447,16 +459,16 @@ export default function Home() {
       >
         {/* Hero */}
         <motion.section
-          className='one group relative'
+          className='group relative'
           id='section-intro'
-          initial={false}
-          animate={{ x: 0, opacity: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
           <div className='text-left font-serif text-4xl font-light leading-[1.05] sm:text-6xl md:mt-8 md:text-7xl'>
             <motion.span
               className='block'
-              initial={false}
+              initial={{ x: -16, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.3, duration: 1 }}
             >
@@ -464,7 +476,7 @@ export default function Home() {
             </motion.span>
             <motion.span
               className='block'
-              initial={false}
+              initial={{ x: -16, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.5, duration: 1 }}
             >
@@ -477,16 +489,21 @@ export default function Home() {
 
         {/* Intro text + links */}
         <motion.div
-          initial={false}
+          initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
         >
           <div className='max-w-2xl space-y-4 text-[15px] leading-7 text-gray-600 dark:text-gray-300 sm:text-base'>
             <p>
               I&apos;m a Software Engineer at{' '}
-              <span className='text-gray-900 underline decoration-gray-300 underline-offset-4 transition-colors hover:decoration-gray-600 dark:text-white dark:decoration-gray-600 dark:hover:decoration-gray-300'>
+              <a
+                href='https://www.amazon.com'
+                target='_blank'
+                rel='noopener noreferrer'
+                className={`text-gray-900 dark:text-white ${underlineLink}`}
+              >
                 Amazon
-              </span>{' '}
+              </a>{' '}
               in Seattle, WA building systems to aid the payments processing
               flow. Before this, I was working in Amazon Web Services on Model
               Customization with AI Agents, Human in the Loop and Mechanical
@@ -495,17 +512,32 @@ export default function Home() {
             </p>
             <p>
               I&apos;ve previously worked at{' '}
-              <span className='text-gray-900 underline decoration-gray-300 underline-offset-4 dark:text-white dark:decoration-gray-600'>
+              <a
+                href='https://www.amazon.com'
+                target='_blank'
+                rel='noopener noreferrer'
+                className={`text-gray-900 dark:text-white ${underlineLink}`}
+              >
                 Amazon.com
-              </span>{' '}
+              </a>{' '}
               building crossborder software,{' '}
-              <span className='text-gray-900 underline decoration-gray-300 underline-offset-4 dark:text-white dark:decoration-gray-600'>
+              <a
+                href='https://www.goldmansachs.com'
+                target='_blank'
+                rel='noopener noreferrer'
+                className={`text-gray-900 dark:text-white ${underlineLink}`}
+              >
                 Goldman Sachs
-              </span>{' '}
+              </a>{' '}
               determining market risk, and{' '}
-              <span className='text-gray-900 underline decoration-gray-300 underline-offset-4 dark:text-white dark:decoration-gray-600'>
+              <a
+                href='https://www.pwc.com'
+                target='_blank'
+                rel='noopener noreferrer'
+                className={`text-gray-900 dark:text-white ${underlineLink}`}
+              >
                 PricewaterhouseCoopers
-              </span>{' '}
+              </a>{' '}
               helping non-profits.
             </p>
           </div>
@@ -537,7 +569,7 @@ export default function Home() {
             <div>
               <div className='relative aspect-[4/5] overflow-hidden rounded-2xl'>
                 <Image
-                  src='/images/kid.jpg'
+                  src='/images/kid.webp'
                   alt='Picture of little me'
                   fill
                   sizes='(max-width: 1024px) 100vw, 40vw'

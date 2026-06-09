@@ -19,7 +19,7 @@ export class Pipeline extends cdk.Stack {
     const sourceOutput = new codepipeline.Artifact("SourceOutput");
     const synthOutput = new codepipeline.Artifact("SynthOutput");
     const frontendBuildOutput = new codepipeline.Artifact(
-      "FrontendBuildOutput"
+      "FrontendBuildOutput",
     );
 
     // ********** GITHUB SOURCE ACTION **********
@@ -37,9 +37,9 @@ export class Pipeline extends cdk.Stack {
     const synthProject = new codebuild.PipelineProject(this, "SynthProject", {
       environment: {
         buildImage: codebuild.LinuxBuildImage.STANDARD_7_0,
-        privileged: true,
       },
-      // Cache node_modules so repeated builds skip the full npm install
+      // Cache the npm download cache (npm ci wipes node_modules, so caching
+      // node_modules directly would be useless)
       cache: codebuild.Cache.local(codebuild.LocalCacheMode.CUSTOM),
       buildSpec: codebuild.BuildSpec.fromObjectToYaml({
         version: "0.2",
@@ -48,10 +48,7 @@ export class Pipeline extends cdk.Stack {
             runtimeVersions: {
               nodejs: "20",
             },
-            commands: [
-              "npm install -g aws-cdk",
-              "npm install --legacy-peer-deps",
-            ],
+            commands: ["npm install -g aws-cdk", "npm ci"],
           },
           pre_build: {
             commands: ["node --version", "npm --version", "cdk --version"],
@@ -65,7 +62,7 @@ export class Pipeline extends cdk.Stack {
           files: ["**/*"],
         },
         cache: {
-          paths: ["node_modules/**/*"],
+          paths: ["/root/.npm/**/*"],
         },
       }),
     });
@@ -87,7 +84,7 @@ export class Pipeline extends cdk.Stack {
           `arn:aws:cloudformation:*:*:stack/PersonalWebsiteStack/*`,
           `arn:aws:cloudformation:*:*:stack/PersonalWebsitePipeline/*`,
         ],
-      })
+      }),
     );
     synthProject.addToRolePolicy(
       new iam.PolicyStatement({
@@ -99,19 +96,19 @@ export class Pipeline extends cdk.Stack {
           "s3:AbortMultipartUpload",
         ],
         resources: ["arn:aws:s3:::cdk-*"],
-      })
+      }),
     );
     synthProject.addToRolePolicy(
       new iam.PolicyStatement({
         actions: ["sts:AssumeRole"],
         resources: ["arn:aws:iam::*:role/cdk-*"],
-      })
+      }),
     );
     synthProject.addToRolePolicy(
       new iam.PolicyStatement({
         actions: ["iam:PassRole"],
         resources: ["arn:aws:iam::*:role/cdk-*"],
-      })
+      }),
     );
 
     // ********** SYNTH ACTION **********
@@ -130,13 +127,17 @@ export class Pipeline extends cdk.Stack {
         environment: {
           buildImage: codebuild.LinuxBuildImage.STANDARD_7_0,
         },
-        // Cache node_modules so repeated builds skip the full npm install
+        // Cache the npm download cache (npm ci wipes node_modules, so caching
+        // node_modules directly would be useless)
         cache: codebuild.Cache.local(codebuild.LocalCacheMode.CUSTOM),
         buildSpec: codebuild.BuildSpec.fromObjectToYaml({
           version: "0.2",
           phases: {
             install: {
-              commands: ["cd frontend", "npm install --legacy-peer-deps"],
+              runtimeVersions: {
+                nodejs: "20",
+              },
+              commands: ["cd frontend", "npm ci"],
             },
             build: {
               commands: ["npm run build"],
@@ -147,10 +148,10 @@ export class Pipeline extends cdk.Stack {
             files: ["**/*"],
           },
           cache: {
-            paths: ["frontend/node_modules/**/*"],
+            paths: ["/root/.npm/**/*"],
           },
         }),
-      }
+      },
     );
 
     // ********** FRONTEND BUILD ACTION **********
@@ -232,10 +233,42 @@ export class Pipeline extends cdk.Stack {
       });
 
     // ********** DEPLOY FRONTEND ACTION (S3) **********
-    const deployFrontendAction = new codepipeline_actions.S3DeployAction({
+    // Tiered Cache-Control instead of a plain S3DeployAction (which uploads
+    // with no cache headers, forcing browsers to revalidate everything):
+    //   1. /_next/static/* is content-hashed       -> immutable for a year
+    //   2. images/fonts/pdf are stable but unhashed -> cache for a day
+    //   3. HTML/sitemap/robots/manifest             -> always revalidate
+    // Old hashed chunks are intentionally never deleted so cached HTML keeps
+    // working; HTML itself is pruned with --delete.
+    const bucketUrl = `s3://${props.frontendConstruct.apexBucket.bucketName}`;
+    const deployFrontendProject = new codebuild.PipelineProject(
+      this,
+      "DeployFrontendProject",
+      {
+        environment: {
+          buildImage: codebuild.LinuxBuildImage.STANDARD_7_0,
+        },
+        buildSpec: codebuild.BuildSpec.fromObjectToYaml({
+          version: "0.2",
+          phases: {
+            build: {
+              commands: [
+                `aws s3 sync . ${bucketUrl} --exclude "*" --include "_next/static/*" --cache-control "public,max-age=31536000,immutable" --only-show-errors`,
+                `aws s3 sync . ${bucketUrl} --exclude "_next/static/*" --exclude "*.html" --exclude "*.xml" --exclude "*.txt" --exclude "*.webmanifest" --cache-control "public,max-age=86400" --only-show-errors`,
+                `aws s3 sync . ${bucketUrl} --exclude "*" --include "*.html" --include "*.xml" --include "*.txt" --include "*.webmanifest" --cache-control "public,max-age=0,must-revalidate" --delete --only-show-errors`,
+              ],
+            },
+          },
+        }),
+      },
+    );
+    props.frontendConstruct.apexBucket.grantReadWrite(deployFrontendProject);
+
+    const deployFrontendAction = new codepipeline_actions.CodeBuildAction({
       actionName: "Deploy_Frontend_To_S3",
-      bucket: props.frontendConstruct.apexBucket,
+      project: deployFrontendProject,
       input: frontendBuildOutput,
+      runOrder: 1,
     });
 
     const invalidateCacheProject = new codebuild.PipelineProject(
@@ -255,11 +288,11 @@ export class Pipeline extends cdk.Stack {
             },
           },
         }),
-      }
+      },
     );
 
     props.frontendConstruct.apexDistribution.grantCreateInvalidation(
-      invalidateCacheProject
+      invalidateCacheProject,
     );
 
     const invalidateCacheAction = new codepipeline_actions.CodeBuildAction({

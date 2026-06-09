@@ -2,6 +2,7 @@
 
 import { updates } from '@/assets/updates';
 import { analyticsAttributes } from '@/lib/analytics';
+import { metaLabel } from '@/lib/styles';
 
 interface UpdatesProps {
   category: string;
@@ -22,16 +23,15 @@ export default function Updates({ category }: UpdatesProps) {
               </p>
             </div>
 
-            <div className='mx-2 hidden flex-grow overflow-hidden sm:flex'>
-              <span className='whitespace-nowrap text-sm font-light text-gray-300 dark:text-gray-600'>
-                {Array(100).fill('•').join('')}
-              </span>
+            <div
+              className='mx-2 hidden flex-grow items-center sm:flex'
+              aria-hidden
+            >
+              <span className='w-full border-b-2 border-dotted border-gray-300 dark:border-gray-600' />
             </div>
 
             <div className='flex-shrink-0 pl-8 sm:pl-0'>
-              <p className='text-xs text-gray-500 dark:text-gray-400 sm:text-sm'>
-                {update.date}
-              </p>
+              <p className={`whitespace-nowrap ${metaLabel}`}>{update.date}</p>
             </div>
           </div>
         );

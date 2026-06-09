@@ -7,6 +7,10 @@ consistent. It describes what is **actually implemented**, not an aspiration.
 Stack: Next.js 15 (App Router, static export) · Tailwind CSS 3 · Framer Motion ·
 next-themes · react-icons + lucide-react.
 
+Photos in `public/images` are pre-optimized WebP (max 1600px wide) — run
+`node scripts/optimize-images.mjs` (in `frontend/`) after adding new ones and
+reference the `.webp` file.
+
 ---
 
 ## 1. Principles
@@ -104,8 +108,8 @@ Hero and major headings. Tailwind's default serif stack via `font-serif`.
 
 ### UI / content (sans)
 
-Body, nav, metadata, card titles, pills. Geist is loaded in `layout.tsx` as a
-local variable font (`--font-geist-mono`); body otherwise uses the default sans.
+Body, nav, metadata, card titles, pills. The body uses Tailwind's default sans
+stack — no webfont is loaded.
 
 - Body rhythm (the baseline for prose): `text-[15px] leading-7 sm:text-base`.
 - Card titles: bold sans (`text-lg font-bold`), **not** serif.
@@ -215,9 +219,9 @@ Icons: `react-icons` (`Fa*`, `Si*`, `Fi*`) and `lucide-react`. Keep icon usage l
 ## 7. Theming
 
 - `next-themes` with `attribute='class'`, `defaultTheme='light'`, `enableSystem={false}`.
-- **First visit**: `ThemeScheduler` (in `theme-provider.tsx`) picks light/dark by local
-  time of day (light 8am–8pm) when no preference is stored. After the visitor uses
-  `ThemeToggle`, next-themes persists their choice and the scheduler no-ops.
+- **First visit**: an inline `<head>` script in `layout.tsx` seeds the stored theme
+  from local time of day (light 8am–8pm) before next-themes reads it — no flash.
+  After that, next-themes persists whatever `ThemeToggle` sets.
 - All Framer Motion respects `prefers-reduced-motion` via `MotionProvider`
   (`<MotionConfig reducedMotion='user'>`) in the layout.
 - Every color must declare its `dark:` counterpart — never rely on a single value.

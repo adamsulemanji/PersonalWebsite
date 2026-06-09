@@ -1,38 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { ThemeProvider as NextThemesProvider, useTheme } from 'next-themes';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
 
-function getScheduledTheme(date = new Date()) {
-  const hour = date.getHours();
-
-  return hour >= 8 && hour < 20 ? 'light' : 'dark';
-}
-
-// On a visitor's first load (no stored preference), pick light/dark by local
-// time of day. Once they toggle manually, next-themes persists it and this
-// no-ops on subsequent visits.
-function ThemeScheduler() {
-  const { setTheme } = useTheme();
-
-  React.useEffect(() => {
-    const stored = localStorage.getItem('theme');
-    if (!stored) {
-      setTheme(getScheduledTheme());
-    }
-  }, [setTheme]);
-
-  return null;
-}
-
+// On a visitor's first load (no stored preference), an inline script in
+// layout.tsx seeds localStorage with a light/dark theme based on local time
+// of day before next-themes reads it — so there is no flash and no extra
+// client logic needed here.
 export function ThemeProvider({
   children,
   ...props
 }: React.ComponentProps<typeof NextThemesProvider>) {
-  return (
-    <NextThemesProvider {...props}>
-      <ThemeScheduler />
-      {children}
-    </NextThemesProvider>
-  );
+  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
 }
