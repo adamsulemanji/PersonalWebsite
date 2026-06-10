@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { FiArrowLeft } from 'react-icons/fi';
 import type { Metadata } from 'next';
 import { writing } from '@/assets/writing';
+import { formatDate } from '@/lib/format';
 import { metaLabel, sectionLabel } from '@/lib/styles';
 
 interface PageProps {
@@ -28,15 +29,6 @@ export async function generateMetadata({
       canonical: `/writing/${slug}/`,
     },
   };
-}
-
-function formatDate(iso: string) {
-  const d = new Date(iso);
-  return d.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
 }
 
 function renderInline(text: string) {
@@ -95,7 +87,7 @@ export default async function WritingPost({ params }: PageProps) {
             {post.title}
           </h1>
           <div className={`flex flex-wrap items-center gap-3 ${metaLabel}`}>
-            <span>{formatDate(post.date)}</span>
+            <span>{formatDate(post.date, 'long')}</span>
             {post.readingTime && <span>· {post.readingTime}</span>}
           </div>
         </header>

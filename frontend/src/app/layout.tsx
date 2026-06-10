@@ -25,7 +25,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className='flex min-h-screen justify-center overflow-x-hidden bg-[var(--background)] text-[var(--foreground)]'>
+      <body className='flex min-h-screen justify-center overflow-x-hidden bg-background text-foreground antialiased'>
         <ThemeProvider
           attribute='class'
           defaultTheme='light'
@@ -33,10 +33,8 @@ export default function RootLayout({
         >
           <AnalyticsProvider>
             <MotionProvider>
-              <div className='w-full max-w-[1200px] bg-[var(--background)]'>
-                <main className='bg-[var(--background)] antialiased'>
-                  {children}
-                </main>
+              <div className='w-full max-w-[1200px]'>
+                <main>{children}</main>
                 <Footer />
               </div>
             </MotionProvider>

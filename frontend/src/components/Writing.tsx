@@ -2,16 +2,8 @@ import Link from 'next/link';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { writing } from '@/assets/writing';
 import { analyticsAttributes } from '@/lib/analytics';
+import { formatDate } from '@/lib/format';
 import { metaLabel } from '@/lib/styles';
-
-function formatDate(iso: string) {
-  const d = new Date(iso);
-  return d.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
-}
 
 export default function Writing() {
   const posts = [...writing].sort((a, b) => (a.date < b.date ? 1 : -1));

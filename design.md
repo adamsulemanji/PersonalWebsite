@@ -73,9 +73,8 @@ Color comes almost entirely from Tailwind grays. Use these exact pairings:
 ### Category pills (projects)
 
 The only place saturated color appears. Pills carry the color; the card stays
-neutral. Colors come from `colorMap` in `frontend/src/assets/projects.tsx`
-(red, blue, green, purple, orange, banana, sky, pink — each a `[base, light]` pair;
-the lighter `[1]` shade is used).
+neutral. Colors come from `colorMap` in `frontend/src/assets/projects.ts`
+(red, blue, green, purple, orange, banana, sky, pink — one hex per name).
 
 ```tsx
 <span
@@ -158,9 +157,9 @@ Single-page scroller. Outer padding then a centered, narrower column:
 
 ### The `Section` wrapper
 
-Every homepage section (except the bespoke hero, intro, and scroll-line) is wrapped
-by the local `Section` component in `page.tsx`: a fade-in-on-scroll `motion.div`
-with a `SectionHeader` eyebrow and an optional subtitle. **Reuse it** rather than
+Every homepage section (except the bespoke hero and intro) is wrapped by
+`components/Section.tsx`: a fade-in-on-scroll `motion.div` with a
+`SectionHeader` eyebrow and an optional subtitle. **Reuse it** rather than
 re-deriving the motion props.
 
 ```tsx
@@ -198,19 +197,23 @@ Always specify border colors explicitly (`border-gray-200 dark:border-gray-700`)
 
 ## 6. Components
 
-| Component          | Role                                                    |
-| ------------------ | ------------------------------------------------------- |
-| `SectionHeader`    | Uppercase section eyebrow (the `0.2em` tier).           |
-| `Section` (page)   | Fade-in section wrapper: eyebrow + subtitle + content.  |
-| `SocialLinks`      | Icon row driven by the `socials` array in `page.tsx`.   |
-| `PictureCarousel`  | Auto-advancing image slider (Framer `AnimatePresence`). |
-| `ThemeToggle`      | Sun/Moon manual light↔dark toggle.                      |
-| `Experience`       | Left-bordered timeline with dot markers.                |
-| `Project`          | Neutral card grid; hover reveals detail on desktop.     |
-| `Writing`          | Divided list of posts → `/writing/[slug]`.              |
-| `Books` / `Update` | Data-driven list sections.                              |
-| `MovieList`        | Letterboxd cards from an external API (client fetch).   |
-| `Footer`           | Thin divider + centered closing note + heart.           |
+All live in `frontend/src/components/`; the homepage (`app/page.tsx`) is just
+composition plus the bespoke hero/intro markup.
+
+| Component           | Role                                                         |
+| ------------------- | ------------------------------------------------------------ |
+| `SectionHeader`     | Uppercase section eyebrow (the `0.2em` tier).                |
+| `Section`           | Fade-in section wrapper: eyebrow + subtitle + content.       |
+| `SocialLinks`       | Icon row (owns the `socials` data); ends with `ThemeToggle`. |
+| `PictureCarousel`   | Auto-advancing image slider over `assets/images.ts`.         |
+| `ScrollThread`      | Accent line that draws itself down the page on scroll.       |
+| `ThemeToggle`       | Sun/Moon manual light↔dark toggle.                           |
+| `Experience`        | Left-bordered timeline with dot markers.                     |
+| `Projects`          | Neutral card grid; hover/focus reveals detail on desktop.    |
+| `Writing`           | Divided list of posts → `/writing/[slug]`.                   |
+| `Books` / `Updates` | Data-driven list sections.                                   |
+| `MovieList`         | Letterboxd cards from an external API (client fetch).        |
+| `Footer`            | Thin divider + centered closing note + heart.                |
 
 Icons: `react-icons` (`Fa*`, `Si*`, `Fi*`) and `lucide-react`. Keep icon usage light.
 

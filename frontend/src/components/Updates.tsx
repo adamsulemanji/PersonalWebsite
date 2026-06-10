@@ -4,16 +4,10 @@ import { updates } from '@/assets/updates';
 import { analyticsAttributes } from '@/lib/analytics';
 import { metaLabel } from '@/lib/styles';
 
-interface UpdatesProps {
-  category: string;
-}
-
-export default function Updates({ category }: UpdatesProps) {
-  const filtered = updates.filter((update) => update.category === category);
-
+export default function Updates() {
   return (
     <div className='space-y-[-2px]'>
-      {filtered.map((update, index) => {
+      {updates.map((update) => {
         const inner = (
           <div className='flex w-full flex-col gap-2 overflow-hidden rounded-md p-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 sm:flex-row sm:items-center sm:justify-between'>
             <div className='flex min-w-0 items-start space-x-2'>
@@ -39,7 +33,6 @@ export default function Updates({ category }: UpdatesProps) {
         const sharedProps = {
           className: 'block w-full',
           ...analyticsAttributes('update_clicked', {
-            category,
             date: update.date,
             label: update.description,
           }),
@@ -48,7 +41,7 @@ export default function Updates({ category }: UpdatesProps) {
         if (update.url) {
           return (
             <a
-              key={index}
+              key={update.description}
               {...sharedProps}
               href={update.url}
               target='_blank'
@@ -60,7 +53,7 @@ export default function Updates({ category }: UpdatesProps) {
         }
 
         return (
-          <div key={index} {...sharedProps}>
+          <div key={update.description} {...sharedProps}>
             {inner}
           </div>
         );

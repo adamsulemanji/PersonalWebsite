@@ -1,25 +1,26 @@
-export interface projectsInterface {
+export interface Project {
   title: string;
   description: string;
   url?: string;
   date: string;
   pictures?: string[];
   categories?: string[];
-  color?: string;
+  color?: keyof typeof colorMap;
 }
 
-export const colorMap: Record<string, string[]> = {
-  red: ['#ef4444', '#f87171'],
-  blue: ['#3b82f6', '#60a5fa'],
-  green: ['#14b8a6', '#2dd4bf'],
-  purple: ['#8b5cf6', '#a78bfa'],
-  orange: ['#f97316', '#fb923c'],
-  banana: ['#eab308', '#facc15'],
-  sky: ['#0ea5e9', '#38bdf8'],
-  pink: ['#d63384', '#f56565'],
-};
+/** Category-pill background colors (see /design.md — pills carry the color). */
+export const colorMap = {
+  red: '#f87171',
+  blue: '#60a5fa',
+  green: '#2dd4bf',
+  purple: '#a78bfa',
+  orange: '#fb923c',
+  banana: '#facc15',
+  sky: '#38bdf8',
+  pink: '#f56565',
+} as const;
 
-export const projects: projectsInterface[] = [
+export const projects: Project[] = [
   {
     title: 'Personal Website',
     description:
