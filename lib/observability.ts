@@ -2,7 +2,10 @@ import * as cdk from "aws-cdk-lib";
 import * as athena from "aws-cdk-lib/aws-athena";
 import * as cloudwatch from "aws-cdk-lib/aws-cloudwatch";
 import * as cloudwatch_actions from "aws-cdk-lib/aws-cloudwatch-actions";
+import * as cognito from "aws-cdk-lib/aws-cognito";
 import * as glue from "aws-cdk-lib/aws-glue";
+import * as iam from "aws-cdk-lib/aws-iam";
+import * as rum from "aws-cdk-lib/aws-rum";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import * as sns from "aws-cdk-lib/aws-sns";
 import * as subscriptions from "aws-cdk-lib/aws-sns-subscriptions";
@@ -20,6 +23,8 @@ export class ObservabilityConstruct extends Construct {
   public readonly databaseName = "personal_website_analytics";
   public readonly tableName = "cloudfront_access_logs";
   public readonly workGroupName = "personal-website-observability";
+  public readonly rumAppMonitor: rum.CfnAppMonitor;
+  public readonly rumIdentityPool: cognito.CfnIdentityPool;
 
   constructor(
     scope: Construct,
@@ -31,6 +36,7 @@ export class ObservabilityConstruct extends Construct {
     this.athenaResultsBucket = new s3.Bucket(this, "AthenaResultsBucket", {
       autoDeleteObjects: true,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      encryption: s3.BucketEncryption.S3_MANAGED,
       enforceSSL: true,
       lifecycleRules: [
         {
@@ -38,6 +44,64 @@ export class ObservabilityConstruct extends Construct {
         },
       ],
       removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
+
+    // CloudWatch RUM measures browser sessions and page views. Its Cognito
+    // identity is unauthenticated but the role can only submit events to this
+    // one app monitor; it cannot read analytics or access other AWS resources.
+    this.rumIdentityPool = new cognito.CfnIdentityPool(
+      this,
+      "RumIdentityPool",
+      {
+        allowUnauthenticatedIdentities: true,
+      },
+    );
+
+    const rumGuestRole = new iam.Role(this, "RumGuestRole", {
+      assumedBy: new iam.FederatedPrincipal(
+        "cognito-identity.amazonaws.com",
+        {
+          StringEquals: {
+            "cognito-identity.amazonaws.com:aud": this.rumIdentityPool.ref,
+          },
+          "ForAnyValue:StringLike": {
+            "cognito-identity.amazonaws.com:amr": "unauthenticated",
+          },
+        },
+        "sts:AssumeRoleWithWebIdentity",
+      ),
+    });
+
+    this.rumAppMonitor = new rum.CfnAppMonitor(this, "RumAppMonitor", {
+      name: "personal-website",
+      domainList: ["adamsulemanji.com", "www.adamsulemanji.com"],
+      cwLogEnabled: false,
+      appMonitorConfiguration: {
+        allowCookies: true,
+        enableXRay: false,
+        guestRoleArn: rumGuestRole.roleArn,
+        identityPoolId: this.rumIdentityPool.ref,
+        sessionSampleRate: 1,
+        telemetries: ["errors", "performance", "http"],
+      },
+    });
+
+    rumGuestRole.addToPolicy(
+      new iam.PolicyStatement({
+        actions: ["rum:PutRumEvents"],
+        resources: [
+          cdk.Stack.of(this).formatArn({
+            service: "rum",
+            resource: "appmonitor",
+            resourceName: this.rumAppMonitor.name,
+          }),
+        ],
+      }),
+    );
+
+    new cognito.CfnIdentityPoolRoleAttachment(this, "RumIdentityPoolRoles", {
+      identityPoolId: this.rumIdentityPool.ref,
+      roles: { unauthenticated: rumGuestRole.roleArn },
     });
 
     const database = new glue.CfnDatabase(this, "AnalyticsDatabase", {
@@ -133,6 +197,25 @@ export class ObservabilityConstruct extends Construct {
         description: "Requests per day for the last 30 days",
         name: "daily_requests_last_30_days",
         queryString: `SELECT log_date, COUNT(*) AS requests
+FROM ${this.tableName}
+WHERE log_date >= current_date - interval '30' day
+GROUP BY log_date
+ORDER BY log_date DESC;`,
+      },
+      {
+        description: "Requests per month across all retained logs",
+        name: "monthly_request_history",
+        queryString: `SELECT date_trunc('month', CAST(log_date AS timestamp)) AS month,
+       COUNT(*) AS requests
+FROM ${this.tableName}
+GROUP BY 1
+ORDER BY 1 DESC;`,
+      },
+      {
+        description:
+          "Approximate unique clients per day for the last 30 days; includes bots and shared IPs",
+        name: "approximate_daily_unique_clients",
+        queryString: `SELECT log_date, COUNT(DISTINCT c_ip) AS approximate_unique_clients
 FROM ${this.tableName}
 WHERE log_date >= current_date - interval '30' day
 GROUP BY log_date
@@ -247,8 +330,15 @@ ORDER BY requests DESC;`,
     // ***********************
     this.dashboard = new cloudwatch.Dashboard(this, "TrafficDashboard", {
       dashboardName: "personal-website-traffic",
-      defaultInterval: cdk.Duration.days(14),
+      defaultInterval: cdk.Duration.days(30),
     });
+
+    const requestMetric =
+      props.frontendConstruct.apexDistribution.metricRequests({
+        ...metricOptions,
+        period: cdk.Duration.days(1),
+        statistic: "Sum",
+      });
 
     this.dashboard.addWidgets(
       new cloudwatch.TextWidget({
@@ -259,6 +349,7 @@ ORDER BY requests DESC;`,
           `- Athena database: \`${this.databaseName}\``,
           `- Athena table: \`${this.tableName}\``,
           `- Athena workgroup: \`${this.workGroupName}\``,
+          `- CloudWatch RUM app monitor: \`${this.rumAppMonitor.name}\``,
           `- Raw log bucket: \`${props.frontendConstruct.accessLogsBucket.bucketName}\``,
           "",
           "Use the saved Athena queries in the `personal-website-observability` workgroup for top paths, referrers, user agents, and daily request trends.",
@@ -271,6 +362,19 @@ ORDER BY requests DESC;`,
         alarms: [alarm5xx, alarm4xx],
         width: 24,
         height: 3,
+      }),
+      new cloudwatch.SingleValueWidget({
+        title: "Requests in Selected Time Range",
+        metrics: [requestMetric],
+        setPeriodToTimeRange: true,
+        width: 8,
+        height: 4,
+      }),
+      new cloudwatch.GraphWidget({
+        title: "Daily Request Volume",
+        left: [requestMetric],
+        width: 16,
+        height: 4,
       }),
       new cloudwatch.GraphWidget({
         title: "Requests and Data Transfer",

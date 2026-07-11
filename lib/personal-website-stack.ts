@@ -9,13 +9,18 @@ export class PersonalWebsiteStack extends cdk.Stack {
     super(scope, id, props);
 
     const frontendConstruct = new FrontendConstruct(this, "PersonalWebsite");
-    new ObservabilityConstruct(this, "PersonalWebsiteObservability", {
-      frontendConstruct,
-    });
+    const observabilityConstruct = new ObservabilityConstruct(
+      this,
+      "PersonalWebsiteObservability",
+      {
+        frontendConstruct,
+      },
+    );
 
     // ********** Create the Pipeline stack **********
     new Pipeline(this, "PersonalWebsitePipeline", {
       frontendConstruct,
+      observabilityConstruct,
       env: {
         account: process.env.CDK_DEFAULT_ACCOUNT,
         region: process.env.CDK_DEFAULT_REGION,

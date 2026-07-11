@@ -27,13 +27,21 @@ export class FrontendConstruct extends Construct {
     this.apexBucket = new s3.Bucket(this, "ApexBucket", {
       removalPolicy: cdk.RemovalPolicy.RETAIN,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      encryption: s3.BucketEncryption.S3_MANAGED,
       enforceSSL: true,
+      versioned: true,
+      lifecycleRules: [
+        {
+          noncurrentVersionExpiration: cdk.Duration.days(30),
+        },
+      ],
     });
 
     this.accessLogsBucket = new s3.Bucket(this, "AccessLogsBucket", {
       accessControl: s3.BucketAccessControl.LOG_DELIVERY_WRITE,
       autoDeleteObjects: true,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      encryption: s3.BucketEncryption.S3_MANAGED,
       enforceSSL: true,
       lifecycleRules: [
         {
@@ -114,6 +122,8 @@ export class FrontendConstruct extends Construct {
             cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           // Static site only needs GET/HEAD — ALLOW_ALL was unnecessary
           allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
+          cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+          compress: true,
           // Managed policy: HSTS, X-Content-Type-Options, frame-ancestors,
           // Referrer-Policy, XSS protection
           responseHeadersPolicy:
@@ -127,6 +137,8 @@ export class FrontendConstruct extends Construct {
         },
         domainNames: [domainName],
         certificate: certificate,
+        minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
+        httpVersion: cloudfront.HttpVersion.HTTP2_AND_3,
         enableLogging: true,
         publishAdditionalMetrics: true,
         errorResponses: [
@@ -159,6 +171,8 @@ export class FrontendConstruct extends Construct {
           viewerProtocolPolicy:
             cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
+          cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+          compress: true,
           responseHeadersPolicy:
             cloudfront.ResponseHeadersPolicy.SECURITY_HEADERS,
           functionAssociations: [
@@ -170,6 +184,8 @@ export class FrontendConstruct extends Construct {
         },
         domainNames: [wwwDomain],
         certificate: certificate,
+        minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
+        httpVersion: cloudfront.HttpVersion.HTTP2_AND_3,
       },
     );
 
@@ -185,6 +201,22 @@ export class FrontendConstruct extends Construct {
     });
 
     new route53.ARecord(this, "AliasRecordWww", {
+      zone,
+      recordName: wwwDomain,
+      target: route53.RecordTarget.fromAlias(
+        new route53targets.CloudFrontTarget(this.wwwDistribution),
+      ),
+    });
+
+    new route53.AaaaRecord(this, "AliasRecordApexIpv6", {
+      zone,
+      recordName: domainName,
+      target: route53.RecordTarget.fromAlias(
+        new route53targets.CloudFrontTarget(this.apexDistribution),
+      ),
+    });
+
+    new route53.AaaaRecord(this, "AliasRecordWwwIpv6", {
       zone,
       recordName: wwwDomain,
       target: route53.RecordTarget.fromAlias(

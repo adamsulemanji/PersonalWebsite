@@ -1,5 +1,5 @@
 import { sectionLabel } from '@/lib/styles';
 
 export default function SectionHeader({ title }: { title: string }) {
-  return <p className={`mb-6 ${sectionLabel}`}>{title}</p>;
+  return <h2 className={`mb-6 ${sectionLabel}`}>{title}</h2>;
 }

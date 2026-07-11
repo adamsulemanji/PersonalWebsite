@@ -6,9 +6,11 @@ import * as codebuild from "aws-cdk-lib/aws-codebuild";
 import * as iam from "aws-cdk-lib/aws-iam";
 
 import { FrontendConstruct } from "./cloudfront";
+import { ObservabilityConstruct } from "./observability";
 
 export interface PipelineStackProps extends cdk.StackProps {
   frontendConstruct: FrontendConstruct;
+  observabilityConstruct: ObservabilityConstruct;
 }
 
 export class Pipeline extends cdk.Stack {
@@ -48,13 +50,20 @@ export class Pipeline extends cdk.Stack {
             runtimeVersions: {
               nodejs: "20",
             },
-            commands: ["npm install -g aws-cdk", "npm ci"],
+            commands: ["npm ci"],
           },
           pre_build: {
-            commands: ["node --version", "npm --version", "cdk --version"],
+            commands: [
+              "node --version",
+              "npm --version",
+              "npx --no-install cdk --version",
+            ],
           },
           build: {
-            commands: ["cdk synth -o dist"],
+            commands: [
+              "npm test -- --runInBand",
+              "npx --no-install cdk synth -o dist",
+            ],
           },
         },
         artifacts: {
@@ -126,6 +135,17 @@ export class Pipeline extends cdk.Stack {
       {
         environment: {
           buildImage: codebuild.LinuxBuildImage.STANDARD_7_0,
+          environmentVariables: {
+            NEXT_PUBLIC_AWS_RUM_APP_MONITOR_ID: {
+              value: props.observabilityConstruct.rumAppMonitor.attrId,
+            },
+            NEXT_PUBLIC_AWS_RUM_IDENTITY_POOL_ID: {
+              value: props.observabilityConstruct.rumIdentityPool.ref,
+            },
+            NEXT_PUBLIC_AWS_RUM_REGION: {
+              value: cdk.Stack.of(props.observabilityConstruct).region,
+            },
+          },
         },
         // Cache the npm download cache (npm ci wipes node_modules, so caching
         // node_modules directly would be useless)
@@ -175,7 +195,15 @@ export class Pipeline extends cdk.Stack {
             }),
             new iam.PolicyStatement({
               sid: "Observability",
-              actions: ["glue:*", "athena:*", "cloudwatch:*", "logs:*"],
+              actions: [
+                "glue:*",
+                "athena:*",
+                "cloudwatch:*",
+                "cognito-identity:*",
+                "logs:*",
+                "rum:*",
+                "sns:*",
+              ],
               resources: ["*"],
             }),
             new iam.PolicyStatement({

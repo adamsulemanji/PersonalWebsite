@@ -17,7 +17,7 @@ export default function Section({
   children: ReactNode;
 }) {
   return (
-    <motion.div
+    <motion.section
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
@@ -31,6 +31,6 @@ export default function Section({
         </p>
       )}
       {children}
-    </motion.div>
+    </motion.section>
   );
 }

@@ -3,7 +3,7 @@ import '../styles/globals.css';
 
 export { metadata, viewport } from './metadata';
 import { ThemeProvider } from '@/components/theme/theme-provider';
-import AnalyticsProvider from '@/components/analytics/AnalyticsProvider';
+import RumProvider from '@/components/analytics/RumProvider';
 import MotionProvider from '@/components/MotionProvider';
 
 import Footer from '@/components/Footer';
@@ -31,14 +31,14 @@ export default function RootLayout({
           defaultTheme='light'
           enableSystem={false}
         >
-          <AnalyticsProvider>
+          <RumProvider>
             <MotionProvider>
               <div className='w-full max-w-[1200px]'>
                 <main>{children}</main>
                 <Footer />
               </div>
             </MotionProvider>
-          </AnalyticsProvider>
+          </RumProvider>
         </ThemeProvider>
       </body>
     </html>

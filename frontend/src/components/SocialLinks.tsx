@@ -88,6 +88,7 @@ export default function SocialLinks() {
             className={`rounded transition-colors hover:text-gray-900 focus-visible:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:hover:text-white dark:focus-visible:text-white dark:focus-visible:ring-gray-500 ${
               social.small ? 'text-sm' : ''
             }`}
+            aria-label={social.label}
             {...analyticsAttributes(social.event ?? 'social_link_clicked', {
               label: social.label,
               section: 'hero',

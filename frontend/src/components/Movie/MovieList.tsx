@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { analyticsAttributes } from '@/lib/analytics';
 import './movie-item.css';
 
-interface MovieItemProps {
+export interface Movie {
   title: string;
   letterboxd_url: string;
   poster_url: string;
@@ -14,11 +14,11 @@ interface MovieItemProps {
   review?: string;
 }
 
-const API_URL =
-  'https://api.fast.adamsulemanji.com/movies/search?username=adamsulemanji&limit=8';
-const SKELETON_COUNT = 8;
 const DISK_STYLES = ['disk-cd', 'disk-bluray'];
 const DISC_COLOR_COUNT = 7;
+const SKELETON_COUNT = 8;
+const API_URL =
+  'https://api.fast.adamsulemanji.com/movies/search?username=adamsulemanji&limit=8';
 
 // Deterministic hash so the disc styling stays stable across re-renders
 // instead of reshuffling on every render (which Math.random() in render does).
@@ -38,14 +38,10 @@ function MovieItem({
   rating,
   director,
   review,
-}: MovieItemProps) {
-  const { discColorClass, diskStyle } = useMemo(() => {
-    const seed = hashString(letterboxd_url || title);
-    return {
-      discColorClass: `disc-color-${seed % DISC_COLOR_COUNT}`,
-      diskStyle: DISK_STYLES[seed % DISK_STYLES.length],
-    };
-  }, [letterboxd_url, title]);
+}: Movie) {
+  const seed = hashString(letterboxd_url || title);
+  const discColorClass = `disc-color-${seed % DISC_COLOR_COUNT}`;
+  const diskStyle = DISK_STYLES[seed % DISK_STYLES.length];
 
   return (
     <a
@@ -124,63 +120,50 @@ const movieGridClass =
 
 function MovieListSkeleton() {
   return (
-    <div className={movieGridClass} aria-hidden>
-      {Array.from({ length: SKELETON_COUNT }).map((_, i) => (
-        <div key={i} className='animate-pulse'>
-          {/* Mobile placeholder */}
-          <div className='flex items-start gap-4 rounded-lg border border-gray-200 bg-gray-100 p-4 dark:border-gray-700 dark:bg-gray-800 sm:hidden'>
-            <div className='h-32 w-24 shrink-0 rounded-md bg-gray-200 dark:bg-gray-700' />
-            <div className='flex-1 space-y-2 pt-1'>
-              <div className='h-4 w-3/4 rounded bg-gray-200 dark:bg-gray-700' />
-              <div className='h-3 w-1/2 rounded bg-gray-200 dark:bg-gray-700' />
-            </div>
-          </div>
-          {/* Desktop placeholder */}
-          <div className='hidden rounded-lg border border-gray-200 bg-gray-100 px-10 py-16 dark:border-gray-700 dark:bg-gray-800 sm:block lg:px-16 lg:py-24'>
-            <div className='mx-auto aspect-[2/3] w-2/3 rounded-md bg-gray-200 dark:bg-gray-700' />
-          </div>
-          <div className='mt-4 hidden space-y-2 sm:block'>
-            <div className='h-3 w-3/4 rounded bg-gray-200 dark:bg-gray-700' />
-            <div className='h-3 w-1/2 rounded bg-gray-200 dark:bg-gray-700' />
-          </div>
-        </div>
+    <div className={movieGridClass} aria-label='Loading recent movies'>
+      {Array.from({ length: SKELETON_COUNT }, (_, index) => (
+        <div
+          key={index}
+          className='h-48 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-800 sm:h-72'
+          aria-hidden
+        />
       ))}
     </div>
   );
 }
 
 export default function MovieList() {
-  const [movies, setMovies] = useState<MovieItemProps[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>(
+    'loading'
+  );
 
   useEffect(() => {
     const controller = new AbortController();
 
-    fetch(API_URL, { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
-        setMovies(Array.isArray(data) ? data : []);
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (err.name === 'AbortError') return;
-        console.error('Error fetching movies:', err);
-        setError(true);
-        setLoading(false);
-      });
+    async function loadMovies() {
+      try {
+        const response = await fetch(API_URL, { signal: controller.signal });
+        if (!response.ok)
+          throw new Error(`Movie API returned ${response.status}`);
 
+        const data: unknown = await response.json();
+        setMovies(Array.isArray(data) ? (data as Movie[]) : []);
+        setStatus('ready');
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError')
+          return;
+        setStatus('error');
+      }
+    }
+
+    void loadMovies();
     return () => controller.abort();
   }, []);
 
-  if (loading) {
-    return <MovieListSkeleton />;
-  }
+  if (status === 'loading') return <MovieListSkeleton />;
 
-  if (error) {
+  if (status === 'error') {
     return (
       <p className='text-sm text-gray-500 dark:text-gray-400'>
         Unable to load movies right now. Check back later.
