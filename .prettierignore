@@ -1,0 +1,10 @@
+# frontend/ has its own prettier config and plugins — lint-staged runs prettier
+# there separately (see .lintstagedrc.js). Checking it from the root fails on
+# the unresolvable prettier-plugin-tailwindcss.
+frontend/
+
+node_modules/
+cdk.out/
+dist/
+package-lock.json
+diagram.dot

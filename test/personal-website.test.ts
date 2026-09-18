@@ -97,4 +97,49 @@ describe("website infrastructure", () => {
       }),
     });
   });
+
+  // The frontend reports clicks via recordEvent; RUM drops them unless custom
+  // events are explicitly enabled on the app monitor.
+  test("accepts the frontend's custom click events", () => {
+    template.hasResourceProperties("AWS::RUM::AppMonitor", {
+      CustomEvents: { Status: "ENABLED" },
+    });
+  });
+
+  test("sends a content security policy with every response", () => {
+    template.hasResourceProperties("AWS::CloudFront::ResponseHeadersPolicy", {
+      ResponseHeadersPolicyConfig: Match.objectLike({
+        SecurityHeadersConfig: Match.objectLike({
+          ContentSecurityPolicy: Match.objectLike({
+            ContentSecurityPolicy: Match.stringLikeRegexp(
+              "object-src 'none'.*frame-ancestors 'none'",
+            ),
+            Override: true,
+          }),
+          StrictTransportSecurity: Match.objectLike({
+            AccessControlMaxAgeSec: 31536000,
+            IncludeSubdomains: true,
+            Preload: true,
+          }),
+        }),
+        CustomHeadersConfig: Match.objectLike({
+          Items: Match.arrayWith([
+            Match.objectLike({ Header: "Permissions-Policy" }),
+          ]),
+        }),
+      }),
+    });
+  });
+
+  test("logs requests from both distributions", () => {
+    template.resourcePropertiesCountIs(
+      "AWS::CloudFront::Distribution",
+      {
+        DistributionConfig: Match.objectLike({
+          Logging: Match.anyValue(),
+        }),
+      },
+      2,
+    );
+  });
 });

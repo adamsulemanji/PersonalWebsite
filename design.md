@@ -142,7 +142,7 @@ className='underline decoration-gray-300 underline-offset-4 transition-colors
 
 `body` centers the app horizontally; content is capped at `max-w-[1200px]`.
 
-### Home page (`app/page.tsx`)
+### Home page (`components/HomePage.tsx`)
 
 Single-page scroller. Outer padding then a centered, narrower column:
 
@@ -197,23 +197,36 @@ Always specify border colors explicitly (`border-gray-200 dark:border-gray-700`)
 
 ## 6. Components
 
-All live in `frontend/src/components/`; the homepage (`app/page.tsx`) is just
-composition plus the bespoke hero/intro markup.
+All live in `frontend/src/components/` as flat, PascalCase files named after
+their default export. The homepage (`components/HomePage.tsx`, rendered by
+`app/page.tsx`) is just composition plus the bespoke hero/intro markup.
 
-| Component           | Role                                                         |
-| ------------------- | ------------------------------------------------------------ |
-| `SectionHeader`     | Uppercase section eyebrow (the `0.2em` tier).                |
-| `Section`           | Fade-in section wrapper: eyebrow + subtitle + content.       |
-| `SocialLinks`       | Icon row (owns the `socials` data); ends with `ThemeToggle`. |
-| `PictureCarousel`   | Auto-advancing image slider over `assets/images.ts`.         |
-| `ScrollThread`      | Accent line that draws itself down the page on scroll.       |
-| `ThemeToggle`       | Sun/Moon manual light↔dark toggle.                           |
-| `Experience`        | Left-bordered timeline with dot markers.                     |
-| `Projects`          | Neutral card grid; hover/focus reveals detail on desktop.    |
-| `Writing`           | Divided list of posts → `/writing/[slug]`.                   |
-| `Books` / `Updates` | Data-driven list sections.                                   |
-| `MovieList`         | Letterboxd cards from an external API (client fetch).        |
-| `Footer`            | Thin divider + centered closing note + heart.                |
+| Component           | Client? | Role                                                        |
+| ------------------- | ------- | ----------------------------------------------------------- |
+| `SectionHeader`     | server  | Uppercase section eyebrow (the `0.2em` tier).               |
+| `Section`           | client  | Fade-in section wrapper: eyebrow + subtitle + content.      |
+| `Hero`              | client  | `HeroTitle` + `FadeIn` — the intro's animated wrappers.     |
+| `SocialLinks`       | server  | Icon row over `assets/socials.ts`; ends with `ThemeToggle`. |
+| `PictureCarousel`   | client  | Auto-advancing image slider over `assets/images.ts`.        |
+| `ScrollThread`      | client  | Accent line that draws itself down the page on scroll.      |
+| `ThemeToggle`       | client  | Sun/Moon manual light↔dark toggle.                          |
+| `FreshnessLabel`    | client  | "Updated …" stamp, badged once it passes 4 months.          |
+| `Experience`        | server  | Left-bordered timeline with dot markers.                    |
+| `Projects`          | server  | Neutral card grid; hover/focus reveals detail on desktop.   |
+| `Writing`           | server  | Divided list of posts → `/writing/[slug]`.                  |
+| `Books` / `Updates` | server  | Data-driven list sections.                                  |
+| `MovieList`         | client  | Letterboxd cards from an external API (client fetch).       |
+| `JsonLd`            | server  | Emits a structured-data block into the static HTML.         |
+| `Footer`            | server  | Thin divider + centered closing note + heart + RSS link.    |
+
+### Server by default
+
+The homepage is a **server component**. Only the animated wrappers and the
+genuinely interactive pieces carry `'use client'`; they take their content as
+`children`, which React renders on the server and passes through as finished
+markup. Adding `'use client'` to a component that has no hooks, no event
+handlers and no Framer Motion pulls it — and everything it imports — into the
+browser bundle for nothing. Check before you add the directive.
 
 Icons: `react-icons` (`Fa*`, `Si*`, `Fi*`) and `lucide-react`. Keep icon usage light.
 
@@ -244,7 +257,30 @@ utilities via a template literal:
 
 ---
 
-## 8. Motion
+## 8. Accessibility
+
+Non-negotiable, because these are the ones this site has actually got wrong before:
+
+- **Focus is global, not per-component.** `globals.css` gives every element a
+  `:focus-visible` outline in the accent color. Do **not** add `focus-visible:ring-*`
+  utilities to individual components — the site-wide rule already covers them, and
+  a local override is how components end up with no focus state at all.
+- **Anything revealed on `:hover` must also reveal on `:focus-visible`**, hung off
+  the focusable ancestor (the card's `<a>`, not the inner div). See `book.css`
+  and `movie.css`.
+- **Motion that starts on its own needs a visible stop** (WCAG 2.2.2). Pausing
+  on hover/focus is not enough on its own — `PictureCarousel` ships a real
+  pause/play button.
+- **`aria-live` is for changes the visitor caused.** The carousel switches its
+  caption region to `aria-live='off'` during autoplay so it does not interrupt a
+  screen reader every four seconds.
+- Use real semantics before ARIA: `<dl>` for label/value pairs, `<ul>`/`<ol>`
+  for lists, `<time dateTime>` for dates.
+- The layout ships a skip link to `#main`; keep the `id` on `<main>`.
+
+---
+
+## 9. Motion
 
 Framer Motion, kept restrained:
 
@@ -257,7 +293,7 @@ Avoid springy UI everywhere, parallax, animated gradients, or long chained seque
 
 ---
 
-## 9. Do / Don't
+## 10. Do / Don't
 
 **Do**
 
@@ -266,6 +302,9 @@ Avoid springy UI everywhere, parallax, animated gradients, or long chained seque
 - Keep surfaces neutral gray; put any real color in pills.
 - Reference tokens as `var(--x)`; declare `dark:` for every color.
 - Reuse `Section` and `SectionHeader`.
+- Let the global `:focus-visible` rule handle focus; pair every `:hover` reveal
+  with a `:focus-visible` one.
+- Keep components on the server unless they genuinely need the browser.
 
 **Don't**
 
@@ -273,10 +312,14 @@ Avoid springy UI everywhere, parallax, animated gradients, or long chained seque
 - Add a second accent color or reintroduce the magenta shadcn palette.
 - Wrap hex tokens in `hsl()`.
 - Use `<a>` for internal routes (use `next/link`); leave images without `alt`.
+- Add `focus-visible:ring-*` to a component — the global rule already covers it.
+- Reach for `'use client'` before checking whether the component needs it.
+- Declare `:root` custom properties from a component stylesheet; scope them to
+  the component's own class.
 
 ---
 
-## 10. Prompt template (for future LLM use)
+## 11. Prompt template (for future LLM use)
 
 > Match the personal-portfolio design language: off-white/near-black backgrounds,
 > Tailwind gray scale for text and cards (`bg-gray-100 dark:bg-gray-800`, borders
@@ -287,3 +330,6 @@ Avoid springy UI everywhere, parallax, animated gradients, or long chained seque
 > white-on-color category pills only. Wrap homepage sections in the `Section`
 > component. Restrained Framer Motion (fade-in on scroll, light hover lift).
 > Preserve desktop layout, stack cleanly on mobile, declare `dark:` for every color.
+> Keep it a server component unless it needs hooks or handlers, rely on the global
+> `:focus-visible` outline rather than per-component rings, and give anything
+> revealed on hover the same treatment on keyboard focus.

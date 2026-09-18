@@ -1,5 +1,3 @@
-'use client';
-
 import type { CSSProperties } from 'react';
 import '../styles/book.css';
 import Image from 'next/image';
@@ -10,13 +8,13 @@ type BookCSSProperties = CSSProperties & { '--book-height': string };
 export default function Books() {
   return (
     <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-      {books.map((book, index) => (
+      {books.map((book) => (
         <a
           href={book.goodreads_url}
           target='_blank'
           rel='noopener noreferrer'
           className='transition-background bookPerspectiveContainer relative z-0 block w-full cursor-pointer rounded-xl border border-gray-200 bg-gray-100 p-8 duration-[0.7s] hover:z-10 hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-800 sm:p-12 lg:p-14'
-          key={index}
+          key={book.goodreads_url}
         >
           <div className='bookPerspective !my-0 flex h-full items-center justify-center gap-[0]'>
             <div className='bookMetaText absolute left-[-24px] right-[-24px] top-[-24px] !my-0 -translate-y-4 text-left opacity-0 transition-all duration-700 ease-in-out'>

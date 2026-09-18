@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { analyticsAttributes } from '@/lib/analytics';
-import './movie-item.css';
+import '../styles/movie.css';
 
 export interface Movie {
   title: string;
@@ -48,7 +48,7 @@ function MovieItem({
       href={letterboxd_url}
       target='_blank'
       rel='noopener noreferrer'
-      className='relative z-0 mb-6 block h-full w-full cursor-pointer rounded-xl hover:z-10'
+      className='movie-card relative z-0 mb-6 block h-full w-full cursor-pointer rounded-xl hover:z-10'
       {...analyticsAttributes('movie_clicked', { label: title })}
     >
       <div className='flex items-start gap-4 rounded-lg border border-gray-200 bg-gray-100 p-4 dark:border-gray-700 dark:bg-gray-800 sm:hidden'>

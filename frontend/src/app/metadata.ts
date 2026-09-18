@@ -1,39 +1,41 @@
 import type { Metadata, Viewport } from 'next';
-
-const siteUrl = 'https://adamsulemanji.com';
-const description =
-  'Adam Sulemanji — Software Engineer at Amazon in Seattle. Writing, projects, and the occasional over-engineered side project.';
+import { siteDescription, siteName, siteUrl } from '@/lib/site';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Adam Sulemanji',
-    template: '%s — Adam Sulemanji',
+    default: siteName,
+    template: `%s — ${siteName}`,
   },
-  description,
-  authors: [{ name: 'Adam Sulemanji', url: siteUrl }],
+  description: siteDescription,
+  authors: [{ name: siteName, url: siteUrl }],
   alternates: {
     canonical: '/',
+    types: {
+      'application/rss+xml': [
+        { url: '/feed.xml', title: `${siteName} — Writing` },
+      ],
+    },
   },
   openGraph: {
     type: 'website',
     url: siteUrl,
-    siteName: 'Adam Sulemanji',
-    title: 'Adam Sulemanji',
-    description,
+    siteName,
+    title: siteName,
+    description: siteDescription,
     images: [
       {
         url: '/images/og.jpg',
         width: 1200,
         height: 630,
-        alt: 'Adam Sulemanji',
+        alt: siteName,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Adam Sulemanji',
-    description,
+    title: siteName,
+    description: siteDescription,
     images: ['/images/og.jpg'],
   },
   icons: {
@@ -55,8 +57,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f8f8f8' },
-    { media: '(prefers-color-scheme: dark)', color: '#1c1c1c' },
-  ],
+  // Single value: the theme is class-based, so a `prefers-color-scheme` split
+  // would disagree with it. ThemeProvider syncs this at runtime.
+  themeColor: '#f8f8f8',
 };

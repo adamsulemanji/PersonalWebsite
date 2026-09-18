@@ -4,6 +4,7 @@ import * as codepipeline from "aws-cdk-lib/aws-codepipeline";
 import * as codepipeline_actions from "aws-cdk-lib/aws-codepipeline-actions";
 import * as codebuild from "aws-cdk-lib/aws-codebuild";
 import * as iam from "aws-cdk-lib/aws-iam";
+import * as codestarnotifications from "aws-cdk-lib/aws-codestarnotifications";
 
 import { FrontendConstruct } from "./cloudfront";
 import { ObservabilityConstruct } from "./observability";
@@ -212,6 +213,7 @@ export class Pipeline extends cdk.Stack {
                 "codebuild:*",
                 "codepipeline:*",
                 "codestar-connections:UseConnection",
+                "codestar-notifications:*",
               ],
               resources: ["*"],
             }),
@@ -333,26 +335,44 @@ export class Pipeline extends cdk.Stack {
     // ********** PIPELINE DEFINITION **********
     // Synth and BuildFrontend are independent — running them in the same stage
     // lets CodePipeline execute them in parallel, cutting pipeline time roughly in half.
-    new codepipeline.Pipeline(this, "PersonalWebsitePipeline", {
-      pipelineName: "PersonalWebsitePipeline",
-      stages: [
-        {
-          stageName: "Source",
-          actions: [sourceAction],
-        },
-        {
-          stageName: "SynthAndBuild",
-          actions: [synthAction, buildFrontendAction],
-        },
-        {
-          stageName: "DeployInfra",
-          actions: [deployInfraAction],
-        },
-        {
-          stageName: "DeployFrontend",
-          actions: [deployFrontendAction, invalidateCacheAction],
-        },
-      ],
-    });
+    const pipeline = new codepipeline.Pipeline(
+      this,
+      "PersonalWebsitePipeline",
+      {
+        pipelineName: "PersonalWebsitePipeline",
+        stages: [
+          {
+            stageName: "Source",
+            actions: [sourceAction],
+          },
+          {
+            stageName: "SynthAndBuild",
+            actions: [synthAction, buildFrontendAction],
+          },
+          {
+            stageName: "DeployInfra",
+            actions: [deployInfraAction],
+          },
+          {
+            stageName: "DeployFrontend",
+            actions: [deployFrontendAction, invalidateCacheAction],
+          },
+        ],
+      },
+    );
+
+    // A failed deploy was previously silent — reuse the alarm topic the
+    // CloudFront alarms already notify. Passing the topic itself (not an ARN
+    // import) lets CDK add the publish grant codestar-notifications needs.
+    pipeline.notifyOn(
+      "NotifyOnPipelineFailure",
+      props.observabilityConstruct.alarmTopic,
+      {
+        events: [
+          codepipeline.PipelineNotificationEvents.PIPELINE_EXECUTION_FAILED,
+        ],
+        detailType: codestarnotifications.DetailType.FULL,
+      },
+    );
   }
 }

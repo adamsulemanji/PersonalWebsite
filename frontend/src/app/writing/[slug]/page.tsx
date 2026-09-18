@@ -2,16 +2,19 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { FiArrowLeft } from 'react-icons/fi';
 import type { Metadata } from 'next';
-import { writing } from '@/assets/writing';
+import { writing, localPosts } from '@/assets/writing';
 import { formatDate } from '@/lib/format';
+import { abs, siteName } from '@/lib/site';
 import { metaLabel, sectionLabel } from '@/lib/styles';
+import JsonLd from '@/components/JsonLd';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Linked-out posts get no page here, so don't pre-render empty stubs.
 export function generateStaticParams() {
-  return writing.map((post) => ({ slug: post.slug }));
+  return localPosts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({
@@ -20,13 +23,36 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = writing.find((p) => p.slug === slug);
   if (!post) return {};
+
+  const url = `/writing/${slug}/`;
   return {
-    title: `${post.title} — Adam Sulemanji`,
+    // Bare: the layout's `%s — Adam Sulemanji` template appends the site name.
+    title: post.title,
     description: post.description,
     // Override the site-wide canonical ('/') inherited from the root layout —
     // without this every post canonicalizes to the homepage.
     alternates: {
-      canonical: `/writing/${slug}/`,
+      canonical: url,
+    },
+    // Next replaces the parent OG block rather than merging, so restate
+    // everything — without this, posts share as the homepage.
+    openGraph: {
+      type: 'article',
+      url,
+      siteName,
+      title: post.title,
+      description: post.description,
+      publishedTime: post.date,
+      authors: [siteName],
+      images: [
+        { url: '/images/og.jpg', width: 1200, height: 630, alt: post.title },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+      images: ['/images/og.jpg'],
     },
   };
 }
@@ -74,6 +100,18 @@ export default async function WritingPost({ params }: PageProps) {
 
   return (
     <div className='w-full px-6 pb-32 pt-16 sm:px-12 sm:pt-24 md:px-20'>
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: post.title,
+          description: post.description,
+          datePublished: post.date,
+          author: { '@type': 'Person', name: siteName, url: abs('/') },
+          mainEntityOfPage: abs(`/writing/${slug}/`),
+          image: abs('/images/og.jpg'),
+        }}
+      />
       <div className='mx-auto flex w-full max-w-2xl flex-col gap-10'>
         <Link
           href='/#section-writing'
@@ -87,7 +125,7 @@ export default async function WritingPost({ params }: PageProps) {
             {post.title}
           </h1>
           <div className={`flex flex-wrap items-center gap-3 ${metaLabel}`}>
-            <span>{formatDate(post.date, 'long')}</span>
+            <time dateTime={post.date}>{formatDate(post.date, 'long')}</time>
             {post.readingTime && <span>· {post.readingTime}</span>}
           </div>
         </header>

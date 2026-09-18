@@ -41,11 +41,14 @@
   height: var(--book-height, 30px);
 }
 
-.bookPerspectiveContainer:hover .bookThreeD {
+/* Same reveal on keyboard focus; the card itself is the link. */
+.bookPerspectiveContainer:hover .bookThreeD,
+.bookPerspectiveContainer:focus-visible .bookThreeD {
   transform: rotateX(80deg) rotate(45deg) scale(0.75);
 }
 
-.bookPerspectiveContainer:hover .bookMetaText {
-  opacity: 100;
+.bookPerspectiveContainer:hover .bookMetaText,
+.bookPerspectiveContainer:focus-visible .bookMetaText {
+  opacity: 1;
   transform: translateY(0);
 }

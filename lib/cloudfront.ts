@@ -110,7 +110,68 @@ export class FrontendConstruct extends Construct {
     );
 
     // ***********************
-    // 4) CLOUDFRONT DISTRIBUTIONS
+    // 4) RESPONSE HEADERS
+    // The managed SECURITY_HEADERS policy covers HSTS, nosniff, frame-options,
+    // referrer-policy and XSS-protection but has no CSP, so restate those and
+    // add one. 'unsafe-inline' is unavoidable: Next inlines its hydration
+    // scripts, as does the theme-seeding script in layout.tsx.
+    // ***********************
+    const securityHeaders = new cloudfront.ResponseHeadersPolicy(
+      this,
+      "SecurityHeadersPolicy",
+      {
+        securityHeadersBehavior: {
+          strictTransportSecurity: {
+            accessControlMaxAge: cdk.Duration.days(365),
+            includeSubdomains: true,
+            preload: true,
+            override: true,
+          },
+          contentTypeOptions: { override: true },
+          frameOptions: {
+            frameOption: cloudfront.HeadersFrameOption.DENY,
+            override: true,
+          },
+          referrerPolicy: {
+            referrerPolicy:
+              cloudfront.HeadersReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN,
+            override: true,
+          },
+          contentSecurityPolicy: {
+            contentSecurityPolicy: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline'",
+              "style-src 'self' 'unsafe-inline'",
+              // Book covers and film posters come from third-party CDNs whose
+              // hostnames the upstream APIs are free to change.
+              "img-src 'self' data: https:",
+              "font-src 'self' data:",
+              // The movies API, plus RUM's dataplane and Cognito.
+              "connect-src 'self' https://api.fast.adamsulemanji.com https://*.amazonaws.com",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "frame-ancestors 'none'",
+              "upgrade-insecure-requests",
+            ].join("; "),
+            override: true,
+          },
+        },
+        customHeadersBehavior: {
+          customHeaders: [
+            {
+              header: "Permissions-Policy",
+              value:
+                "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+              override: true,
+            },
+          ],
+        },
+      },
+    );
+
+    // ***********************
+    // 5) CLOUDFRONT DISTRIBUTIONS
     // ***********************
     this.apexDistribution = new cloudfront.Distribution(
       this,
@@ -124,10 +185,7 @@ export class FrontendConstruct extends Construct {
           allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
           cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
           compress: true,
-          // Managed policy: HSTS, X-Content-Type-Options, frame-ancestors,
-          // Referrer-Policy, XSS protection
-          responseHeadersPolicy:
-            cloudfront.ResponseHeadersPolicy.SECURITY_HEADERS,
+          responseHeadersPolicy: securityHeaders,
           functionAssociations: [
             {
               eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
@@ -173,8 +231,7 @@ export class FrontendConstruct extends Construct {
           allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
           cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
           compress: true,
-          responseHeadersPolicy:
-            cloudfront.ResponseHeadersPolicy.SECURITY_HEADERS,
+          responseHeadersPolicy: securityHeaders,
           functionAssociations: [
             {
               eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
@@ -186,11 +243,14 @@ export class FrontendConstruct extends Construct {
         certificate: certificate,
         minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
         httpVersion: cloudfront.HttpVersion.HTTP2_AND_3,
+        enableLogging: true,
+        logBucket: this.accessLogsBucket,
+        logFilePrefix: "cloudfront-www/",
       },
     );
 
     // ***********************
-    // 5) ROUTE53 ALIAS RECORDS
+    // 6) ROUTE53 ALIAS RECORDS
     // ***********************
     new route53.ARecord(this, "AliasRecordApex", {
       zone,
@@ -225,7 +285,7 @@ export class FrontendConstruct extends Construct {
     });
 
     // ***********************
-    // 6) OUTPUTS
+    // 7) OUTPUTS
     // ***********************
     new cdk.CfnOutput(this, "ApexDistributionDomainName", {
       value: this.apexDistribution.distributionDomainName,

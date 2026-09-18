@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, type RefObject } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, useReducedMotion, useScroll } from 'framer-motion';
 
 type Point = [number, number];
@@ -45,9 +45,10 @@ interface ThreadGeometry {
 // scroll. The path is measured from the real section positions, so every bend
 // lands in the gap between two sections regardless of their heights.
 export default function ScrollThread({
-  contentRef,
+  containerId,
 }: {
-  contentRef: RefObject<HTMLDivElement | null>;
+  /** Element whose children are the sections the thread runs alongside. */
+  containerId: string;
 }) {
   const reduceMotion = useReducedMotion();
   // Bind the draw directly to scroll progress (already rAF-synced) so the line
@@ -57,7 +58,8 @@ export default function ScrollThread({
   const [geometry, setGeometry] = useState<ThreadGeometry | null>(null);
 
   useEffect(() => {
-    const container = contentRef.current;
+    // By id, not a ref, so the page owning the sections can stay server-side.
+    const container = document.getElementById(containerId);
     const outer = container?.parentElement;
     if (!container || !outer) return;
 
@@ -108,7 +110,7 @@ export default function ScrollThread({
     observer.observe(outer);
     observer.observe(container);
     return () => observer.disconnect();
-  }, [contentRef]);
+  }, [containerId]);
 
   if (!geometry) return null;
 

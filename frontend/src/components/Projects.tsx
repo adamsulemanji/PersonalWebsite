@@ -1,5 +1,3 @@
-'use client';
-
 import { Fragment } from 'react';
 import Image from 'next/image';
 import { FiArrowUpRight } from 'react-icons/fi';
@@ -57,7 +55,7 @@ function MobileCard({ project }: { project: Project }) {
     <div className='overflow-hidden rounded-xl border border-gray-200 shadow-md dark:border-gray-700 lg:hidden'>
       <div className='relative aspect-[16/10] w-full'>
         <Image
-          src={project.pictures?.[0] || ''}
+          src={project.image}
           alt={project.title}
           className='object-cover'
           fill
@@ -89,7 +87,7 @@ function DesktopCard({ project }: { project: Project }) {
       <div className='absolute inset-0 flex flex-col transition-transform duration-500 ease-out group-focus-within:-translate-y-2/3 group-hover:-translate-y-2/3'>
         <div className='relative h-2/3 w-full p-4'>
           <Image
-            src={project.pictures?.[0] || ''}
+            src={project.image}
             alt={project.title}
             className='h-full w-full rounded-2xl object-cover object-center shadow-md transition-shadow duration-300 group-hover:shadow-xl'
             width={500}

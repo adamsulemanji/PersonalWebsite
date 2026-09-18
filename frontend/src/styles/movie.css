@@ -1,4 +1,4 @@
-:root {
+.music-item {
   --album-width: 144px;
   --album-height: calc(var(--album-width) * 1.5);
   --disk-size: 130px;
@@ -18,7 +18,8 @@
   height: var(--album-height, 150px);
 }
 
-.music-item:hover .album {
+.music-item:hover .album,
+.movie-card:focus-visible .album {
   margin-left: -24px;
   /* Neutral gray — keep saturated color out of surfaces (see /design.md). */
   background: rgba(31, 41, 55, 0.8);
@@ -27,7 +28,8 @@
     inset 0 -1px 2px #00000080;
 }
 
-.music-item:hover .disk {
+.music-item:hover .disk,
+.movie-card:focus-visible .disk {
   margin-left: 48px;
   animation-play-state: running;
 }
@@ -59,7 +61,8 @@
   pointer-events: none;
 }
 
-.music-item:hover .review-overlay {
+.music-item:hover .review-overlay,
+.movie-card:focus-visible .review-overlay {
   opacity: 1 !important;
 }
 
@@ -125,11 +128,6 @@
   );
 }
 
-/* 
-    Everything else (disk:after, disk:before, .disc-color-0, etc.)
-    remains the same as your original code.
-  */
-
 .disk:after {
   box-sizing: border-box;
   content: '';
@@ -176,8 +174,8 @@
   top: 50%;
   left: 50%;
   border-radius: 50%;
-  margin-top: -60px;
-  margin-left: -60px;
+  margin-top: calc((var(--disk-size) - 10px) / -2);
+  margin-left: calc((var(--disk-size) - 10px) / -2);
 }
 
 .disk__inside {
@@ -205,7 +203,7 @@
 }
 
 @media (max-width: 640px) {
-  :root {
+  .music-item {
     --album-width: 120px;
     --album-height: calc(var(--album-width) * 1.5);
     --disk-size: 108px;

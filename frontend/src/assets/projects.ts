@@ -3,7 +3,8 @@ export interface Project {
   description: string;
   url?: string;
   date: string;
-  pictures?: string[];
+  /** Card image. */
+  image: string;
   categories?: string[];
   color?: keyof typeof colorMap;
 }
@@ -27,7 +28,7 @@ export const projects: Project[] = [
       'A personal portfolio overengineered using AWS services and custom CI/CD pipeline.',
     url: 'https://adamsulemanji.com',
     date: 'Dec 2024 - Present',
-    pictures: ['/images/me.webp'],
+    image: '/images/me.webp',
     categories: ['cdk', 'tailwind', 'aws', 'hosting'],
     color: 'orange',
   },
@@ -37,7 +38,7 @@ export const projects: Project[] = [
       'Command line tool to create full cdk applications with a single command.',
     date: 'September 2024 - Present',
     url: 'https://github.com/adamsulemanji',
-    pictures: ['/images/systemdiagram.webp'],
+    image: '/images/systemdiagram.webp',
     categories: ['cli', 'ci/cd', 'aws'],
     color: 'green',
   },
@@ -47,7 +48,7 @@ export const projects: Project[] = [
       'A course monitoring tool for students about TAMU classes (unfortunately not available anymore)',
     date: 'May 2022 - Present',
     url: 'https://courses.adamsulemanji.com/',
-    pictures: ['/images/coursemonitoring.webp'],
+    image: '/images/coursemonitoring.webp',
     categories: ['eventbridge', 'lambda', 'dynamodb'],
     color: 'purple',
   },
@@ -57,7 +58,7 @@ export const projects: Project[] = [
       'A movie scraper for most recent movies on letterboxd and of course its overengineered',
     date: 'January 2025 - Present',
     url: 'https://api.fast.adamsulemanji.com/',
-    pictures: ['/images/letterboxd.webp'],
+    image: '/images/letterboxd.webp',
     categories: ['webscrapping', 'dynamodb'],
     color: 'red',
   },
@@ -66,7 +67,7 @@ export const projects: Project[] = [
     description: 'Banagrams for online multiplayer for my friends and I',
     date: 'April 2025 - Present',
     url: 'https://bananas.adamsulemanji.com/',
-    pictures: ['/images/river.webp'],
+    image: '/images/river.webp',
     categories: ['websockets', 'cursor', 'react-dnd'],
     color: 'banana',
   },
@@ -76,7 +77,7 @@ export const projects: Project[] = [
       'Democratizing model customization through AI agents and evaluation ',
     url: 'https://aws.amazon.com/sagemaker/ai/model-customization/',
     date: 'October 2025 - Jan 2026',
-    pictures: ['/images/sagemaker.webp'],
+    image: '/images/sagemaker.webp',
     categories: [],
     color: 'pink',
   },

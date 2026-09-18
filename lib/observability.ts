@@ -25,6 +25,7 @@ export class ObservabilityConstruct extends Construct {
   public readonly workGroupName = "personal-website-observability";
   public readonly rumAppMonitor: rum.CfnAppMonitor;
   public readonly rumIdentityPool: cognito.CfnIdentityPool;
+  public readonly alarmTopic: sns.Topic;
 
   constructor(
     scope: Construct,
@@ -76,6 +77,9 @@ export class ObservabilityConstruct extends Construct {
       name: "personal-website",
       domainList: ["adamsulemanji.com", "www.adamsulemanji.com"],
       cwLogEnabled: false,
+      // Required for the frontend's click events (see lib/analytics.ts) —
+      // without it RUM rejects every recordEvent call.
+      customEvents: { status: "ENABLED" },
       appMonitorConfiguration: {
         allowCookies: true,
         enableXRay: false,
@@ -292,6 +296,7 @@ ORDER BY requests DESC;`,
     alarmTopic.addSubscription(
       new subscriptions.EmailSubscription("adam.k.sulemanji@gmail.com"),
     );
+    this.alarmTopic = alarmTopic;
 
     const alarm5xx = new cloudwatch.Alarm(this, "Alarm5xx", {
       metric: props.frontendConstruct.apexDistribution.metric5xxErrorRate({

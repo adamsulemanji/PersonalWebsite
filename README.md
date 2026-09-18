@@ -5,8 +5,9 @@ A modern, responsive personal portfolio website built with Next.js and deployed 
 ## 🚀 Features
 
 - Modern, responsive design with smooth animations
-- Server-side rendered React application using Next.js
-- Dark mode support
+- Statically exported Next.js site — no server at runtime
+- Dark mode, seeded from local time of day on a first visit
+- RSS feed, sitemap, and per-page structured data
 - AWS CloudFront distribution for global content delivery
 - Continuous deployment pipeline using AWS CodePipeline
 - Infrastructure as Code using AWS CDK
@@ -15,11 +16,11 @@ A modern, responsive personal portfolio website built with Next.js and deployed 
 
 - **Frontend:**
 
-  - Next.js 13+ (App Router)
-  - React
+  - Next.js 15 (App Router, `output: 'export'`)
+  - React 19
   - TypeScript
-  - Tailwind CSS
-  - CSS Modules
+  - Tailwind CSS 3
+  - Framer Motion
 
 - **Infrastructure:**
   - AWS CDK
@@ -27,13 +28,16 @@ A modern, responsive personal portfolio website built with Next.js and deployed 
   - AWS S3
   - AWS CodePipeline
   - AWS CodeBuild
+  - CloudWatch RUM + Athena over CloudFront logs ([docs](./docs/analytics.md))
 
 ## 🏗️ Project Structure
 
 ```
-├── frontend/              # Next.js frontend application
+├── frontend/              # Next.js frontend application (see its README)
 ├── lib/                   # AWS CDK infrastructure code
 ├── bin/                   # CDK app entry point
+├── docs/                  # Analytics / observability notes
+├── design.md              # The site's design language — read before adding UI
 └── test/                  # Infrastructure tests
 ```
 
@@ -63,6 +67,13 @@ A modern, responsive personal portfolio website built with Next.js and deployed 
    ```bash
    cd frontend
    npm run dev
+   ```
+
+   Before pushing, verify the static export the pipeline actually builds — the
+   dev server does not exercise it:
+
+   ```bash
+   cd frontend && npm run build
    ```
 
 3. Deploy infrastructure (only required once):

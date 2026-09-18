@@ -1,16 +1,14 @@
 import Link from 'next/link';
 import { FiArrowUpRight } from 'react-icons/fi';
-import { writing } from '@/assets/writing';
+import { postsByDate } from '@/assets/writing';
 import { analyticsAttributes } from '@/lib/analytics';
 import { formatDate } from '@/lib/format';
 import { metaLabel } from '@/lib/styles';
 
 export default function Writing() {
-  const posts = [...writing].sort((a, b) => (a.date < b.date ? 1 : -1));
-
   return (
     <ul className='divide-y divide-gray-200 dark:divide-gray-800'>
-      {posts.map((post) => {
+      {postsByDate.map((post) => {
         const inner = (
           <div className='group flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6'>
             <div className='min-w-0'>

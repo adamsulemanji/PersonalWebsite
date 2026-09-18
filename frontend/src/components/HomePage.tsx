@@ -1,21 +1,20 @@
-'use client';
-
-import { useRef } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 
 import Books from '@/components/Books';
 import Updates from '@/components/Updates';
 import Projects from '@/components/Projects';
 import Experience from '@/components/Experience';
 import Writing from '@/components/Writing';
-import MovieList from '@/components/Movie/MovieList';
+import MovieList from '@/components/MovieList';
 import Section from '@/components/Section';
 import SocialLinks from '@/components/SocialLinks';
 import PictureCarousel from '@/components/PictureCarousel';
 import ScrollThread from '@/components/ScrollThread';
 import FreshnessLabel from '@/components/FreshnessLabel';
+import { FadeIn, HeroTitle } from '@/components/Hero';
 import { metaLabel, underlineLink } from '@/lib/styles';
+
+const CONTENT_ID = 'page-content';
 
 const highlights = [
   { label: 'Based in', value: 'Seattle, WA' },
@@ -27,52 +26,19 @@ const companyLink = `text-gray-900 dark:text-white ${underlineLink}`;
 const bodyCopy =
   'max-w-2xl space-y-4 text-[15px] leading-7 text-gray-600 dark:text-gray-300 sm:text-base';
 
+/** Server component: `HeroTitle`, `FadeIn` and `Section` are the only client islands. */
 export default function HomePage() {
-  const contentRef = useRef<HTMLDivElement>(null);
-
   return (
     <div className='relative w-full px-6 pb-32 pt-16 sm:px-12 sm:pt-24 md:px-20'>
-      <ScrollThread contentRef={contentRef} />
+      <ScrollThread containerId={CONTENT_ID} />
       <div
-        ref={contentRef}
+        id={CONTENT_ID}
         className='relative z-10 mx-auto flex w-full max-w-4xl flex-col gap-24'
       >
-        {/* Hero */}
-        <motion.section
-          className='group relative'
-          id='section-intro'
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <h1 className='text-left font-serif text-4xl font-light leading-[1.05] sm:text-6xl md:mt-8 md:text-7xl'>
-            <motion.span
-              className='block'
-              initial={{ x: -16, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.3, duration: 1 }}
-            >
-              Hi, my
-            </motion.span>
-            <motion.span
-              className='block'
-              initial={{ x: -16, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.5, duration: 1 }}
-            >
-              name is <b className='text-5xl sm:text-7xl md:text-8xl'>Adam</b>
-              <span className='accent'>.</span>
-            </motion.span>
-          </h1>
-          <span className='accent-bar absolute -bottom-5 left-0 mt-5 h-2 w-0 transition-all group-hover:w-2/3' />
-        </motion.section>
+        <HeroTitle />
 
         {/* Intro text + links */}
-        <motion.div
-          initial={{ y: 10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-        >
+        <FadeIn delay={1}>
           <div className={bodyCopy}>
             <p>
               I&apos;m a Software Engineer at{' '}
@@ -123,7 +89,7 @@ export default function HomePage() {
           </div>
 
           <SocialLinks />
-        </motion.div>
+        </FadeIn>
 
         {/* Now */}
         <Section title='Now' id='section-now'>
@@ -182,18 +148,18 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <div className='space-y-3'>
+              <dl className='space-y-3'>
                 {highlights.map((item) => (
                   <div key={item.label} className='flex gap-4'>
-                    <span className={`w-28 shrink-0 pt-0.5 ${metaLabel}`}>
+                    <dt className={`w-28 shrink-0 pt-0.5 ${metaLabel}`}>
                       {item.label}
-                    </span>
-                    <span className='text-sm text-gray-700 dark:text-gray-300'>
+                    </dt>
+                    <dd className='text-sm text-gray-700 dark:text-gray-300'>
                       {item.value}
-                    </span>
+                    </dd>
                   </div>
                 ))}
-              </div>
+              </dl>
             </div>
           </div>
         </Section>

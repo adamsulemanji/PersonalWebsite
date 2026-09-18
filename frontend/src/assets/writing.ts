@@ -63,19 +63,30 @@ That "completely unnecessary" is the point. I wanted to learn CDK properly, and 
 
 **Stack**
 
-- **Framework**: Next.js 15 (App Router), TypeScript
-- **Styling**: Tailwind, a handful of shadcn primitives, Geist font
+- **Framework**: Next.js 15 (App Router), TypeScript, statically exported
+- **Styling**: Tailwind, no component library and no webfont — the system font stack
 - **Motion**: Framer Motion for the entrance animations and the image carousel
 - **Hosting**: S3 + CloudFront, fronted by a Route 53 alias
 - **Infra**: AWS CDK, with a CodePipeline that builds from this repo on push to \`main\`
-- **Analytics**: PostHog, with a light wrapper so components can fire events with typed attributes
+- **Analytics**: CloudWatch RUM, with a light wrapper so components can declare events as data attributes
 
 **What I'd do differently**
 
 - The CDK stack grew organically and could be consolidated. One day.
+- Every dependency I added "just to try it" eventually got pruned. Reaching for a library is the easy call; the site got better each time I took one back out.
 - I resisted adding MDX for a long time. Writing posts as TS strings works, but barely — the moment I want code blocks with syntax highlighting, I'll migrate.
 
 If you want to poke around the source, the repo is linked from my GitHub.
     `,
   },
 ];
+
+/** Every post, newest first. Prefer this over the authored order. */
+export const postsByDate: WritingPost[] = [...writing].sort((a, b) =>
+  b.date.localeCompare(a.date)
+);
+
+/** Posts that render as a page on this site (i.e. not linked out elsewhere). */
+export const localPosts: WritingPost[] = postsByDate.filter(
+  (post) => !post.external
+);

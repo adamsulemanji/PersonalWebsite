@@ -86,5 +86,11 @@ After the deploy:
   included.
 - Raw access logs are retained for 90 days. CloudWatch keeps aggregated metric
   history according to its standard retention policy.
-- This setup tracks traffic and request behavior, not client-side clicks. For
-  click-level product analytics, you still need a frontend event system.
+- Click-level events **are** captured, via RUM custom events. Components tag
+  themselves with `analyticsAttributes(...)` (see
+  `frontend/src/lib/analytics.ts`) and one delegated listener in `RumProvider`
+  forwards each click to `recordEvent`. The app monitor sets
+  `customEvents.status = ENABLED`, without which RUM drops them all.
+- The RUM client is imported dynamically and only initializes when all three
+  `NEXT_PUBLIC_AWS_RUM_*` variables are set at build time — the pipeline injects
+  them, so this is on in production and off locally.

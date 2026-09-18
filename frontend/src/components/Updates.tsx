@@ -1,5 +1,3 @@
-'use client';
-
 import { updates } from '@/assets/updates';
 import { analyticsAttributes } from '@/lib/analytics';
 import { metaLabel } from '@/lib/styles';

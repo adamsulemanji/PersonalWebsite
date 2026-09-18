@@ -27,6 +27,29 @@
     background-color: var(--background);
     color: var(--foreground);
   }
+
+  /* One focus treatment for the whole site, so no component can ship without
+     one. Don't re-declare rings locally. */
+  :focus-visible {
+    outline: 2px solid var(--main);
+    outline-offset: 3px;
+  }
+
+  /* In-page anchors glide, unless less motion was asked for. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  [id^='section-'] {
+    scroll-margin-top: 2rem;
+  }
+
+  ::selection {
+    background-color: var(--main);
+    color: var(--background);
+  }
 }
 
 /* Accent helpers — the trailing period in display titles and the hero bar. */
