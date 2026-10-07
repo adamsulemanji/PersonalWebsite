@@ -13,11 +13,11 @@ export default function Footer() {
         Made with <Heart size={14} className='fill-current' aria-hidden /> by
         Adam Sulemanji
       </p>
-      <p className='mb-10 mt-3 text-center text-sm text-gray-500 dark:text-gray-400'>
+      {/* <p className='mb-10 mt-3 text-center text-sm text-gray-500 dark:text-gray-400'>
         <a href='/feed.xml' className={underlineLink}>
           RSS
         </a>
-      </p>
+      </p> */}
     </footer>
   );
 }
