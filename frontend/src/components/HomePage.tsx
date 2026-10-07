@@ -172,9 +172,7 @@ export default function HomePage() {
             <div className={`order-2 lg:order-1 lg:pb-10 ${bodyCopy}`}>
               <p className={metaLabel}>With Zahra</p>
               <p>
-                Most of my favorite memories lately are with Zahra — a weekend
-                on San Juan Island, Japanese food in Salt Lake City, a lot of
-                trips to Phoenix, and a week and a half in Japan.
+                Zahra and I <3
               </p>
             </div>
             <div className='order-1 lg:order-2'>
