@@ -48,7 +48,7 @@ export default function PictureCarousel() {
 
   return (
     <div
-      className='relative mx-auto max-w-2xl'
+      className='relative mx-auto max-w-xl'
       role='group'
       aria-roledescription='carousel'
       aria-label='Photos of Adam'

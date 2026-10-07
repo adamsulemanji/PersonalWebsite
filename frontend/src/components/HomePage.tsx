@@ -9,6 +9,7 @@ import MovieList from '@/components/MovieList';
 import Section from '@/components/Section';
 import SocialLinks from '@/components/SocialLinks';
 import PictureCarousel from '@/components/PictureCarousel';
+import PhotoCollage from '@/components/PhotoCollage';
 import ScrollThread from '@/components/ScrollThread';
 import FreshnessLabel from '@/components/FreshnessLabel';
 import { FadeIn, HeroTitle } from '@/components/Hero';
@@ -142,9 +143,7 @@ export default function HomePage() {
                 <p>
                   Outside of work, I spend a lot of time outdoors and I&apos;ll
                   play almost any sport — basketball most of all, with skiing a
-                  close second now that the mountains are so close. Most of my
-                  favorite memories lately are with Zahra, whether that&apos;s a
-                  weekend on San Juan Island or a trip through Japan.
+                  close second now that the mountains are so close.
                 </p>
                 <p>
                   During the rest of the year, I sign up for impromptu races,
@@ -167,23 +166,33 @@ export default function HomePage() {
               </dl>
             </div>
           </div>
-        </Section>
 
-        {/* Zahra and me */}
-        <figure className='mx-auto w-full max-w-[280px]'>
-          <div className='relative aspect-[3/4] overflow-hidden rounded-2xl'>
-            <Image
-              src='/images/adam-zahra.webp'
-              alt='Adam and Zahra'
-              fill
-              sizes='280px'
-              className='object-cover'
-            />
+          {/* Zahra and me */}
+          <div className='mt-16 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end lg:gap-12'>
+            <div className={`order-2 lg:order-1 lg:pb-10 ${bodyCopy}`}>
+              <p className={metaLabel}>With Zahra</p>
+              <p>
+                Most of my favorite memories lately are with Zahra — a weekend
+                on San Juan Island, Japanese food in Salt Lake City, a lot of
+                trips to Phoenix, and a week and a half in Japan.
+              </p>
+            </div>
+            <div className='order-1 lg:order-2'>
+              <div className='relative mx-auto aspect-[4/5] max-w-sm overflow-hidden rounded-2xl lg:max-w-none'>
+                <Image
+                  src='/images/adam-zahra.webp'
+                  alt='Adam and Zahra'
+                  fill
+                  sizes='(max-width: 1024px) 384px, 35vw'
+                  className='object-cover'
+                />
+              </div>
+              <p className='mt-3 text-sm text-gray-400 dark:text-gray-500'>
+                Zahra and me, September 2026.
+              </p>
+            </div>
           </div>
-          <figcaption className='mt-3 text-center text-sm text-gray-400 dark:text-gray-500'>
-            Zahra and me, September 2026.
-          </figcaption>
-        </figure>
+        </Section>
 
         {/* Experience */}
         <Section
@@ -197,6 +206,7 @@ export default function HomePage() {
         {/* Pictures */}
         <Section title='Pictures'>
           <PictureCarousel />
+          <PhotoCollage />
         </Section>
 
         {/* Projects */}
