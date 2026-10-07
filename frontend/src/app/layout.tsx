@@ -18,7 +18,7 @@ const person = {
   description: siteDescription,
   image: abs('/images/og.jpg'),
   jobTitle: 'Software Engineer',
-  worksFor: { '@type': 'Organization', name: 'Amazon' },
+  worksFor: { '@type': 'Organization', name: 'Amazon Web Services' },
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Seattle',

@@ -9,30 +9,47 @@ export interface ExperienceItem {
 
 export const experience: ExperienceItem[] = [
   {
-    role: 'Software Engineer, Global Payments Tech',
+    role: 'Software Engineer, Security Incident Response',
+    company: 'Amazon Web Services',
+    location: 'Seattle, WA',
+    dates: 'Sep 2026 — Present',
+    description:
+      'Building on the AWS Security Incident Response team (Kumo), helping customers detect, triage, and recover from security events.',
+    url: 'https://aws.amazon.com/security-incident-response/',
+  },
+  {
+    role: 'Software Engineer, Payments Processing Initialization',
     company: 'Amazon',
     location: 'Seattle, WA',
-    dates: 'Feb 2026 — Present',
+    dates: 'Feb 2026 — Sep 2026',
     description:
-      'Building systems that power the payments processing flow across Amazon.',
+      'Built systems that kick off the payments processing flow across Amazon.',
     url: 'https://www.amazon.com',
   },
   {
-    role: 'Software Engineer, Model Customization',
+    role: 'Software Engineer, SageMaker AI',
     company: 'Amazon Web Services',
     location: 'Seattle, WA',
     dates: 'Aug 2025 — Feb 2026',
     description:
-      'Worked on AI agents, human-in-the-loop workflows, and Mechanical Turk integrations for model customization.',
-    url: 'https://aws.amazon.com',
+      'Worked on model customization through AI agents, SageMaker Ground Truth data labeling, and Mechanical Turk human-in-the-loop workflows.',
+    url: 'https://aws.amazon.com/sagemaker/',
   },
   {
-    role: 'Software Engineer Intern, Crossborders',
+    role: 'Software Engineer (Contract)',
+    company: 'Mercor',
+    location: 'Remote',
+    dates: '2025',
+    description: 'Mixed projects with leading AI labs.',
+    url: 'https://www.mercor.com',
+  },
+  {
+    role: 'Software Engineer Intern, Global Stores Tech',
     company: 'Amazon',
     location: 'Seattle, WA',
     dates: 'Summer 2024',
     description:
-      'Built software that connects international customers to products across borders.',
+      'Built crosslisting software and the Global Store landing page on Amazon.com, connecting international customers to products across borders.',
   },
   {
     role: 'Market Risk Summer Analyst',
@@ -40,16 +57,16 @@ export const experience: ExperienceItem[] = [
     location: 'Dallas, TX',
     dates: 'Summer 2023',
     description:
-      'Worked on market-risk tooling used by trading desks to price and monitor exposure.',
+      'Worked on market-risk tooling for the GS Bank legal entity, used to price and monitor exposure.',
     url: 'https://www.goldmansachs.com',
   },
   {
-    role: 'Technology Consulting Intern',
+    role: 'Data and Technology Intern',
     company: 'PricewaterhouseCoopers',
-    location: 'Dallas, TX',
+    location: 'Houston, TX',
     dates: 'Summer 2022',
     description:
-      'Delivered technology engagements for non-profit clients focused on operational efficiency.',
+      'Data analytics and research for technology engagements with non-profit clients.',
     url: 'https://www.pwc.com',
   },
 ];

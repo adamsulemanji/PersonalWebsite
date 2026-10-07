@@ -7,8 +7,56 @@ export interface Update {
 
 export const updates: Update[] = [
   {
+    icon: '🛡️',
+    description: 'Switched teams to AWS Security Incident Response',
+    date: 'September 2026',
+  },
+  {
+    icon: '🇯🇵',
+    description:
+      'Spent a week and a half in Japan with Zahra and family — Tokyo, Kyoto, and Nara. A typhoon cancelled our original flight over, so we got rebooked last-minute',
+    date: 'September 2026',
+  },
+  {
+    icon: '💛',
+    description: 'Celebrated Adam ♥ Zahra in Phoenix',
+    date: 'September 2026',
+  },
+  {
+    icon: '🏀',
+    description: 'Played in BBA 2026 in Detroit',
+    date: 'September 2026',
+  },
+  {
+    icon: '⛴️',
+    description:
+      'Weekend on San Juan Island — coffee, seaplanes, and views in Friday Harbor',
+    date: 'July 2026',
+  },
+  {
+    icon: '🍜',
+    description: 'Trip to Salt Lake City',
+    date: 'June 2026',
+  },
+  {
+    icon: '🌵',
+    description: 'Sunset hike in Phoenix with Zahra',
+    date: 'May 2026',
+  },
+  {
+    icon: '🍀',
+    description:
+      'Chicago for St. Patrick’s Day weekend — saw the green river and a Blackhawks game, then flew to Houston',
+    date: 'March 2026',
+  },
+  {
+    icon: '⛷️',
+    description: 'Ski day in Washington',
+    date: 'February 2026',
+  },
+  {
     icon: '💷',
-    description: 'Switched to a new team in Global Payments',
+    description: 'Switched to a new team in Amazon Payments',
     date: 'February 2026',
   },
   {
@@ -37,6 +85,11 @@ export const updates: Update[] = [
     icon: '🤵‍♂️',
     description: 'Added Zoher and Zahra Darugers wedding in Chicago',
     date: 'September 2025',
+  },
+  {
+    icon: '🏔️',
+    description: 'Moved to Seattle and did my first big PNW hike',
+    date: 'August 2025',
   },
   {
     icon: '🏀',

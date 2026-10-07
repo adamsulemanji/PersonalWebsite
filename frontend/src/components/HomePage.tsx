@@ -18,8 +18,11 @@ const CONTENT_ID = 'page-content';
 
 const highlights = [
   { label: 'Based in', value: 'Seattle, WA' },
-  { label: 'Current role', value: 'Software Engineer at Amazon' },
-  { label: 'Outside of work', value: 'Skiing, sports, and being outdoors' },
+  { label: 'Current role', value: 'Software Engineer at AWS' },
+  {
+    label: 'Outside of work',
+    value: 'Basketball, skiing, travel, and the outdoors',
+  },
 ];
 
 const companyLink = `text-gray-900 dark:text-white ${underlineLink}`;
@@ -43,18 +46,19 @@ export default function HomePage() {
             <p>
               I&apos;m a Software Engineer at{' '}
               <a
-                href='https://www.amazon.com'
+                href='https://aws.amazon.com/security-incident-response/'
                 target='_blank'
                 rel='noopener noreferrer'
                 className={companyLink}
               >
-                Amazon
+                Amazon Web Services
               </a>{' '}
-              in Seattle, WA building systems to aid the payments processing
-              flow. Before this, I was working in Amazon Web Services on Model
-              Customization with AI Agents, Human in the Loop and Mechanical
-              Turk. My philosophy is to build in order to learn and make the
-              lives of people around me easier.
+              in Seattle, WA on the Security Incident Response team. Before
+              this, I built systems for the payments processing flow at Amazon,
+              and before that I worked on SageMaker AI — model customization
+              with AI agents, human-in-the-loop labeling, and Mechanical Turk.
+              My philosophy is to build in order to learn and make the lives of
+              people around me easier.
             </p>
             <p>
               I&apos;ve previously worked at{' '}
@@ -95,18 +99,32 @@ export default function HomePage() {
         <Section title='Now' id='section-now'>
           <div className={bodyCopy}>
             <p>
-              Ramping up on a new team in Global Payments at Amazon — learning
-              about the payments ecosystem and enjoying the fresh context.
-              Outside of work, I&apos;m stretching the tail end of ski season
-              and training for a marathon.
+              Ramping up on a new team in AWS Security Incident Response after
+              eight months in Amazon Payments. Just got back from a week and a
+              half in Japan with Zahra and family — Tokyo, Kyoto, and Nara —
+              right after playing in BBA 2026 in Detroit.
             </p>
+            <figure className='pt-2'>
+              <div className='relative aspect-[4/3] overflow-hidden rounded-2xl'>
+                <Image
+                  src='/images/japan-kimono.webp'
+                  alt='Zahra and Adam in kimonos in Kyoto'
+                  fill
+                  sizes='(max-width: 768px) 100vw, 672px'
+                  className='object-cover'
+                />
+              </div>
+              <figcaption className='mt-3 text-sm text-gray-400 dark:text-gray-500'>
+                Zahra and me in Kyoto, September 2026.
+              </figcaption>
+            </figure>
             <p>
               Side-project-wise, I&apos;m iterating on this site, cleaning up
               the CDK pipeline behind it, and slowly chipping away at a writing
               habit (see below).
             </p>
-            <FreshnessLabel date='2026-04-01'>
-              Updated April 2026
+            <FreshnessLabel date='2026-10-06'>
+              Updated October 2026
             </FreshnessLabel>
           </div>
         </Section>
@@ -117,29 +135,30 @@ export default function HomePage() {
             <div>
               <div className='relative aspect-[4/5] overflow-hidden rounded-2xl'>
                 <Image
-                  src='/images/kid.webp'
-                  alt='Picture of little me'
+                  src='/images/adam-zahra.webp'
+                  alt='Adam and Zahra'
                   fill
                   sizes='(max-width: 1024px) 100vw, 40vw'
-                  className='object-cover'
+                  className='object-cover object-top'
                 />
               </div>
               <p className='mt-3 text-sm text-gray-400 dark:text-gray-500'>
-                Me around age 7. I look a little older now.
+                Me and Zahra, September 2026.
               </p>
             </div>
 
             <div className='space-y-8'>
               <div className={bodyCopy}>
                 <p>
-                  I&apos;m a software engineer at Amazon in Seattle, building
-                  software that helps connect people to international products.
+                  I&apos;m a software engineer at AWS in Seattle, where
+                  I&apos;ve lived since August 2025.
                 </p>
                 <p>
                   Outside of work, I spend a lot of time outdoors and I&apos;ll
-                  play almost any sport. Right now skiing is the main obsession,
-                  and I&apos;ve been trying to make the most of being close to
-                  the mountains.
+                  play almost any sport — basketball most of all, with skiing a
+                  close second now that the mountains are so close. Most of my
+                  favorite memories lately are with Zahra, whether that&apos;s a
+                  weekend on San Juan Island or a trip through Japan.
                 </p>
                 <p>
                   During the rest of the year, I sign up for impromptu races,

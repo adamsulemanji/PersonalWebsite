@@ -3,8 +3,80 @@ export type PictureAsset = {
   alt: string;
 };
 
-/** Photos for the homepage carousel, shown in this order. */
+/** Photos for the homepage carousel, shown in this order (newest first). */
 export const pictures: PictureAsset[] = [
+  {
+    src: '/images/japan-kimono.webp',
+    alt: 'Kimono day in Kyoto with Zahra',
+  },
+  {
+    src: '/images/nara-deer.webp',
+    alt: 'Getting mobbed by the deer in Nara',
+  },
+  {
+    src: '/images/kyoto-bamboo.webp',
+    alt: 'Bamboo forest in Kyoto',
+  },
+  {
+    src: '/images/kyoto-kimono-group.webp',
+    alt: 'The whole crew in kimonos, Kyoto',
+  },
+  {
+    src: '/images/bba-2026.webp',
+    alt: 'BBA 2026 in Detroit',
+  },
+  {
+    src: '/images/friday-harbor-zahra.webp',
+    alt: 'Weekend on San Juan Island with Zahra',
+  },
+  {
+    src: '/images/friday-harbor-seaplane.webp',
+    alt: 'Seaplane landing in Friday Harbor',
+  },
+  {
+    src: '/images/lake-union-sunset.webp',
+    alt: 'Summer sunset over Lake Union',
+  },
+  {
+    src: '/images/summer-potluck.webp',
+    alt: 'Summer potluck with friends in Seattle',
+  },
+  {
+    src: '/images/phoenix-sunset-hike.webp',
+    alt: 'Sunset hike in Phoenix with Zahra',
+  },
+  {
+    src: '/images/slc-ramen.webp',
+    alt: 'Ramen in Salt Lake City',
+  },
+  {
+    src: '/images/chicago-river.webp',
+    alt: 'Chicago skyline on St. Patrick’s Day weekend',
+  },
+  {
+    src: '/images/skiing-washington.webp',
+    alt: 'Ski day in Washington',
+  },
+  {
+    src: '/images/friday-harbor-cafe.webp',
+    alt: 'Coffee with Zahra',
+  },
+  {
+    src: '/images/seattle-game-day.webp',
+    alt: 'Game day in Seattle with friends',
+  },
+  {
+    src: '/images/friends-holiday.webp',
+    alt: 'Holiday party with friends',
+  },
+  {
+    src: '/images/home-cooking.webp',
+    alt: 'Sheet-pan salmon night',
+  },
+  {
+    src: '/images/alpine-lake-hike.webp',
+    alt: 'First big PNW hike after moving to Seattle',
+  },
   {
     src: '/images/aggiefootball.webp',
     alt: 'Texas A&M Aggie Football game day',
@@ -64,5 +136,9 @@ export const pictures: PictureAsset[] = [
   {
     src: '/images/kfd.webp',
     alt: 'Kyle Field Day celebration at Texas A&M',
+  },
+  {
+    src: '/images/kid.webp',
+    alt: 'Me around age 7. I look a little older now.',
   },
 ];
