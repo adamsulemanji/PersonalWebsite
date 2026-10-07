@@ -104,20 +104,6 @@ export default function HomePage() {
               half in Japan with Zahra and family — Tokyo, Kyoto, and Nara —
               right after playing in BBA 2026 in Detroit.
             </p>
-            <figure className='pt-2'>
-              <div className='relative aspect-[4/3] overflow-hidden rounded-2xl'>
-                <Image
-                  src='/images/japan-kimono.webp'
-                  alt='Zahra and Adam in kimonos in Kyoto'
-                  fill
-                  sizes='(max-width: 768px) 100vw, 672px'
-                  className='object-cover'
-                />
-              </div>
-              <figcaption className='mt-3 text-sm text-gray-400 dark:text-gray-500'>
-                Zahra and me in Kyoto, September 2026.
-              </figcaption>
-            </figure>
             <p>
               Side-project-wise, I&apos;m iterating on this site, cleaning up
               the CDK pipeline behind it, and slowly chipping away at a writing
@@ -135,15 +121,15 @@ export default function HomePage() {
             <div>
               <div className='relative aspect-[4/5] overflow-hidden rounded-2xl'>
                 <Image
-                  src='/images/adam-zahra.webp'
-                  alt='Adam and Zahra'
+                  src='/images/kid.webp'
+                  alt='Picture of little me'
                   fill
                   sizes='(max-width: 1024px) 100vw, 40vw'
-                  className='object-cover object-top'
+                  className='object-cover'
                 />
               </div>
               <p className='mt-3 text-sm text-gray-400 dark:text-gray-500'>
-                Me and Zahra, September 2026.
+                Me around age 7. I look a little older now.
               </p>
             </div>
 
@@ -182,6 +168,22 @@ export default function HomePage() {
             </div>
           </div>
         </Section>
+
+        {/* Zahra and me */}
+        <figure className='mx-auto w-full max-w-[280px]'>
+          <div className='relative aspect-[3/4] overflow-hidden rounded-2xl'>
+            <Image
+              src='/images/adam-zahra.webp'
+              alt='Adam and Zahra'
+              fill
+              sizes='280px'
+              className='object-cover'
+            />
+          </div>
+          <figcaption className='mt-3 text-center text-sm text-gray-400 dark:text-gray-500'>
+            Zahra and me, September 2026.
+          </figcaption>
+        </figure>
 
         {/* Experience */}
         <Section

@@ -7,52 +7,116 @@ export interface Update {
 
 export const updates: Update[] = [
   {
+    icon: '👋',
+    description: 'Josh and Jackie came to visit me in Seattle',
+    date: 'October 2026',
+  },
+  {
     icon: '🛡️',
-    description: 'Switched teams to AWS Security Incident Response',
+    description: 'Started on a new team: AWS Security Incident Response',
     date: 'September 2026',
   },
   {
     icon: '🇯🇵',
     description:
-      'Spent a week and a half in Japan with Zahra and family — Tokyo, Kyoto, and Nara. A typhoon cancelled our original flight over, so we got rebooked last-minute',
+      'Flew through a typhoon to get to Japan, then explored Tokyo, Kyoto, and Nara',
     date: 'September 2026',
   },
   {
-    icon: '💛',
-    description: 'Celebrated Adam ♥ Zahra in Phoenix',
+    icon: '🌵',
+    description: 'LARPed as a Phoenix local for a week',
+    date: 'September 2026',
+  },
+  {
+    icon: '⛳',
+    description: 'Back in Phoenix to play golf and celebrate our baat paki',
     date: 'September 2026',
   },
   {
     icon: '🏀',
-    description: 'Played in BBA 2026 in Detroit',
+    description:
+      'BBA 2026 in Detroit over Labor Day weekend. The team went 0-6, but hanging with Mustafa made it a blast',
     date: 'September 2026',
+  },
+  {
+    icon: '🔤',
+    description: 'Got all of my Seattle friends hooked on Bananagrams',
+    date: 'August 2026',
+  },
+  {
+    icon: '🌊',
+    description:
+      'Phoenix again: a night at the JW Marriott and a water park day',
+    date: 'August 2026',
+  },
+  {
+    icon: '🏖️',
+    description: 'Beach day in San Clemente',
+    date: 'August 2026',
+  },
+  {
+    icon: '🌴',
+    description:
+      'Phoenix to see Zahra, then LA to see Taaha and Sarah for a baat paki and to meet the Adamji family',
+    date: 'August 2026',
+  },
+  {
+    icon: '⭐',
+    description: 'August 1st, my favorite day of the year',
+    date: 'August 2026',
   },
   {
     icon: '⛴️',
     description:
-      'Weekend on San Juan Island — coffee, seaplanes, and views in Friday Harbor',
+      'Zahra came to Seattle and we spent a few days on San Juan Island. It was beautiful',
     date: 'July 2026',
   },
   {
-    icon: '🍜',
-    description: 'Trip to Salt Lake City',
+    icon: '☀️',
+    description: 'Phoenix to see Zahra',
+    date: 'July 2026',
+  },
+  {
+    icon: '⚽',
+    description:
+      'Dad, Yasmin, and Raj came up to Seattle for July 4th week to watch Senegal vs Belgium at the World Cup',
+    date: 'July 2026',
+  },
+  {
+    icon: '🍣',
+    description:
+      'Salt Lake City with Zahra: amazing Japanese food, a day trip to Park City, and learned a lot about eyes',
     date: 'June 2026',
   },
   {
-    icon: '🌵',
-    description: 'Sunset hike in Phoenix with Zahra',
-    date: 'May 2026',
+    icon: '🤠',
+    description: 'Dallas to see Josh, Jackie, and Laura',
+    date: 'June 2026',
+  },
+  {
+    icon: '💒',
+    description: 'Austin to celebrate Mark and Grace’s wedding',
+    date: 'June 2026',
+  },
+  {
+    icon: '🎂',
+    description: 'Celebrated my birthday with friends',
+    date: 'May 23, 2026',
+  },
+  {
+    icon: '🪕',
+    description: 'Country bar night with Zahra',
+    date: 'May 17, 2026',
   },
   {
     icon: '🍀',
-    description:
-      'Chicago for St. Patrick’s Day weekend — saw the green river and a Blackhawks game, then flew to Houston',
+    description: 'St. Patrick’s Day in Chicago with Josh and Jackie',
     date: 'March 2026',
   },
   {
-    icon: '⛷️',
-    description: 'Ski day in Washington',
-    date: 'February 2026',
+    icon: '🎿',
+    description: 'Skiing in Whistler with BBC',
+    date: 'March 2026',
   },
   {
     icon: '💷',

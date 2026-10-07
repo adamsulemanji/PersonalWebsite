@@ -6,10 +6,6 @@ export type PictureAsset = {
 /** Photos for the homepage carousel, shown in this order (newest first). */
 export const pictures: PictureAsset[] = [
   {
-    src: '/images/japan-kimono.webp',
-    alt: 'Kimono day in Kyoto with Zahra',
-  },
-  {
     src: '/images/nara-deer.webp',
     alt: 'Getting mobbed by the deer in Nara',
   },
@@ -56,10 +52,6 @@ export const pictures: PictureAsset[] = [
   {
     src: '/images/skiing-washington.webp',
     alt: 'Ski day in Washington',
-  },
-  {
-    src: '/images/friday-harbor-cafe.webp',
-    alt: 'Coffee with Zahra',
   },
   {
     src: '/images/seattle-game-day.webp',
@@ -136,9 +128,5 @@ export const pictures: PictureAsset[] = [
   {
     src: '/images/kfd.webp',
     alt: 'Kyle Field Day celebration at Texas A&M',
-  },
-  {
-    src: '/images/kid.webp',
-    alt: 'Me around age 7. I look a little older now.',
   },
 ];
