@@ -172,7 +172,7 @@ export default function HomePage() {
             <div className={`order-2 lg:order-1 lg:pb-10 ${bodyCopy}`}>
               <p className={metaLabel}>With Zahra</p>
               <p>
-                Zahra and I <3
+                Zahra and I &lt;3
               </p>
             </div>
             <div className='order-1 lg:order-2'>
