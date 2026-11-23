@@ -6,6 +6,7 @@ import Projects from '@/components/Projects';
 import Experience from '@/components/Experience';
 import Writing from '@/components/Writing';
 import MovieList from '@/components/MovieList';
+import RecentRuns from '@/components/RecentRuns';
 import Section from '@/components/Section';
 import SocialLinks from '@/components/SocialLinks';
 import PictureCarousel from '@/components/PictureCarousel';
@@ -171,9 +172,7 @@ export default function HomePage() {
           <div className='mt-16 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end lg:gap-12'>
             <div className={`order-2 lg:order-1 lg:pb-10 ${bodyCopy}`}>
               <p className={metaLabel}>With Zahra</p>
-              <p>
-                Zahra and I &lt;3
-              </p>
+              <p>Zahra and I &lt;3</p>
             </div>
             <div className='order-1 lg:order-2'>
               <div className='relative mx-auto aspect-[4/5] max-w-sm overflow-hidden rounded-2xl lg:max-w-none'>
@@ -237,6 +236,11 @@ export default function HomePage() {
         {/* Movies */}
         <Section title='Movies' subtitle='Most recent watches'>
           <MovieList />
+        </Section>
+
+        {/* Running */}
+        <Section title='Running' subtitle='Latest runs from Strava'>
+          <RecentRuns />
         </Section>
       </div>
     </div>
