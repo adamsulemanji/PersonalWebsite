@@ -239,7 +239,7 @@ export default function HomePage() {
         </Section>
 
         {/* Running */}
-        <Section title='Running' subtitle='Latest runs from Strava'>
+        <Section title='Running' subtitle='Latest miles'>
           <RecentRuns />
         </Section>
       </div>

@@ -5,6 +5,7 @@ import { useTheme } from 'next-themes';
 import { analyticsAttributes } from '@/lib/analytics';
 import { formatDate } from '@/lib/format';
 import { metaLabel, underlineLink } from '@/lib/styles';
+import { socials } from '@/assets/socials';
 
 export interface Run {
   id: number;
@@ -15,13 +16,15 @@ export interface Run {
   elevation_gain_m: number;
   /** [[lat, lng], ...], ends already trimmed server-side for privacy. */
   route: [number, number][];
-  strava_url: string;
 }
 
 const RUN_COUNT = 3;
+const STRAVA_PROFILE =
+  socials.find((social) => social.id === 'strava')?.href ??
+  'https://www.strava.com/athletes/109469044';
 const API_URL = `${
   process.env.NEXT_PUBLIC_API_URL ?? 'https://api.fast.adamsulemanji.com'
-}/strava/runs?limit=${RUN_COUNT}`;
+}/runs?limit=${RUN_COUNT}`;
 
 const METERS_PER_MILE = 1609.344;
 const FEET_PER_METER = 3.28084;
@@ -197,41 +200,30 @@ function RunCard({ run, dark }: { run: Run; dark: boolean }) {
   ];
 
   return (
-    <li>
-      <a
-        href={run.strava_url}
-        target='_blank'
-        rel='noopener noreferrer'
-        className='group block h-full overflow-hidden rounded-lg border border-gray-200 bg-gray-100 transition-transform hover:-translate-y-1 dark:border-gray-700 dark:bg-gray-800'
-        {...analyticsAttributes('run_clicked', { label: run.name })}
-      >
-        <RouteMap route={run.route} dark={dark} />
-        <div className='p-4'>
-          <p className={metaLabel}>
-            <time dateTime={run.start_date_local}>
-              {formatDate(run.start_date_local)}
-            </time>
-          </p>
-          <p className='mt-1 truncate font-bold text-gray-900 dark:text-gray-100'>
-            {run.name}
-          </p>
-          <dl className='mt-3 grid grid-cols-2 gap-x-4 gap-y-3'>
-            {stats.map((stat) => (
-              <div key={stat.label} className='min-w-0'>
-                <dt className='text-[10px] uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500'>
-                  {stat.label}
-                </dt>
-                <dd className='mt-0.5 truncate text-sm text-gray-800 dark:text-gray-200'>
-                  {stat.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-          <p className='mt-3 text-xs font-semibold text-[#fc5200]'>
-            View on Strava
-          </p>
-        </div>
-      </a>
+    <li className='h-full overflow-hidden rounded-lg border border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800'>
+      <RouteMap route={run.route} dark={dark} />
+      <div className='p-4'>
+        <p className={metaLabel}>
+          <time dateTime={run.start_date_local}>
+            {formatDate(run.start_date_local)}
+          </time>
+        </p>
+        <p className='mt-1 truncate font-bold text-gray-900 dark:text-gray-100'>
+          {run.name}
+        </p>
+        <dl className='mt-3 grid grid-cols-2 gap-x-4 gap-y-3'>
+          {stats.map((stat) => (
+            <div key={stat.label} className='min-w-0'>
+              <dt className='text-[10px] uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500'>
+                {stat.label}
+              </dt>
+              <dd className='mt-0.5 truncate text-sm text-gray-800 dark:text-gray-200'>
+                {stat.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </li>
   );
 }
@@ -266,7 +258,7 @@ export default function RecentRuns() {
       try {
         const response = await fetch(API_URL, { signal: controller.signal });
         if (!response.ok)
-          throw new Error(`Strava API returned ${response.status}`);
+          throw new Error(`Runs API returned ${response.status}`);
         const data: unknown = await response.json();
         setRuns(Array.isArray(data) ? (data as Run[]) : []);
         setStatus('ready');
@@ -300,8 +292,19 @@ export default function RecentRuns() {
           <RunCard key={run.id} run={run} dark={resolvedTheme === 'dark'} />
         ))}
       </ul>
-      <p className='mt-4 text-[11px] text-gray-400 dark:text-gray-500'>
-        Powered by Strava · Maps ©{' '}
+      <a
+        href={STRAVA_PROFILE}
+        target='_blank'
+        rel='noopener noreferrer'
+        className={`mt-4 inline-block text-sm text-gray-700 dark:text-gray-200 ${underlineLink}`}
+        {...analyticsAttributes('social_link_clicked', {
+          label: 'Strava (runs)',
+        })}
+      >
+        More on Strava
+      </a>
+      <p className='mt-2 text-[11px] text-gray-400 dark:text-gray-500'>
+        Maps ©{' '}
         <a
           href='https://www.esri.com/'
           target='_blank'
