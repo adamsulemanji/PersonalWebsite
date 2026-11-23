@@ -142,4 +142,26 @@ describe("website infrastructure", () => {
       2,
     );
   });
+
+  // CloudFront only publishes metrics with Region=Global; without it the
+  // alarms watch an empty series and the dashboard is blank.
+  test("CloudFront alarms and dashboard use the Region=Global dimension", () => {
+    const alarms = template.findResources("AWS::CloudWatch::Alarm");
+    expect(Object.keys(alarms)).toHaveLength(2);
+    for (const alarm of Object.values(alarms)) {
+      expect(alarm.Properties.Dimensions).toEqual(
+        expect.arrayContaining([{ Name: "Region", Value: "Global" }]),
+      );
+    }
+
+    const [dashboard] = Object.values(
+      template.findResources("AWS::CloudWatch::Dashboard"),
+    );
+    const body = JSON.stringify(dashboard.Properties.DashboardBody);
+    const cloudFrontMetrics = body.match(/AWS\/CloudFront[^\]]*/g) ?? [];
+    expect(cloudFrontMetrics.length).toBeGreaterThan(0);
+    for (const metric of cloudFrontMetrics) {
+      expect(metric).toContain('Region\\",\\"Global');
+    }
+  });
 });

@@ -286,7 +286,47 @@ ORDER BY requests DESC;`,
     // ***********************
     // CLOUDWATCH ALARMS
     // ***********************
-    const metricOptions = { region: "us-east-1" };
+    const distribution = props.frontendConstruct.apexDistribution;
+
+    // CloudFront publishes every metric with Region=Global alongside the
+    // DistributionId. The CDK helpers (distribution.metricRequests() etc.) leave
+    // Region off, which names a series that doesn't exist, so the dashboard was
+    // blank and the alarms could never fire. Always build them through this.
+    const cfMetric = (
+      metricName: string,
+      statistic: string,
+      period: cdk.Duration,
+      label?: string,
+    ) =>
+      new cloudwatch.Metric({
+        namespace: "AWS/CloudFront",
+        metricName,
+        dimensionsMap: {
+          DistributionId: distribution.distributionId,
+          Region: "Global",
+        },
+        statistic,
+        period,
+        region: "us-east-1",
+        label,
+      });
+
+    const rumMetric = (
+      metricName: string,
+      statistic: string,
+      period: cdk.Duration,
+      label?: string,
+    ) =>
+      new cloudwatch.Metric({
+        namespace: "AWS/RUM",
+        metricName,
+        dimensionsMap: { application_name: this.rumAppMonitor.name },
+        statistic,
+        period,
+        label,
+      });
+
+    const fiveMinutes = cdk.Duration.minutes(5);
 
     // Alarms are useless without a destination — notify by email.
     // The subscription must be confirmed once from the inbox.
@@ -299,11 +339,7 @@ ORDER BY requests DESC;`,
     this.alarmTopic = alarmTopic;
 
     const alarm5xx = new cloudwatch.Alarm(this, "Alarm5xx", {
-      metric: props.frontendConstruct.apexDistribution.metric5xxErrorRate({
-        ...metricOptions,
-        period: cdk.Duration.minutes(5),
-        statistic: "Average",
-      }),
+      metric: cfMetric("5xxErrorRate", "Average", fiveMinutes),
       threshold: 1,
       evaluationPeriods: 2,
       comparisonOperator:
@@ -315,11 +351,7 @@ ORDER BY requests DESC;`,
     alarm5xx.addOkAction(new cloudwatch_actions.SnsAction(alarmTopic));
 
     const alarm4xx = new cloudwatch.Alarm(this, "Alarm4xx", {
-      metric: props.frontendConstruct.apexDistribution.metric4xxErrorRate({
-        ...metricOptions,
-        period: cdk.Duration.minutes(5),
-        statistic: "Average",
-      }),
+      metric: cfMetric("4xxErrorRate", "Average", fiveMinutes),
       threshold: 10,
       evaluationPeriods: 2,
       comparisonOperator:
@@ -338,94 +370,134 @@ ORDER BY requests DESC;`,
       defaultInterval: cdk.Duration.days(30),
     });
 
-    const requestMetric =
-      props.frontendConstruct.apexDistribution.metricRequests({
-        ...metricOptions,
-        period: cdk.Duration.days(1),
-        statistic: "Sum",
-      });
+    const day = cdk.Duration.days(1);
+    const hour = cdk.Duration.hours(1);
 
     this.dashboard.addWidgets(
       new cloudwatch.TextWidget({
         markdown: [
-          "# Personal Website Traffic",
+          "# Personal Website",
           "",
-          `- Distribution ID: \`${props.frontendConstruct.apexDistribution.distributionId}\``,
-          `- Athena database: \`${this.databaseName}\``,
-          `- Athena table: \`${this.tableName}\``,
-          `- Athena workgroup: \`${this.workGroupName}\``,
-          `- CloudWatch RUM app monitor: \`${this.rumAppMonitor.name}\``,
-          `- Raw log bucket: \`${props.frontendConstruct.accessLogsBucket.bucketName}\``,
+          "**Visitors** are real browsers (CloudWatch RUM). **Requests** are everything CloudFront served, bots and crawlers included, so they run far higher.",
           "",
-          "Use the saved Athena queries in the `personal-website-observability` workgroup for top paths, referrers, user agents, and daily request trends.",
+          `Distribution \`${distribution.distributionId}\` · RUM monitor \`${this.rumAppMonitor.name}\` · Athena workgroup \`${this.workGroupName}\` (saved queries for top paths, referrers and user agents) · logs in \`${props.frontendConstruct.accessLogsBucket.bucketName}\``,
         ].join("\n"),
-        width: 24,
-        height: 6,
-      }),
-      new cloudwatch.AlarmStatusWidget({
-        title: "Active Alarms",
-        alarms: [alarm5xx, alarm4xx],
         width: 24,
         height: 3,
       }),
+      new cloudwatch.AlarmStatusWidget({
+        title: "Alarms",
+        alarms: [alarm5xx, alarm4xx],
+        width: 24,
+        height: 2,
+      }),
+    );
+
+    // Real visitors (RUM)
+    const sessions = rumMetric("SessionCount", "Sum", day, "Sessions");
+    const pageViews = rumMetric("PageViewCount", "Sum", day, "Page views");
+    this.dashboard.addWidgets(
       new cloudwatch.SingleValueWidget({
-        title: "Requests in Selected Time Range",
-        metrics: [requestMetric],
+        title: "Visitors in range",
+        metrics: [sessions, pageViews],
         setPeriodToTimeRange: true,
         width: 8,
-        height: 4,
+        height: 5,
       }),
       new cloudwatch.GraphWidget({
-        title: "Daily Request Volume",
-        left: [requestMetric],
+        title: "Visitors per day",
+        left: [sessions, pageViews],
+        leftYAxis: { min: 0 },
         width: 16,
-        height: 4,
+        height: 5,
+      }),
+    );
+
+    this.dashboard.addWidgets(
+      new cloudwatch.GraphWidget({
+        title: "Page speed (p75, ms)",
+        left: [
+          rumMetric(
+            "WebVitalsLargestContentfulPaint",
+            "p75",
+            day,
+            "Largest contentful paint",
+          ),
+          rumMetric("PerformanceNavigationDuration", "p75", day, "Page load"),
+          rumMetric(
+            "WebVitalsInteractionToNextPaint",
+            "p75",
+            day,
+            "Interaction to next paint",
+          ),
+        ],
+        leftYAxis: { min: 0 },
+        width: 12,
+        height: 6,
       }),
       new cloudwatch.GraphWidget({
-        title: "Requests and Data Transfer",
-        width: 12,
+        title: "Browser errors per page view",
         left: [
-          props.frontendConstruct.apexDistribution.metricRequests({
-            ...metricOptions,
-            period: cdk.Duration.hours(1),
-            statistic: "Sum",
-          }),
+          rumMetric("JsErrorCountPerPageView", "Average", day, "JS errors"),
+          rumMetric("Http4xxCountPerPageView", "Average", day, "HTTP 4xx"),
+          rumMetric("Http5xxCountPerPageView", "Average", day, "HTTP 5xx"),
         ],
-        right: [
-          props.frontendConstruct.apexDistribution.metricBytesDownloaded({
-            ...metricOptions,
-            period: cdk.Duration.hours(1),
-            statistic: "Sum",
-          }),
-          props.frontendConstruct.apexDistribution.metricBytesUploaded({
-            ...metricOptions,
-            period: cdk.Duration.hours(1),
-            statistic: "Sum",
-          }),
-        ],
+        leftYAxis: { min: 0 },
+        width: 12,
+        height: 6,
+      }),
+    );
+
+    // All traffic (CloudFront)
+    const requests = cfMetric("Requests", "Sum", day, "Requests");
+    this.dashboard.addWidgets(
+      new cloudwatch.SingleValueWidget({
+        title: "Requests in range",
+        metrics: [requests],
+        setPeriodToTimeRange: true,
+        width: 8,
+        height: 5,
       }),
       new cloudwatch.GraphWidget({
-        title: "Error Rates and Cache Efficiency",
-        width: 12,
+        title: "Requests per day",
+        left: [requests],
+        leftYAxis: { min: 0 },
+        width: 16,
+        height: 5,
+      }),
+    );
+
+    this.dashboard.addWidgets(
+      new cloudwatch.GraphWidget({
+        title: "Error rates (%)",
         left: [
-          props.frontendConstruct.apexDistribution.metric4xxErrorRate({
-            ...metricOptions,
-            period: cdk.Duration.hours(1),
-            statistic: "Average",
-          }),
-          props.frontendConstruct.apexDistribution.metric5xxErrorRate({
-            ...metricOptions,
-            period: cdk.Duration.hours(1),
-            statistic: "Average",
-          }),
+          cfMetric("4xxErrorRate", "Average", hour, "4xx"),
+          cfMetric("5xxErrorRate", "Average", hour, "5xx"),
         ],
-        right: [
-          props.frontendConstruct.apexDistribution.metricCacheHitRate({
-            ...metricOptions,
-            period: cdk.Duration.hours(1),
-            statistic: "Average",
-          }),
+        leftYAxis: { min: 0 },
+        leftAnnotations: [
+          { value: 10, label: "4xx alarm", color: cloudwatch.Color.ORANGE },
+          { value: 1, label: "5xx alarm", color: cloudwatch.Color.RED },
         ],
+        width: 8,
+        height: 6,
+      }),
+      new cloudwatch.GraphWidget({
+        title: "Cache hit rate (%)",
+        left: [cfMetric("CacheHitRate", "Average", hour, "Cache hit rate")],
+        leftYAxis: { min: 0, max: 100 },
+        width: 8,
+        height: 6,
+      }),
+      new cloudwatch.GraphWidget({
+        title: "Data transferred (bytes)",
+        left: [
+          cfMetric("BytesDownloaded", "Sum", hour, "Downloaded"),
+          cfMetric("BytesUploaded", "Sum", hour, "Uploaded"),
+        ],
+        leftYAxis: { min: 0 },
+        width: 8,
+        height: 6,
       }),
     );
 
