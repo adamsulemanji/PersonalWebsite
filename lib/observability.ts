@@ -351,7 +351,18 @@ ORDER BY requests DESC;`,
     alarm5xx.addOkAction(new cloudwatch_actions.SnsAction(alarmTopic));
 
     const alarm4xx = new cloudwatch.Alarm(this, "Alarm4xx", {
-      metric: cfMetric("4xxErrorRate", "Average", fiveMinutes),
+      // Traffic is low enough that one bot probing /wp-login.php in a quiet
+      // window reads as a 30-50% 4xx rate. Only count windows with enough
+      // requests for the rate to mean something (e.g. a deploy breaking assets).
+      metric: new cloudwatch.MathExpression({
+        expression: "IF(requests >= 20, rate, 0)",
+        usingMetrics: {
+          rate: cfMetric("4xxErrorRate", "Average", fiveMinutes),
+          requests: cfMetric("Requests", "Sum", fiveMinutes),
+        },
+        period: fiveMinutes,
+        label: "4xx rate (windows with 20+ requests)",
+      }),
       threshold: 10,
       evaluationPeriods: 2,
       comparisonOperator:
@@ -359,8 +370,9 @@ ORDER BY requests DESC;`,
       alarmDescription: "4xx error rate >= 10% for 10 consecutive minutes",
       treatMissingData: cloudwatch.TreatMissingData.NOT_BREACHING,
     });
-    alarm4xx.addAlarmAction(new cloudwatch_actions.SnsAction(alarmTopic));
-    alarm4xx.addOkAction(new cloudwatch_actions.SnsAction(alarmTopic));
+    // Dashboard-only, no email: bot scans of missing paths look identical to a
+    // real breakage in CloudFront metrics, and emailing on them meant ~1 alert
+    // a day (backtested Nov 2026). Real outages show up as 5xx, which emails.
 
     // ***********************
     // CLOUDWATCH DASHBOARD

@@ -149,9 +149,21 @@ describe("website infrastructure", () => {
     const alarms = template.findResources("AWS::CloudWatch::Alarm");
     expect(Object.keys(alarms)).toHaveLength(2);
     for (const alarm of Object.values(alarms)) {
-      expect(alarm.Properties.Dimensions).toEqual(
-        expect.arrayContaining([{ Name: "Region", Value: "Global" }]),
-      );
+      // Plain alarms carry Dimensions; metric-math alarms carry Metrics[].
+      const dimensionSets = alarm.Properties.Dimensions
+        ? [alarm.Properties.Dimensions]
+        : alarm.Properties.Metrics.filter(
+            (m: { MetricStat?: unknown }) => m.MetricStat,
+          ).map(
+            (m: { MetricStat: { Metric: { Dimensions: unknown } } }) =>
+              m.MetricStat.Metric.Dimensions,
+          );
+      expect(dimensionSets.length).toBeGreaterThan(0);
+      for (const dimensions of dimensionSets) {
+        expect(dimensions).toEqual(
+          expect.arrayContaining([{ Name: "Region", Value: "Global" }]),
+        );
+      }
     }
 
     const [dashboard] = Object.values(
