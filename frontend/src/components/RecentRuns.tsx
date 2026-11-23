@@ -1,230 +1,139 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from 'next-themes';
+import { ArrowUpRight, X } from 'lucide-react';
+import RouteMap from '@/components/RouteMap';
+import RunDetail from '@/components/RunDetail';
 import { analyticsAttributes } from '@/lib/analytics';
 import { formatDate } from '@/lib/format';
+import { feet, formatDuration, formatPace, miles } from '@/lib/runs';
+import type { Run } from '@/lib/runs';
 import { metaLabel, underlineLink } from '@/lib/styles';
 import { socials } from '@/assets/socials';
-
-export interface Run {
-  id: number;
-  name: string;
-  start_date_local: string;
-  distance_m: number;
-  moving_time_s: number;
-  elevation_gain_m: number;
-  /** [[lat, lng], ...], ends already trimmed server-side for privacy. */
-  route: [number, number][];
-}
+import '../styles/runs.css';
 
 const RUN_COUNT = 3;
 const STRAVA_PROFILE =
   socials.find((social) => social.id === 'strava')?.href ??
   'https://www.strava.com/athletes/109469044';
 const API_URL = `${
-  process.env.NEXT_PUBLIC_API_URL ?? 'https://api.fast.adamsulemanji.com'
+  process.env.NEXT_PUBLIC_RUNS_API_URL ?? 'https://api.fast.adamsulemanji.com'
 }/runs?limit=${RUN_COUNT}`;
 
-const METERS_PER_MILE = 1609.344;
-const FEET_PER_METER = 3.28084;
-
-// --- Static slippy map --------------------------------------------------------
-// The route is drawn as SVG over a hand-placed grid of raster tiles: no map
-// library, no API key, nothing interactive to trap scrolling. Everything is
-// laid out in a fixed logical box and scaled with CSS percentages.
-const MAP_W = 400;
-const MAP_H = 240;
-const TILE = 256; // Web Mercator pixels per tile at the layout zoom
-// Tiles are fetched one zoom level deeper and drawn at half size, so the
-// 256px rasters stay sharp on 2x screens.
-const TILE_DRAWN = TILE / 2;
-// Esri canvas basemaps: muted light/dark gray, free and keyless.
-const MAX_LAYOUT_ZOOM = 15;
-const tileUrl = (dark: boolean, z: number, x: number, y: number) =>
-  `https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_${
-    dark ? 'Dark' : 'Light'
-  }_Gray_Base/MapServer/tile/${z}/${y}/${x}`;
-const FIT = 0.8; // route fills at most 80% of the box on each axis
-
-function project(lat: number, lng: number, zoom: number): [number, number] {
-  const scale = TILE * 2 ** zoom;
-  const sin = Math.sin((lat * Math.PI) / 180);
-  return [
-    ((lng + 180) / 360) * scale,
-    (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI)) * scale,
+function RunCard({
+  run,
+  dark,
+  onOpen,
+}: {
+  run: Run;
+  dark: boolean;
+  onOpen: () => void;
+}) {
+  const stats = [
+    { label: 'Distance', value: `${miles(run.distance_m).toFixed(2)} mi` },
+    { label: 'Pace', value: formatPace(run.distance_m, run.moving_time_s) },
+    { label: 'Time', value: formatDuration(run.moving_time_s) },
+    { label: 'Elev', value: `${feet(run.elevation_gain_m)} ft` },
   ];
-}
-
-function layoutMap(route: [number, number][]) {
-  let zoom = MAX_LAYOUT_ZOOM;
-  let points: [number, number][] = [];
-  for (; zoom > 2; zoom--) {
-    points = route.map(([lat, lng]) => project(lat, lng, zoom));
-    const xs = points.map((p) => p[0]);
-    const ys = points.map((p) => p[1]);
-    if (
-      Math.max(...xs) - Math.min(...xs) <= MAP_W * FIT &&
-      Math.max(...ys) - Math.min(...ys) <= MAP_H * FIT
-    )
-      break;
-  }
-
-  const xs = points.map((p) => p[0]);
-  const ys = points.map((p) => p[1]);
-  const originX = (Math.min(...xs) + Math.max(...xs)) / 2 - MAP_W / 2;
-  const originY = (Math.min(...ys) + Math.max(...ys)) / 2 - MAP_H / 2;
-
-  const tiles: { x: number; y: number; left: number; top: number }[] = [];
-  const max = 2 ** (zoom + 1);
-  for (
-    let ty = Math.floor(originY / TILE_DRAWN);
-    ty * TILE_DRAWN < originY + MAP_H;
-    ty++
-  ) {
-    for (
-      let tx = Math.floor(originX / TILE_DRAWN);
-      tx * TILE_DRAWN < originX + MAP_W;
-      tx++
-    ) {
-      if (ty < 0 || ty >= max) continue;
-      tiles.push({
-        x: ((tx % max) + max) % max,
-        y: ty,
-        left: tx * TILE_DRAWN - originX,
-        top: ty * TILE_DRAWN - originY,
-      });
-    }
-  }
-
-  const path = points
-    .map(
-      ([x, y], i) =>
-        `${i ? 'L' : 'M'}${(x - originX).toFixed(1)} ${(y - originY).toFixed(1)}`
-    )
-    .join(' ');
-  const start = [points[0][0] - originX, points[0][1] - originY];
-  const end = [
-    points[points.length - 1][0] - originX,
-    points[points.length - 1][1] - originY,
-  ];
-
-  return { zoom, tiles, path, start, end };
-}
-
-const pct = (value: number, total: number) => `${(value / total) * 100}%`;
-
-function RouteMap({ route, dark }: { route: Run['route']; dark: boolean }) {
-  const { zoom, tiles, path, start, end } = layoutMap(route);
 
   return (
-    <div
-      className='relative w-full overflow-hidden bg-gray-200 dark:bg-gray-700'
-      style={{ aspectRatio: `${MAP_W} / ${MAP_H}` }}
-    >
-      {tiles.map((tile) => (
-        // eslint-disable-next-line @next/next/no-img-element -- static export; third-party tiles
-        <img
-          key={`${dark}-${zoom}-${tile.x}-${tile.y}-${tile.left}`}
-          src={tileUrl(dark, zoom + 1, tile.x, tile.y)}
-          alt=''
-          loading='lazy'
-          decoding='async'
-          draggable={false}
-          className='absolute max-w-none select-none'
-          style={{
-            left: pct(tile.left, MAP_W),
-            top: pct(tile.top, MAP_H),
-            width: pct(TILE_DRAWN, MAP_W),
-            height: pct(TILE_DRAWN, MAP_H),
-          }}
-        />
-      ))}
-      <svg
-        viewBox={`0 0 ${MAP_W} ${MAP_H}`}
-        className='absolute inset-0 h-full w-full'
-        aria-hidden
+    <li>
+      <button
+        type='button'
+        onClick={onOpen}
+        aria-haspopup='dialog'
+        className='run-card group block h-full w-full overflow-hidden rounded-lg border border-gray-200 bg-gray-100 text-left transition duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-lg focus-visible:-translate-y-1 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600 dark:hover:shadow-black/40'
+        {...analyticsAttributes('run_opened', { label: run.name })}
       >
-        <path
-          d={path}
-          fill='none'
-          stroke='var(--main)'
-          strokeWidth={3}
-          strokeLinecap='round'
-          strokeLinejoin='round'
-        />
-        <circle cx={start[0]} cy={start[1]} r={4} fill='var(--main)' />
-        <circle
-          cx={end[0]}
-          cy={end[1]}
-          r={4}
-          fill={dark ? '#1c1c1c' : '#ffffff'}
-          stroke='var(--main)'
-          strokeWidth={2}
-        />
-      </svg>
-    </div>
+        <RouteMap route={run.route} dark={dark} />
+        <div className='p-4'>
+          <p className={metaLabel}>
+            <time dateTime={run.start_date_local}>
+              {formatDate(run.start_date_local)}
+            </time>
+          </p>
+          <p className='mt-1 truncate font-bold text-gray-900 dark:text-gray-100'>
+            {run.name}
+          </p>
+          <dl className='mt-3 grid grid-cols-2 gap-x-4 gap-y-3'>
+            {stats.map((stat) => (
+              <div key={stat.label} className='min-w-0'>
+                <dt className='text-[10px] uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500'>
+                  {stat.label}
+                </dt>
+                <dd className='mt-0.5 truncate text-sm tabular-nums text-gray-800 dark:text-gray-200'>
+                  {stat.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <p className='run-hint mt-3 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400'>
+            Splits, heart rate &amp; more
+            <ArrowUpRight className='h-3.5 w-3.5' aria-hidden />
+          </p>
+        </div>
+      </button>
+    </li>
   );
 }
 
-// --- Formatting -------------------------------------------------------------------
+/** Native modal <dialog>: focus trap, Esc to close and inert page for free. */
+function RunDialog({
+  run,
+  dark,
+  onClose,
+}: {
+  run: Run | null;
+  dark: boolean;
+  onClose: () => void;
+}) {
+  const ref = useRef<HTMLDialogElement>(null);
 
-function formatDuration(totalSeconds: number) {
-  const h = Math.floor(totalSeconds / 3600);
-  const m = Math.floor((totalSeconds % 3600) / 60);
-  const s = Math.round(totalSeconds % 60);
-  const mmss = `${String(m).padStart(h ? 2 : 1, '0')}:${String(s).padStart(2, '0')}`;
-  return h ? `${h}:${mmss}` : mmss;
-}
+  useEffect(() => {
+    const dialog = ref.current;
+    if (!dialog) return;
+    if (run && !dialog.open) {
+      dialog.showModal();
+      dialog.scrollTop = 0;
+      document.documentElement.style.overflow = 'hidden';
+    } else if (!run && dialog.open) {
+      dialog.close();
+    }
+  }, [run]);
 
-function formatPace(meters: number, seconds: number) {
-  if (!meters) return '—';
-  const perMile = Math.round(seconds / (meters / METERS_PER_MILE));
-  return `${Math.floor(perMile / 60)}:${String(perMile % 60).padStart(2, '0')} /mi`;
-}
-
-// --- Components -------------------------------------------------------------------
-
-function RunCard({ run, dark }: { run: Run; dark: boolean }) {
-  const stats = [
-    {
-      label: 'Distance',
-      value: `${(run.distance_m / METERS_PER_MILE).toFixed(2)} mi`,
-    },
-    { label: 'Pace', value: formatPace(run.distance_m, run.moving_time_s) },
-    { label: 'Time', value: formatDuration(run.moving_time_s) },
-    {
-      label: 'Elev',
-      value: `${Math.round(run.elevation_gain_m * FEET_PER_METER)} ft`,
-    },
-  ];
+  const handleClose = useCallback(() => {
+    document.documentElement.style.overflow = '';
+    onClose();
+  }, [onClose]);
 
   return (
-    <li className='h-full overflow-hidden rounded-lg border border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800'>
-      <RouteMap route={run.route} dark={dark} />
-      <div className='p-4'>
-        <p className={metaLabel}>
-          <time dateTime={run.start_date_local}>
-            {formatDate(run.start_date_local)}
-          </time>
-        </p>
-        <p className='mt-1 truncate font-bold text-gray-900 dark:text-gray-100'>
-          {run.name}
-        </p>
-        <dl className='mt-3 grid grid-cols-2 gap-x-4 gap-y-3'>
-          {stats.map((stat) => (
-            <div key={stat.label} className='min-w-0'>
-              <dt className='text-[10px] uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500'>
-                {stat.label}
-              </dt>
-              <dd className='mt-0.5 truncate text-sm text-gray-800 dark:text-gray-200'>
-                {stat.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-    </li>
+    // Backdrop click is a pointer shortcut; Esc (native) is the keyboard path.
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+    <dialog
+      ref={ref}
+      onClose={handleClose}
+      // A click on the dialog element itself (not its content) is the backdrop.
+      onClick={(event) => {
+        if (event.target === event.currentTarget) ref.current?.close();
+      }}
+      aria-labelledby={run ? `run-${run.id}-title` : undefined}
+      className='run-dialog m-auto max-h-[calc(100dvh-2rem)] w-[min(52rem,calc(100%-2rem))] overflow-y-auto overscroll-contain rounded-xl border border-gray-200 bg-background p-0 text-gray-900 shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-sm dark:border-gray-700 dark:text-gray-100'
+    >
+      {run && (
+        <div className='relative'>
+          <button
+            type='button'
+            onClick={() => ref.current?.close()}
+            className='absolute right-3 top-3 z-10 rounded-full bg-white/90 p-2 text-gray-700 shadow transition hover:bg-white dark:bg-gray-900/90 dark:text-gray-200 dark:hover:bg-gray-900'
+            aria-label='Close'
+          >
+            <X className='h-4 w-4' aria-hidden />
+          </button>
+          <RunDetail run={run} dark={dark} />
+        </div>
+      )}
+    </dialog>
   );
 }
 
@@ -246,10 +155,13 @@ function RunsSkeleton() {
 
 export default function RecentRuns() {
   const { resolvedTheme } = useTheme();
+  const dark = resolvedTheme === 'dark';
   const [runs, setRuns] = useState<Run[]>([]);
+  const [openRun, setOpenRun] = useState<Run | null>(null);
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>(
     'loading'
   );
+  const closeRun = useCallback(() => setOpenRun(null), []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -289,7 +201,12 @@ export default function RecentRuns() {
     <>
       <ul className={gridClass}>
         {runs.map((run) => (
-          <RunCard key={run.id} run={run} dark={resolvedTheme === 'dark'} />
+          <RunCard
+            key={run.id}
+            run={run}
+            dark={dark}
+            onOpen={() => setOpenRun(run)}
+          />
         ))}
       </ul>
       <a
@@ -303,27 +220,7 @@ export default function RecentRuns() {
       >
         More on Strava
       </a>
-      <p className='mt-2 text-[11px] text-gray-400 dark:text-gray-500'>
-        Maps ©{' '}
-        <a
-          href='https://www.esri.com/'
-          target='_blank'
-          rel='noopener noreferrer'
-          className={underlineLink}
-        >
-          Esri
-        </a>
-        , HERE, Garmin, ©{' '}
-        <a
-          href='https://www.openstreetmap.org/copyright'
-          target='_blank'
-          rel='noopener noreferrer'
-          className={underlineLink}
-        >
-          OpenStreetMap
-        </a>{' '}
-        contributors
-      </p>
+      <RunDialog run={openRun} dark={dark} onClose={closeRun} />
     </>
   );
 }

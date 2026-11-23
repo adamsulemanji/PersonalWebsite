@@ -1,0 +1,71 @@
+/* Running section: card hover/focus treatment and the detail dialog. */
+
+.run-card .run-route {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.run-card .run-hint {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.run-card:hover .run-hint,
+.run-card:focus-visible .run-hint {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .run-card .run-map-layer {
+    transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .run-card:hover .run-map-layer,
+  .run-card:focus-visible .run-map-layer {
+    transform: scale(1.06);
+  }
+
+  /* Re-trace the route each time the card is hovered or focused. */
+  .run-card:hover .run-route,
+  .run-card:focus-visible .run-route {
+    animation: run-draw 1.4s ease-in-out both;
+  }
+
+  .run-dialog[open] {
+    animation: run-pop 0.22s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .run-dialog[open]::backdrop {
+    animation: run-fade 0.22s ease-out;
+  }
+
+  .run-dialog[open] .run-route {
+    animation: run-draw 1.8s ease-in-out both;
+  }
+}
+
+@keyframes run-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes run-pop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+@keyframes run-fade {
+  from {
+    opacity: 0;
+  }
+}
